@@ -21,7 +21,8 @@
     "build": "rm -rf lib && mkdir lib && cross-env NODE_ENV=production babel src --out-dir lib --ignore src/**/*.stories.js,src/**/*.test.js && copyfiles -u 1 src/**/*.d.ts lib",
     "test": "jest",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "rm -rf docs/storybook && build-storybook -s public -o docs/storybook"
+    "build-storybook": "rm -rf docs/storybook && build-storybook -s public -o docs/storybook",
+    "build-docs": "rm -rf docs/docs && typedoc --includeDeclarations --excludeExternals --ignoreCompilerErrors --out docs/docs --readme README.md src/"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -59,7 +60,8 @@
     "enzyme-to-json": "^3.4.4",
     "jest": "^25.1.0",
     "node-sass": "^4.13.1",
-    "react-scripts": "^3.4.0"
+    "react-scripts": "^3.4.0",
+    "typedoc": "^0.16.11"
   },
   "jest": {
     "snapshotSerializers": [

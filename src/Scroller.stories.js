@@ -42,22 +42,22 @@ const ListCellComponent = ({ value, style }) => {
 };
 
 export const ListTestComponent = props => {
-  return <Scroller CellComponent={ListCellComponent} height={600} overscroll={2} {...props} />;
+  return <Scroller CellComponent={ListCellComponent} {...props} />;
 };
 
 const gridValue = generateGridValues(1000, 50);
 const columnsSizes = generateRandomSizes(gridValue[0].length, 80, 250);
 
-const GridCellComponent = ({ value, ...props }) => {
+const GridCellComponent = ({ value, style }) => {
   return (
-    <div className={classes.cell} {...props}>
+    <div className={classes.cell} style={style}>
       {value || 'Loading...'}
     </div>
   )
 };
 
 export const GridTestComponent = props => {
-  return <Scroller CellComponent={GridCellComponent} width={800} height={600} overscroll={2} {...props} />;
+  return <Scroller CellComponent={GridCellComponent} {...props} />;
 };
 
 export const loadPageAsync = value => (page, itemsPerPage) => {
@@ -75,6 +75,8 @@ export const syncListWithDefaultSizes = props => (
       defaultRowHeight={40}
       totalRows={gridValue.length}
       value={listValue}
+      height={600}
+      overscroll={2}
       {...props} />
 );
 
@@ -84,6 +86,8 @@ export const syncListWithCustomSizes = props => (
       totalRows={gridValue.length}
       rowsSizes={rowsSizes}
       value={listValue}
+      height={600}
+      overscroll={2}
       {...props} />
 );
 
@@ -94,6 +98,9 @@ export const syncGridWithDefaultSizes = props => (
       totalRows={gridValue.length}
       totalColumns={gridValue[0].length}
       value={gridValue}
+      width={800}
+      height={600}
+      overscroll={2}
       {...props} />
 );
 
@@ -105,9 +112,10 @@ export const syncGridWithCustomSizes = props => (
       columnsSizes={columnsSizes}
       totalRows={gridValue.length}
       totalColumns={gridValue[0].length}
-      rowsPerPage={30}
-      columnsPerPage={10}
       value={gridValue}
+      width={800}
+      height={600}
+      overscroll={2}
       {...props} />
 );
 

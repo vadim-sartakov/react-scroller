@@ -1,5 +1,7 @@
 import React from 'react';
-import { useScroller, ScrollerContainer } from './';
+import { useScroller, ScrollerContainer, ScrollerCell } from './';
+
+const defaultArray = [];
 
 const Scroller = inputProps => {
 
@@ -11,31 +13,27 @@ const Scroller = inputProps => {
   };
 
   const {
-    scrollerContainerRef,
+    visibleRowsIndexes,
+    visibleColumnsIndexes,
     onScroll,
     width,
     height,
     scrollAreaStyle,
     visibleAreaStyle,
-    visibleRowsIndexes,
-    visibleColumnsIndexes,
-    rowsSizes = [],
-    columnsSizes = [],
-    defaultColumnWidth,
+    scrollerContainerRef,
+    rowsSizes = defaultArray,
+    columnsSizes = defaultArray,
     defaultRowHeight,
+    defaultColumnWidth,
     value,
     CellComponent,
     RowComponent = 'div'
   } = props;
 
   const elements = visibleRowsIndexes.map(rowIndex => {
-    const height = rowsSizes[rowIndex] || defaultRowHeight;
     if (visibleColumnsIndexes) {
       const columnsElements = visibleColumnsIndexes.map(columnIndex => {
-        const width = columnsSizes[columnIndex] || defaultColumnWidth;
-        const curValue = value[rowIndex] && value[rowIndex][columnIndex];
-        const style = { width, height };
-        return <CellComponent key={`${rowIndex}-${columnIndex}`} value={curValue} style={style} />;
+        return <ScrollerCell Component={CellComponent} key={`${rowIndex}-${columnIndex}`} rowIndex={rowIndex} columnIndex={columnIndex} />;
       });
       return (
         <RowComponent key={rowIndex} style={{ display: 'flex' }}>
@@ -43,16 +41,16 @@ const Scroller = inputProps => {
         </RowComponent>
       );
     } else {
-      const curValue = value[rowIndex];
-      const style = { height };
-      const rowElement = <CellComponent key={rowIndex} value={curValue} style={style} />;
-      return rowElement;
+      return <ScrollerCell Component={CellComponent} key={rowIndex} rowIndex={rowIndex} />;
     }
   });
 
   return (
     <ScrollerContainer
         ref={scrollerContainerRef}
+        value={value}
+        rowsSizes={rowsSizes}
+        columnsSizes={columnsSizes}
         defaultRowHeight={defaultRowHeight}
         defaultColumnWidth={defaultColumnWidth}
         onScroll={onScroll}

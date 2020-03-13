@@ -1,4 +1,4 @@
-import { MutableRefObject, UIEventHandler } from 'react';
+import { FunctionComponent, Context, MutableRefObject, UIEventHandler, CSSProperties } from 'react';
 
 export interface Cell {
   row: number;
@@ -19,11 +19,13 @@ export interface UseScrollerOptions {
   /**
    * Number of elements which should be rendered out of visible scroller container
    */
-  overscroll: number;
+  overscroll?: number;
   /**
-   * If set to true than scroll container will be expanded only reaching end scroll threshold
+   * If set to true than scroll container will be expanded only when reached end scroll threshold
    */
-  lazy: boolean;
+  lazy?: boolean;
+  /** Scrolls to specified cell by it's address. */
+  focusedCell?: Cell;
 }
 
 export interface UseScrollerResult {
@@ -41,14 +43,49 @@ export interface UseScrollerResult {
    * It is used by hook to control current scroll position if required (e.g. on focusing cell).
    */
   containerRef: MutableRefObject<Element>;
-  /**
-   * Focus cell callback. Scrolls to specified cell by it's address.
-   */
-  focusCell: (cell: Cell) => void;
   /** Styles of scroll area. Contains final width and height */
   scrollAreaStyle: { width: number; height: number; position: 'relative' };
   /** Styles of visible area. Contains top and left absolute position on scroll area */
-  visibleAreaStyle: { top: number; left: number; position: 'absolute' }
+  visibleAreaStyle: { top: number; left: number; position: 'absolute' };
 }
 
 export declare function useScroller(options: UseScrollerOptions): UseScrollerResult
+
+interface ScrollerContextProps {
+  value: any[];
+  defaultRowHeight: number;
+  defaultColumnWidth?: number;
+  rowsSizes?: number[];
+  columnsSizes?: number[];
+}
+
+declare const ScrollerContext: Context<ScrollerContextProps>
+
+export interface ScrollerContainerProps {
+  value: any[];
+  width?: number;
+  height: number;
+  defaultRowHeight: number;
+  defaultColumnWidth: number;
+  rowsSizes: number[];
+  columnsSizes?: number[];
+  style: CSSProperties;
+  onScroll: UIEventHandler;
+}
+
+export declare const ScrollerContainer: FunctionComponent<ScrollerContainerProps>
+
+export interface ScrollerCellProps {
+  rowIndex: number;
+  columnIndex?: number;
+  /** Default is 'div' */
+  Component: FunctionComponent;
+}
+
+export interface ScrollerProps extends UseScrollerOptions, ScrollerContainerProps {
+  CellComponent: FunctionComponent;
+}
+
+declare const Scroller: FunctionComponent<ScrollerProps>
+
+export default Scroller

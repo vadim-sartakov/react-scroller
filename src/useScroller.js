@@ -10,7 +10,6 @@ import {
 const defaultArray = [];
 
 const useScroller = ({
-  lazy,
   defaultRowHeight,
   defaultColumnWidth,
   totalRows,
@@ -19,13 +18,15 @@ const useScroller = ({
   columnsSizes = defaultArray,
   width,
   height,
-  overscroll = 0
+  lazy,
+  overscroll = 0,
+  focusedCell
 }) => {
   const scrollerContainerRef = useRef();
+  
+  useEffect(function focusCell() {
 
-  const focusCell = useCallback(cell => {
-
-  }, []);
+  }, [focusedCell]);
 
   const [containerSizes, setContainerSizes] = useState({ width, height });
   useEffect(() => {
@@ -164,7 +165,6 @@ const useScroller = ({
 
   return {
     scrollerContainerRef,
-    focusCell,
     visibleRowsIndexes: rowsScrollData.visibleIndexes,
     visibleColumnsIndexes: columnsScrollData && columnsScrollData.visibleIndexes,
     onScroll: handleScroll,
