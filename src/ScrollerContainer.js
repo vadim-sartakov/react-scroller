@@ -26,7 +26,7 @@ const ScrollerContainer = forwardRef(({
     <ScrollerContext.Provider value={contextValue}>
       <div
           ref={ref}
-          style={{ ...style, width, height, overflow: height && 'auto' }}
+          style={{ width, height, overflow: height && 'auto', ...style }}
           onScroll={onScroll}>
         {children}
       </div>

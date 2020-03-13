@@ -26,6 +26,12 @@ export interface UseScrollerOptions {
   lazy?: boolean;
   /** Scrolls to specified cell by it's address. */
   focusedCell?: Cell;
+  /**
+   * Ref which should be passed to corresponding scroller container html element.
+   * It is used by hook to control current scroll position if required (e.g. on focusing cell).
+   * If not specified, then local ref object will be created and returned as hook result
+   */
+  scrollerContainerRef?: MutableRefObject<Element>;
 }
 
 export interface UseScrollerResult {
@@ -42,7 +48,7 @@ export interface UseScrollerResult {
    * Ref which should be passed to corresponding scroller container html element.
    * It is used by hook to control current scroll position if required (e.g. on focusing cell).
    */
-  containerRef: MutableRefObject<Element>;
+  scrollerContainerRef: MutableRefObject<Element>;
   /** Styles of scroll area. Contains final width and height */
   scrollAreaStyle: { width: number; height: number; position: 'relative' };
   /** Styles of visible area. Contains top and left absolute position on scroll area */

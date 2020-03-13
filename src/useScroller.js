@@ -20,9 +20,11 @@ const useScroller = ({
   height,
   lazy,
   overscroll = 0,
-  focusedCell
+  focusedCell,
+  scrollerContainerRef: scrollerContainerRefProp
 }) => {
-  const scrollerContainerRef = useRef();
+  const scrollerContainerRefLocal = useRef();
+  const scrollerContainerRef = scrollerContainerRefProp || scrollerContainerRefLocal;
   
   useEffect(function focusCell() {
 
@@ -32,7 +34,7 @@ const useScroller = ({
   useEffect(() => {
     const scrollerContainerRect = scrollerContainerRef.current.getBoundingClientRect();
     setContainerSizes({ width: scrollerContainerRect.width, height: scrollerContainerRect.height });
-  }, []);
+  }, [scrollerContainerRef]);
 
   const [columnsScrollData, setColumnsScrollData] = useState(() => {
     if (!totalColumns) return;
