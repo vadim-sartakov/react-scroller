@@ -11,6 +11,7 @@ const ScrollerContainer = forwardRef(({
   defaultColumnWidth,
   rowsSizes = defaultArray,
   columnsSizes = defaultArray,
+  className,
   style,
   onScroll,
   children
@@ -27,6 +28,7 @@ const ScrollerContainer = forwardRef(({
       <div
           ref={ref}
           style={{ width, height, overflow: height && 'auto', ...style }}
+          className={className}
           onScroll={onScroll}>
         {children}
       </div>
