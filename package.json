@@ -1,0 +1,66 @@
+{
+  "name": "@vadim-sartakov/react-scroller",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": "https://github.com/vadim-sartakov/react-scroller",
+  "homepage": "https://github.com/vadim-sartakov/react-scroller#readme",
+  "author": "Vadim Sartakov",
+  "keywords": [
+    "react",
+    "scroll",
+    "list",
+    "grid"
+  ],
+  "files": [
+    "/lib/**/*"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "rm -rf lib && mkdir lib && cross-env NODE_ENV=production babel src --out-dir lib --ignore src/**/*.stories.js,src/**/*.test.js && copyfiles -u 1 src/**/*.d.ts lib",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "rm -rf docs/storybook && build-storybook -s public -o docs/storybook"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "peerDependencies": {
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@storybook/addon-actions": "^5.3.14",
+    "@storybook/addon-links": "^5.3.14",
+    "@storybook/addons": "^5.3.14",
+    "@storybook/react": "^5.3.14",
+    "@types/react": "^16.9.23",
+    "copyfiles": "^2.2.0",
+    "cross-env": "^7.0.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.4.4",
+    "node-sass": "^4.13.1",
+    "react-scripts": "^3.4.0"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
+  }
+}
