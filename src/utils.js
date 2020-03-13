@@ -57,8 +57,7 @@ export function getScrollDataWithDefaultSize({ containerSize, defaultSize, total
   lastIndex = applyEndOverscroll(lastIndex, totalCount, overscroll);
   const visibleIndexes = getVisibleIndexesRange(firstIndex, lastIndex);
   const offset = defaultSize * firstIndex;
-  const size = totalCount * defaultSize;
-  return { offset, size, visibleIndexes };
+  return { offset, visibleIndexes };
 };
 
 export function getCustomSizesTotal({ sizes, totalCount, defaultSize }) {

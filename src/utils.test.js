@@ -30,7 +30,6 @@ describe('Scroller utils', () => {
       const result = getScrollDataWithDefaultSize({ containerSize: 50, defaultSize: 10, scroll: 0, totalCount: 200 });
       expect(result).toEqual({
         offset: 0, 
-        size: 2000,
         visibleIndexes: [0, 1, 2, 3, 4]
       });
     });
@@ -39,7 +38,6 @@ describe('Scroller utils', () => {
       const result = getScrollDataWithDefaultSize({ containerSize: 50, defaultSize: 10, scroll: 10, totalCount: 200, overscroll: 2 });
       expect(result).toEqual({
         offset: 0,
-        size: 2000,
         visibleIndexes: [0, 1, 2, 3, 4, 5, 6, 7]
       });
     });
@@ -48,7 +46,6 @@ describe('Scroller utils', () => {
       const result = getScrollDataWithDefaultSize({ containerSize: 50, defaultSize: 10, scroll: 1955, totalCount: 200, overscroll: 2 });
       expect(result).toEqual({
         offset: 1930,
-        size: 2000,
         visibleIndexes: [193, 194, 195, 196, 197, 198, 199]
       });
     });
@@ -57,7 +54,6 @@ describe('Scroller utils', () => {
       const result = getScrollDataWithDefaultSize({ containerSize: 50, defaultSize: 10, scroll: 55, totalCount: 200 });
       expect(result).toEqual({
         offset: 50,
-        size: 2000,
         visibleIndexes: [5, 6, 7, 8, 9]
       });
     });
@@ -66,7 +62,6 @@ describe('Scroller utils', () => {
       const result = getScrollDataWithDefaultSize({ containerSize: 50, defaultSize: 10, scroll: 50, totalCount: 200, overscroll: 2 });
       expect(result).toEqual({
         offset: 30,
-        size: 2000,
         visibleIndexes: [3, 4, 5, 6, 7, 8, 9, 10, 11]
       });
     });
