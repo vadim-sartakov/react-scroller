@@ -15,8 +15,8 @@ const Scroller = inputProps => {
     onScroll,
     width,
     height,
-    coverStyles,
-    pagesStyles,
+    scrollAreaStyle,
+    visibleAreaStyle,
     visibleRowsIndexes,
     visibleColumnsIndexes,
     rowsSizes = [],
@@ -58,8 +58,8 @@ const Scroller = inputProps => {
         onScroll={onScroll}
         width={width}
         height={height}>
-      <div style={coverStyles}>
-        <div style={pagesStyles}>
+      <div style={scrollAreaStyle}>
+        <div style={visibleAreaStyle}>
           {elements}
         </div>
       </div>

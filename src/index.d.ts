@@ -1,106 +1,54 @@
-import { CSSProperties, UIEventHandler, HTMLAttributes, FunctionComponent, Context, MutableRefObject } from 'react';
+import { MutableRefObject, UIEventHandler } from 'react';
 
-export interface Meta {
-  size: number;
+export interface Cell {
+  row: number;
+  column: number;
 }
 
-export interface ScrollerContextProps {
+export interface UseScrollerOptions {
   defaultRowHeight: number;
-  defaultColumnWidth: number;
-}
-export const ScrollerContext: Context<ScrollerContextProps>
-
-export interface ScrollerContainerProps extends HTMLAttributes<{}> {
-  width?: number;
-  height: number;
-  defaultRowHeight: number; 
-  defaultColumnWidth: number;
-  onScroll: UIEventHandler;
-}
-
-/**
- * Scroller container component which creates scrollable container, also provides scroller context
- */
-export const ScrollerContainer: FunctionComponent<ScrollerContainerProps>
-
-export interface ScrollerOptionsBase {
-  defaultRowHeight: number;
-  defaultColumnWidth: number;
+  defaultColumnWidth?: number;
   totalRows: number;
-  totalColumns: number[];
-  rowsPerPage: number;
-  columnsPerPage: number;
-  rows?: Meta[];
-  columns?: Meta[];
-}
-
-export interface UseScrollerOptions extends ScrollerOptionsBase {
-  scrollerContainerRef: MutableRefObject<Element>;
-  /** When set to true whe height of scroller will expand on demand */
-  lazy?: boolean;
-  /** Load async page callback */
-  loadPage?: (page: number, itemsPerPage: number) => void;
-  fixRows?: number;
-  fixColumns?: number;
+  totalColumns?: number;
+  rowsSizes: number[];
+  columnsSizes: number[];
+  /** Scroll container height */
+  height: number;
+  /** Scroll container width */
+  width?: number;
   /**
-   * To take control over current scroll position.
-   * If values change, scroll container sets new scroll values.
+   * Number of elements which should be rendered out of visible scroller container
    */
-  scroll: { top: number, left: number };
-  /** To navigate scroller to specific cell */
-  focusedCell: { row: number, column: number }
+  overscroll: number;
+  /**
+   * If set to true than scroll container will be expanded only reaching end scroll threshold
+   */
+  lazy: boolean;
 }
 
 export interface UseScrollerResult {
-  rowsPage: number;
-  columnsPage: number;
-  /** Rows indexes */
-  visibleRows: number[],
-  /** Columns indexes */
-  visibleColumns: number[],
-  /** Rows meta with added offset */
-  rows?: Meta[],
-  /** Columns meta with added offset */
-  columns?: Meta[]
-  /**
-   * Values loaded asynchronously. Applicable only for 'async' mode
-   * when 'loadPage' callback specified
-   */
-  loadedValues: any[];
+  /** Scroll callback which should be passed to scroll container as 'onScroll' event handler */
   onScroll: UIEventHandler;
-  coverStyles: CSSProperties;
-  pagesStyles: CSSProperties;
-  gridStyles: CSSProperties;
+  /** Rows indexes which are visible at the current scroll position */
+  visibleRowsIndexes: number[];
+  /**
+   * Columns indexes which are visible at the current scroll position.
+   * Might be 'undefined' if no 'totalColumns' was specified, assuming it is a list, not a grid.
+   */
+  visibleColumnsIndexes?: number[];
+  /**
+   * Ref which should be passed to corresponding scroller container html element.
+   * It is used by hook to control current scroll position if required (e.g. on focusing cell).
+   */
+  containerRef: MutableRefObject<Element>;
+  /**
+   * Focus cell callback. Scrolls to specified cell by it's address.
+   */
+  focusCell: (cell: Cell) => void;
+  /** Styles of scroll area. Contains final width and height */
+  scrollAreaStyle: { width: number; height: number; position: 'relative' };
+  /** Styles of visible area. Contains top and left absolute position on scroll area */
+  visibleAreaStyle: { top: number; left: number; position: 'absolute' }
 }
 
-/**
- * Scroller hook which deals with all scroller state management 
- */
-export function useScroller(options: UseScrollerOptions): UseScrollerResult
-
-export interface ScrollerCellProps extends HTMLAttributes<{}> {
-  rowIndex: number;
-  columnIndex: number;
-  row: Meta;
-  column: Meta;
-  value: any;
-}
-
-/**
- * Scroller cell unit
- */
-export const ScrollerCell: FunctionComponent<ScrollerCellProps>
-
-export interface ScrollerProps extends UseScrollerOptions {
-  CellComponent: FunctionComponent<ScrollerCellProps>;
-  value?: any[];
-  width?: number;
-  height: number;
-}
-
-/**
- * Data scrolling and buffering component, helps to deal with large data sets rendering, displaying only visible part of data.
- */
-declare const Scroller: FunctionComponent<ScrollerProps>
-
-export default Scroller;
+export declare function useScroller(options: UseScrollerOptions): UseScrollerResult

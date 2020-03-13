@@ -9,10 +9,6 @@ import {
 
 const defaultArray = [];
 
-/**
- * @param {import('.').UseScrollerOptions} options
- * @returns {import('.').UseScrollerResult}
- */
 const useScroller = ({
   lazy,
   defaultRowHeight,
@@ -25,7 +21,6 @@ const useScroller = ({
   height,
   overscroll = 0
 }) => {
-
   const scrollerContainerRef = useRef();
 
   const focusCell = useCallback(cell => {
@@ -151,7 +146,7 @@ const useScroller = ({
     }
   }, [rowsSizes, defaultRowHeight, totalRows]);
 
-  const coverStyles = useMemo(() => {
+  const scrollAreaStyle = useMemo(() => {
     return {
       height: lazy ? rowsScrollData.offset + visibleRowsSize : coverHeight,
       width: coverWidth,
@@ -159,7 +154,7 @@ const useScroller = ({
     }
   }, [lazy, coverHeight, coverWidth, rowsScrollData.offset, visibleRowsSize]);
 
-  const pagesStyles = useMemo(() => {
+  const visibleAreaStyle = useMemo(() => {
     return {
       top: rowsScrollData.offset,
       left: columnsScrollData && columnsScrollData.offset,
@@ -173,8 +168,8 @@ const useScroller = ({
     visibleRowsIndexes: rowsScrollData.visibleIndexes,
     visibleColumnsIndexes: columnsScrollData && columnsScrollData.visibleIndexes,
     onScroll: handleScroll,
-    coverStyles,
-    pagesStyles
+    scrollAreaStyle,
+    visibleAreaStyle
   };
 
 };

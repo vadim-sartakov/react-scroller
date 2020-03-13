@@ -1,22 +1,27 @@
 import React, { useMemo, forwardRef } from 'react';
 import { ScrollerContext } from './';
 
+const defaultArray = [];
+
 const ScrollerContainer = forwardRef(({
   width,
   height,
-  style,
   defaultRowHeight,
   defaultColumnWidth,
+  rowsSizes = defaultArray,
+  columnsSizes = defaultArray,
+  style,
   ...props
 }, ref) => {
   const contextValue = useMemo(() => ({
     defaultRowHeight,
-    defaultColumnWidth
-  }), [defaultRowHeight, defaultColumnWidth]);
+    defaultColumnWidth,
+    rowsSizes,
+    columnsSizes
+  }), [defaultRowHeight, defaultColumnWidth, rowsSizes, columnsSizes]);
   return (
     <ScrollerContext.Provider value={contextValue}>
       <div
-          tabIndex="0"
           ref={ref}
           {...props}
           style={{ width, height, overflow: height && 'auto', ...style }} />
