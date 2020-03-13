@@ -30,30 +30,43 @@ const useScroller = ({
 
   }, [focusedCell]);
 
-  const [containerSizes, setContainerSizes] = useState({ width, height });
-  useEffect(() => {
-    const scrollerContainerRect = scrollerContainerRef.current.getBoundingClientRect();
-    setContainerSizes({ width: scrollerContainerRect.width, height: scrollerContainerRect.height });
-  }, [scrollerContainerRef]);
+  const containerSizes = useRef({ width, height });
 
-  const [columnsScrollData, setColumnsScrollData] = useState(() => {
+  const getColumnsScrollData = useCallback(() => {
     if (!totalColumns) return;
-    const containerSize = containerSizes.width;
+    const containerSize = containerSizes.current.width;
     if (columnsSizes.length) {
       return getScrollDataWithCustomSizes({ scroll: 0, sizes: columnsSizes, containerSize, defaultSize: defaultColumnWidth, totalCount: totalColumns, overscroll });
     } else {
       return getScrollDataWithDefaultSize({ scroll: 0, containerSize, defaultSize: defaultColumnWidth, totalCount: totalColumns, overscroll })
     }
-  });
+  }, [columnsSizes, defaultColumnWidth, overscroll, totalColumns]);
+
+  const prevRowsScrollData = useRef();
+  const prevColumnsScrollData = useRef();
+
+  const [columnsScrollData, setColumnsScrollData] = useState(getColumnsScrollData());
 
   const [rowsScrollData, setRowsScrollData] = useState(() => {
-    const containerSize = containerSizes.height;
+    const containerSize = containerSizes.current.height;
     if (rowsSizes.length) {
       return getScrollDataWithCustomSizes({ scroll: 0, sizes: rowsSizes, containerSize, defaultSize: defaultRowHeight, totalCount: totalRows, overscroll });
     } else {
       return getScrollDataWithDefaultSize({ scroll: 0, containerSize, defaultSize: defaultRowHeight, totalCount: totalRows, overscroll })
     }
   });
+
+  prevRowsScrollData.current = { ...rowsScrollData };
+  prevColumnsScrollData.current = { ...columnsScrollData };
+
+  useEffect(function calculateContainerWidth() {
+    // Do not recalculate if width is specified explicitly by prop
+    if (width) return;
+    const scrollerContainerRect = scrollerContainerRef.current.getBoundingClientRect();
+    containerSizes.current = { width: scrollerContainerRect.width, height: scrollerContainerRect.height };
+    const columnsScrollData = getColumnsScrollData();
+    setColumnsScrollData(columnsScrollData);
+  }, [width, scrollerContainerRef, getColumnsScrollData]);
 
   const prevScrollTop = useRef(0);
   const prevScrollLeft = useRef(0);
@@ -63,18 +76,18 @@ const useScroller = ({
     if (totalColumns) {
       if (columnsSizes.length) {
         nextColumnsScrollData = shiftScroll({
-          prevScrollData: columnsScrollData,
+          prevScrollData: prevColumnsScrollData.current,
           prevScroll: prevScrollLeft.current,
           sizes: columnsSizes,
           scroll: e.target.scrollLeft,
-          containerSize: containerSizes.width,
+          containerSize: containerSizes.current.width,
           totalCount: totalColumns,
           defaultSize: defaultColumnWidth,
           overscroll
         });
       } else {
         nextColumnsScrollData = getScrollDataWithDefaultSize({
-          containerSize: containerSizes.width,
+          containerSize: containerSizes.current.width,
           defaultSize: defaultColumnWidth,
           totalCount: totalColumns,
           scroll: e.target.scrollLeft,
@@ -86,18 +99,18 @@ const useScroller = ({
     
     if (rowsSizes.length) {
       nextRowsScrollData = shiftScroll({
-        prevScrollData: rowsScrollData,
+        prevScrollData: prevRowsScrollData.current,
         prevScroll: prevScrollTop.current,
         sizes: rowsSizes,
         scroll: e.target.scrollTop,
-        containerSize: containerSizes.height,
+        containerSize: containerSizes.current.height,
         totalCount: totalRows,
         defaultSize: defaultRowHeight,
         overscroll
       });
     } else {
       nextRowsScrollData = getScrollDataWithDefaultSize({
-        containerSize: containerSizes.height,
+        containerSize: containerSizes.current.height,
         defaultSize: defaultRowHeight,
         totalCount: totalRows,
         scroll: e.target.scrollTop,
@@ -109,12 +122,8 @@ const useScroller = ({
     prevScrollTop.current = e.target.scrollTop;
     prevScrollLeft.current = e.target.scrollLeft;
   }, [
-    rowsScrollData,
-    columnsScrollData,
     columnsSizes,
     rowsSizes,
-    containerSizes.height,
-    containerSizes.width,
     defaultColumnWidth,
     defaultRowHeight,
     overscroll,

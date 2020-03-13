@@ -98,7 +98,6 @@ export const syncGridWithDefaultSizes = props => (
       totalRows={gridValue.length}
       totalColumns={gridValue[0].length}
       value={gridValue}
-      width={800}
       height={600}
       overscroll={2}
       {...props} />
@@ -113,7 +112,6 @@ export const syncGridWithCustomSizes = props => (
       totalRows={gridValue.length}
       totalColumns={gridValue[0].length}
       value={gridValue}
-      width={800}
       height={600}
       overscroll={2}
       {...props} />
