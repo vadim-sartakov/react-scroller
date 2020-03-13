@@ -4,9 +4,9 @@ A set of hooks, components and utilities for scrolling large datasets. Standalon
 
 
 ## Demo and Documentation
-Live examples available [here](https://vadim-sartakov.github.io/react-scroller/docs/storybook/).
+Live examples available [here](https://vadim-sartakov.github.io/react-scroller/storybook/).
 
-Documentation available [here](https://vadim-sartakov.github.io/react-scroller/docs/docs/).
+Documentation available [here](https://vadim-sartakov.github.io/react-scroller/docs/).
 
 ## Scrollable list
 ```javascript
