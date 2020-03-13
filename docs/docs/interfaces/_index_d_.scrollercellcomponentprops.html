@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>UseScrollerResult | @vadim-sartakov/react-scroller</title>
+	<title>ScrollerCellComponentProps | @vadim-sartakov/react-scroller</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../modules/_index_d_.html">&quot;index.d&quot;</a>
 				</li>
 				<li>
-					<a href="_index_d_.usescrollerresult.html">UseScrollerResult</a>
+					<a href="_index_d_.scrollercellcomponentprops.html">ScrollerCellComponentProps</a>
 				</li>
 			</ul>
-			<h1>Interface UseScrollerResult</h1>
+			<h1>Interface ScrollerCellComponentProps</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">UseScrollerResult</span>
+						<span class="target">ScrollerCellComponentProps</span>
 					</li>
 				</ul>
 			</section>
@@ -82,12 +82,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.usescrollerresult.html#containerref" class="tsd-kind-icon">container<wbr>Ref</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.usescrollerresult.html#onscroll" class="tsd-kind-icon">on<wbr>Scroll</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.usescrollerresult.html#scrollareastyle" class="tsd-kind-icon">scroll<wbr>Area<wbr>Style</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.usescrollerresult.html#visibleareastyle" class="tsd-kind-icon">visible<wbr>Area<wbr>Style</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.usescrollerresult.html#visiblecolumnsindexes" class="tsd-kind-icon">visible<wbr>Columns<wbr>Indexes</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.usescrollerresult.html#visiblerowsindexes" class="tsd-kind-icon">visible<wbr>Rows<wbr>Indexes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.scrollercellcomponentprops.html#style" class="tsd-kind-icon">style</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.scrollercellcomponentprops.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
 					</div>
@@ -96,58 +92,19 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="containerref" class="tsd-anchor"></a>
-					<h3>container<wbr>Ref</h3>
-					<div class="tsd-signature tsd-kind-icon">container<wbr>Ref<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MutableRefObject</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Element</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<a name="style" class="tsd-anchor"></a>
+					<h3>style</h3>
+					<div class="tsd-signature tsd-kind-icon">style<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>width<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/de5c38b/src/index.d.ts#L45">index.d.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/de5c38b/src/index.d.ts#L79">index.d.ts:79</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Ref which should be passed to corresponding scroller container html element.
-							It is used by hook to control current scroll position if required (e.g. on focusing cell).</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="onscroll" class="tsd-anchor"></a>
-					<h3>on<wbr>Scroll</h3>
-					<div class="tsd-signature tsd-kind-icon">on<wbr>Scroll<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">UIEventHandler</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/de5c38b/src/index.d.ts#L33">index.d.ts:33</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Scroll callback which should be passed to scroll container as &#39;onScroll&#39; event handler</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="scrollareastyle" class="tsd-anchor"></a>
-					<h3>scroll<wbr>Area<wbr>Style</h3>
-					<div class="tsd-signature tsd-kind-icon">scroll<wbr>Area<wbr>Style<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"relative"</span><span class="tsd-signature-symbol">; </span>width<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/de5c38b/src/index.d.ts#L47">index.d.ts:47</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Styles of scroll area. Contains final width and height</p>
-						</div>
-					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter">
 								<h5>height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"relative"</span></h5>
 							</li>
 							<li class="tsd-parameter">
 								<h5>width<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
@@ -156,64 +113,14 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="visibleareastyle" class="tsd-anchor"></a>
-					<h3>visible<wbr>Area<wbr>Style</h3>
-					<div class="tsd-signature tsd-kind-icon">visible<wbr>Area<wbr>Style<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>left<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"absolute"</span><span class="tsd-signature-symbol">; </span>top<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></div>
+					<a name="value" class="tsd-anchor"></a>
+					<h3>value</h3>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/de5c38b/src/index.d.ts#L49">index.d.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/de5c38b/src/index.d.ts#L80">index.d.ts:80</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Styles of visible area. Contains top and left absolute position on scroll area</p>
-						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter">
-								<h5>left<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"absolute"</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>top<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="visiblecolumnsindexes" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> visible<wbr>Columns<wbr>Indexes</h3>
-					<div class="tsd-signature tsd-kind-icon">visible<wbr>Columns<wbr>Indexes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/de5c38b/src/index.d.ts#L40">index.d.ts:40</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Columns indexes which are visible at the current scroll position.
-							Might be &#39;undefined&#39; if no &#39;totalColumns&#39; was specified, assuming it is a list, not a grid.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="visiblerowsindexes" class="tsd-anchor"></a>
-					<h3>visible<wbr>Rows<wbr>Indexes</h3>
-					<div class="tsd-signature tsd-kind-icon">visible<wbr>Rows<wbr>Indexes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/de5c38b/src/index.d.ts#L35">index.d.ts:35</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Rows indexes which are visible at the current scroll position</p>
-						</div>
-					</div>
 				</section>
 			</section>
 		</div>
@@ -233,9 +140,21 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="_index_d_.cell.html" class="tsd-kind-icon">Cell</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="_index_d_.scrollercellcomponentprops.html" class="tsd-kind-icon">Scroller<wbr>Cell<wbr>Component<wbr>Props</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_index_d_.scrollercellcomponentprops.html#style" class="tsd-kind-icon">style</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_index_d_.scrollercellcomponentprops.html#value" class="tsd-kind-icon">value</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="_index_d_.scrollercellprops.html" class="tsd-kind-icon">Scroller<wbr>Cell<wbr>Props</a>
 					</li>
@@ -251,33 +170,9 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="_index_d_.usescrolleroptions.html" class="tsd-kind-icon">Use<wbr>Scroller<wbr>Options</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="_index_d_.usescrollerresult.html" class="tsd-kind-icon">Use<wbr>Scroller<wbr>Result</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_index_d_.usescrollerresult.html#containerref" class="tsd-kind-icon">container<wbr>Ref</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_index_d_.usescrollerresult.html#onscroll" class="tsd-kind-icon">on<wbr>Scroll</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_index_d_.usescrollerresult.html#scrollareastyle" class="tsd-kind-icon">scroll<wbr>Area<wbr>Style</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_index_d_.usescrollerresult.html#visibleareastyle" class="tsd-kind-icon">visible<wbr>Area<wbr>Style</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_index_d_.usescrollerresult.html#visiblecolumnsindexes" class="tsd-kind-icon">visible<wbr>Columns<wbr>Indexes</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_index_d_.usescrollerresult.html#visiblerowsindexes" class="tsd-kind-icon">visible<wbr>Rows<wbr>Indexes</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
 						<a href="../modules/_index_d_.html#scroller" class="tsd-kind-icon">Scroller</a>
 					</li>

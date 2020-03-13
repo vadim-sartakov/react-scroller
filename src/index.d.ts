@@ -75,12 +75,19 @@ export interface ScrollerContainerProps {
 
 export declare const ScrollerContainer: FunctionComponent<ScrollerContainerProps>
 
+export interface ScrollerCellComponentProps {
+  style: { width: number; height: number };
+  value: any;
+}
+
 export interface ScrollerCellProps {
   rowIndex: number;
   columnIndex?: number;
   /** Default is 'div' */
-  Component: FunctionComponent;
+  Component: FunctionComponent<ScrollerCellComponentProps>;
 }
+
+export declare const ScrollerCell: FunctionComponent<ScrollerCellProps>
 
 export interface ScrollerProps extends UseScrollerOptions, ScrollerContainerProps {
   CellComponent: FunctionComponent;
