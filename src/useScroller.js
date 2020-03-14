@@ -19,6 +19,7 @@ const useScroller = ({
   width,
   height,
   lazy,
+  onScroll,
   overscroll = 0,
   focusedCell,
   scrollerContainerRef: scrollerContainerRefProp
@@ -155,6 +156,8 @@ const useScroller = ({
 
     prevScrollTop.current = e.target.scrollTop;
     prevScrollLeft.current = e.target.scrollLeft;
+
+    if (onScroll) onScroll(e);
   }, [
     containerSizes.height,
     containerSizes.width,
@@ -162,6 +165,7 @@ const useScroller = ({
     rowsSizes,
     defaultColumnWidth,
     defaultRowHeight,
+    onScroll,
     overscroll,
     totalRows,
     totalColumns

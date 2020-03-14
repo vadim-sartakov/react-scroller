@@ -11,10 +11,14 @@ const ScrollerContainer = forwardRef(({
   defaultColumnWidth,
   rowsSizes = defaultArray,
   columnsSizes = defaultArray,
-  className,
   style,
+  className,
   onScroll,
-  children
+  scrollAreaStyle,
+  visibleAreaStyle,
+  children,
+  OutsideComponent,
+  outsideComponentProps
 }, ref) => {
   const contextValue = useMemo(() => ({
     value,
@@ -30,7 +34,12 @@ const ScrollerContainer = forwardRef(({
           style={{ width, height, overflow: height && 'auto', ...style }}
           className={className}
           onScroll={onScroll}>
-        {children}
+        <div style={scrollAreaStyle}>
+          <div style={visibleAreaStyle}>
+            {children}
+          </div>
+        </div>
+        {OutsideComponent && <OutsideComponent {...outsideComponentProps} />}
       </div>
     </ScrollerContext.Provider>
   );

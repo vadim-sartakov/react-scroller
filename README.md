@@ -62,53 +62,16 @@ const element = (
 |---|---|---|---
 |value|any[]||Array of values
 |totalRows|number||Total number of rows
-|totalColumns|number|yes|Total number of columns
+|totalColumns|number|Yes|Total number of columns
 |defaultRowHeight|number||Default height of scroller cell
-|defaultColumnWidth|number|yes|Default width of scroller cell
-|rowsSizes|number[]|yes|Array of scroller cell heights
-|columnsSizes|number[]|yes|Array of scroller cell widths
-|width|number, string|yes|Scroller container width. Could be any valid css string
+|defaultColumnWidth|number|Yes|Default width of scroller cell
+|rowsSizes|number[]|Yes|Array of scroller cell heights
+|columnsSizes|number[]|Yes|Array of scroller cell widths
+|width|number, string|Yes|Scroller container width. Could be any valid css string
 |height|number, string||Scroller container height. Could be any valid css string
-|overscroll|number|yes|Number of elements which should be rendered out of visible scroller container
-|lazy|boolean|yes|If set to true than scroll container will be expanded only when reached end scroll threshold
-|RowComponent|React component|yes|Custom row component for grid rows. Default is div.
+|onScroll|Callback|Yes|On scroll callback
+|overscroll|number|Yes|Number of elements which should be rendered out of visible scroller container
+|lazy|boolean|Yes|If set to true than scroll container will be expanded only when reached end scroll threshold
+|RowComponent|React component|Yes|Custom row component for grid rows. Default is div.
 |CellComponent|React component||Cell component which will be rendered as scroller cell
-
-## Custom scroller component
-
-Custom scroller component composing is pretty straightforward with lower level hooks and components:
-
-```javascript
-import { useScroller, ScrollerCell, ScrollerContainer } from '@vadim-sartakov/react-scroller';
-
-const ListScroller = inputProps => {
-  const scrollerProps = useScroller(inputProps);
-  const {
-    scrollerContainerRef,
-    scrollAreaStyle,
-    visibleAreaStyle,
-    visibleRowsIndexes,
-    ...resultProps
-  } = { ...inputProps, ...scrollerProps };
-  return (
-    <ScrollerContainer ref={scrollerContainerRef} {...resultProps}>
-      <div style={scrollAreaStyle}>
-        <div style={visibleAreaStyle}>
-          {visibleRowsIndexes.map(index => <ScrollerCell Component={RowComponent} key={index} rowIndex={index} />)}
-        </div>
-      </div>
-    </ScrollerContainer>
-  );
-};
-
-const listValue = [...new Array(1000).keys()];
-
-const element = (
-  <ListScroller
-      value={listValue}
-      defaultRowHeight={50}
-      height="100vh"
-      totalRows={listValue.length} />
-);
-
-```
+|OutsideComponent|React component|Yes|Component which will be rendered outside of visible values

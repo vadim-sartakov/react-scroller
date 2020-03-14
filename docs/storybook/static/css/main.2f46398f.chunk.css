@@ -1,0 +1,11 @@
+.cell {
+  background-color: #fff;
+  border-bottom: solid 1px grey;
+  border-right: solid 1px grey;
+}
+
+.row {
+  display: flex;
+}
+
+/*# sourceMappingURL=main.2f46398f.chunk.css.map*/

@@ -12,6 +12,8 @@ export interface UseScrollerOptions {
   totalColumns?: number;
   rowsSizes: number[];
   columnsSizes: number[];
+  /** On scroll callback. When additional processing is required by parent components */
+  onScroll: UIEventHandler;
   /** Scroll container height. Could be any valid css string */
   height: number | string;
   /** Scroll container width. Could be any valid css string */
@@ -75,8 +77,15 @@ export interface ScrollerContainerProps {
   defaultColumnWidth: number;
   rowsSizes: number[];
   columnsSizes?: number[];
-  style: CSSProperties;
+  style?: CSSProperties;
+  className?: string;
   onScroll: UIEventHandler;
+  scrollAreaStyle: CSSProperties;
+  visibleAreaStyle: CSSProperties;
+  /** Component which will be rendered outside of visible area */
+  OutsideComponent: FunctionComponent;
+  /** Props that will be passed to OutsideComponent */
+  outsideComponentProps: Object;
 }
 
 export declare const ScrollerContainer: FunctionComponent<ScrollerContainerProps>
@@ -96,6 +105,11 @@ export interface ScrollerCellProps {
 export declare const ScrollerCell: FunctionComponent<ScrollerCellProps>
 
 export interface ScrollerProps extends UseScrollerOptions, ScrollerContainerProps {
+  /** Custom row component */
+  RowComponent?: FunctionComponent;
+  /** Props to pass to RowComponent */
+  rowComponentProps?: Object;
+  /** Cell component */
   CellComponent: FunctionComponent;
 }
 

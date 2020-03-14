@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { loadPage } from './utils';
 import Scroller from './';
-import classes from './Scroller-stories.module.sass';
+import './styles.stories.css';
 
 export const generateRandomSizes = (count, start, end) => [...new Array(count).keys()].map(() => getRandomInt(start, end));
 
@@ -50,7 +50,7 @@ const columnsSizes = generateRandomSizes(gridValue[0].length, 80, 250);
 
 const GridCellComponent = ({ value, style }) => {
   return (
-    <div className={classes.cell} style={style}>
+    <div className="cell" style={style}>
       {value || 'Loading...'}
     </div>
   )
@@ -100,6 +100,7 @@ export const syncGridWithDefaultSizes = props => (
       value={gridValue}
       height="100vh"
       overscroll={2}
+      rowComponentProps={{ className: 'row' }}
       {...props} />
 );
 
@@ -114,6 +115,7 @@ export const syncGridWithCustomSizes = props => (
       value={gridValue}
       height="100vh"
       overscroll={2}
+      rowComponentProps={{ className: 'row' }}
       {...props} />
 );
 

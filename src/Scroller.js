@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { useScroller, ScrollerContainer, ScrollerCell } from './';
 
 const defaultArray = [];
 
-const Scroller = inputProps => {
+const Scroller = forwardRef((inputProps, ref) => {
 
-  const scrollerProps = useScroller(inputProps);
+  const scrollerProps = useScroller({ ...inputProps, scrollerContainerRef: ref });
 
   const props = {
     ...inputProps,
@@ -27,7 +27,9 @@ const Scroller = inputProps => {
     defaultColumnWidth,
     value,
     CellComponent,
-    RowComponent = 'div'
+    RowComponent = 'div',
+    rowComponentProps,
+    OutsideComponent
   } = props;
 
   const elements = visibleRowsIndexes.map(rowIndex => {
@@ -36,7 +38,7 @@ const Scroller = inputProps => {
         return <ScrollerCell Component={CellComponent} key={`${rowIndex}-${columnIndex}`} rowIndex={rowIndex} columnIndex={columnIndex} />;
       });
       return (
-        <RowComponent key={rowIndex} style={{ display: 'flex' }}>
+        <RowComponent key={rowIndex} {...rowComponentProps}>
           {columnsElements}
         </RowComponent>
       );
@@ -55,14 +57,14 @@ const Scroller = inputProps => {
         defaultColumnWidth={defaultColumnWidth}
         onScroll={onScroll}
         width={width}
-        height={height}>
-      <div style={scrollAreaStyle}>
-        <div style={visibleAreaStyle}>
-          {elements}
-        </div>
-      </div>
+        height={height}
+        scrollAreaStyle={scrollAreaStyle}
+        visibleAreaStyle={visibleAreaStyle}
+        OutsideComponent={OutsideComponent}
+        externalComponentProps={{ visibleRowsIndexes, visibleColumnsIndexes }}>
+      {elements}
     </ScrollerContainer>
   )
-};
+});
 
 export default Scroller;

@@ -147,7 +147,7 @@
 						<tr>
 							<td>totalColumns</td>
 							<td>number</td>
-							<td>yes</td>
+							<td>Yes</td>
 							<td>Total number of columns</td>
 						</tr>
 						<tr>
@@ -159,49 +159,55 @@
 						<tr>
 							<td>defaultColumnWidth</td>
 							<td>number</td>
-							<td>yes</td>
+							<td>Yes</td>
 							<td>Default width of scroller cell</td>
 						</tr>
 						<tr>
 							<td>rowsSizes</td>
 							<td>number[]</td>
-							<td>yes</td>
+							<td>Yes</td>
 							<td>Array of scroller cell heights</td>
 						</tr>
 						<tr>
 							<td>columnsSizes</td>
 							<td>number[]</td>
-							<td>yes</td>
+							<td>Yes</td>
 							<td>Array of scroller cell widths</td>
 						</tr>
 						<tr>
 							<td>width</td>
 							<td>number, string</td>
-							<td>yes</td>
+							<td>Yes</td>
 							<td>Scroller container width. Could be any valid css string</td>
 						</tr>
 						<tr>
 							<td>height</td>
 							<td>number, string</td>
-							<td>yes</td>
+							<td></td>
 							<td>Scroller container height. Could be any valid css string</td>
+						</tr>
+						<tr>
+							<td>onScroll</td>
+							<td>Callback</td>
+							<td>Yes</td>
+							<td>On scroll callback</td>
 						</tr>
 						<tr>
 							<td>overscroll</td>
 							<td>number</td>
-							<td>yes</td>
+							<td>Yes</td>
 							<td>Number of elements which should be rendered out of visible scroller container</td>
 						</tr>
 						<tr>
 							<td>lazy</td>
 							<td>boolean</td>
-							<td>yes</td>
+							<td>Yes</td>
 							<td>If set to true than scroll container will be expanded only when reached end scroll threshold</td>
 						</tr>
 						<tr>
 							<td>RowComponent</td>
 							<td>React component</td>
-							<td>yes</td>
+							<td>Yes</td>
 							<td>Custom row component for grid rows. Default is div.</td>
 						</tr>
 						<tr>
@@ -209,6 +215,12 @@
 							<td>React component</td>
 							<td></td>
 							<td>Cell component which will be rendered as scroller cell</td>
+						</tr>
+						<tr>
+							<td>OutsideComponent</td>
+							<td>React component</td>
+							<td>Yes</td>
+							<td>Component which will be rendered outside of visible values</td>
 						</tr>
 				</tbody></table>
 				<a href="#custom-scroller-component" id="custom-scroller-component" style="color: inherit; text-decoration: none;">
