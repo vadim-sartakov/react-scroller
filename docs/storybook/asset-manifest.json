@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/vadim-sartakov/react-scrollerstatic/css/main.fb63d700.chunk.css",
-    "main.js": "/vadim-sartakov/react-scrollermain.dde4f06e7d52ff13c3ec.bundle.js",
-    "main.css.map": "/vadim-sartakov/react-scrollerstatic/css/main.fb63d700.chunk.css.map",
-    "main.js.map": "/vadim-sartakov/react-scrollermain.dde4f06e7d52ff13c3ec.bundle.js.map",
-    "runtime~main.js": "/vadim-sartakov/react-scrollerruntime~main.dde4f06e7d52ff13c3ec.bundle.js",
-    "runtime~main.js.map": "/vadim-sartakov/react-scrollerruntime~main.dde4f06e7d52ff13c3ec.bundle.js.map",
-    "vendors~main.js": "/vadim-sartakov/react-scrollervendors~main.dde4f06e7d52ff13c3ec.bundle.js",
-    "vendors~main.js.map": "/vadim-sartakov/react-scrollervendors~main.dde4f06e7d52ff13c3ec.bundle.js.map",
+    "main.css": "/vadim-sartakov/react-scrollerstatic/css/main.5f2b3a9e.chunk.css",
+    "main.js": "/vadim-sartakov/react-scrollermain.42dd88fae31b844ca17a.bundle.js",
+    "main.css.map": "/vadim-sartakov/react-scrollerstatic/css/main.5f2b3a9e.chunk.css.map",
+    "main.js.map": "/vadim-sartakov/react-scrollermain.42dd88fae31b844ca17a.bundle.js.map",
+    "runtime~main.js": "/vadim-sartakov/react-scrollerruntime~main.42dd88fae31b844ca17a.bundle.js",
+    "runtime~main.js.map": "/vadim-sartakov/react-scrollerruntime~main.42dd88fae31b844ca17a.bundle.js.map",
+    "vendors~main.js": "/vadim-sartakov/react-scrollervendors~main.42dd88fae31b844ca17a.bundle.js",
+    "vendors~main.js.map": "/vadim-sartakov/react-scrollervendors~main.42dd88fae31b844ca17a.bundle.js.map",
     "iframe.html": "/vadim-sartakov/react-scrolleriframe.html",
-    "precache-manifest.c0bc2501b50e00bc48e5547a7e56566d.js": "/vadim-sartakov/react-scrollerprecache-manifest.c0bc2501b50e00bc48e5547a7e56566d.js",
+    "precache-manifest.23503cb9eda27eba930da677a477c1c4.js": "/vadim-sartakov/react-scrollerprecache-manifest.23503cb9eda27eba930da677a477c1c4.js",
     "service-worker.js": "/vadim-sartakov/react-scrollerservice-worker.js",
-    "vendors~main.dde4f06e7d52ff13c3ec.bundle.js.LICENSE.txt": "/vadim-sartakov/react-scrollervendors~main.dde4f06e7d52ff13c3ec.bundle.js.LICENSE.txt"
+    "vendors~main.42dd88fae31b844ca17a.bundle.js.LICENSE.txt": "/vadim-sartakov/react-scrollervendors~main.42dd88fae31b844ca17a.bundle.js.LICENSE.txt"
   },
   "entrypoints": [
-    "runtime~main.dde4f06e7d52ff13c3ec.bundle.js",
-    "vendors~main.dde4f06e7d52ff13c3ec.bundle.js",
-    "static/css/main.fb63d700.chunk.css",
-    "main.dde4f06e7d52ff13c3ec.bundle.js"
+    "runtime~main.42dd88fae31b844ca17a.bundle.js",
+    "vendors~main.42dd88fae31b844ca17a.bundle.js",
+    "static/css/main.5f2b3a9e.chunk.css",
+    "main.42dd88fae31b844ca17a.bundle.js"
   ]
 }

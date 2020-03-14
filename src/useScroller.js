@@ -61,16 +61,46 @@ const useScroller = ({
   prevColumnsScrollData.current = { ...columnsScrollData };
 
   useEffect(function observeContainerResize() {
-    // Do not recalculate if width is specified explicitly by prop
-    if (width) return;
-    const scrollerContainerRect = scrollerContainerRef.current.getBoundingClientRect();
-    setContainerSizes({ width: scrollerContainerRect.width, height: scrollerContainerRect.height });
-  }, [width, scrollerContainerRef, getColumnsScrollData]);
+    // Do not recalculate if sizes specified explicitly as numbers by props
+    if (typeof width === 'number' && typeof height === 'number') return;
+
+    const updateContainerSize = () => {
+      const scrollerContainerRect = scrollerContainerRef.current.getBoundingClientRect();
+      setContainerSizes(containerSizes => {
+        return containerSizes.width === scrollerContainerRect.width && containerSizes.height === scrollerContainerRect.height ?
+            containerSizes : { width: scrollerContainerRect.width, height: scrollerContainerRect.height }
+      });
+    };
+
+    const mutationCallback = (mutations, observer) => {
+      const changedScrollerItems = mutations.some(mutation => scrollerContainerRef.current.contains(mutation.target));
+      if (!changedScrollerItems) updateContainerSize();
+    };
+
+    const resizeCallback = () => updateContainerSize();
+
+    const observer = new MutationObserver(mutationCallback);
+    observer.observe(document.body, { attributes: true, childList: true, subtree: true });
+    window.addEventListener('resize', resizeCallback);
+
+    // Initial update
+    updateContainerSize();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', resizeCallback);
+    };
+  }, [width, height, scrollerContainerRef, getColumnsScrollData]);
 
   useEffect(function updateScrollDataOnContainerSizeChange() {
-    const columnsScrollData = getColumnsScrollData(scrollerContainerRef.current.scrollLeft);
-    setColumnsScrollData(columnsScrollData);
-  }, [scrollerContainerRef, containerSizes, getColumnsScrollData]);
+    if (typeof width !== 'number') {
+      const columnsScrollData = getColumnsScrollData(scrollerContainerRef.current.scrollLeft);
+      setColumnsScrollData(columnsScrollData);
+    }
+    if (typeof height !== 'number') {
+      const rowsScrollData = getRowsScrollData(scrollerContainerRef.current.scrollTop);
+      setRowsScrollData(rowsScrollData);
+    }
+  }, [width, height, scrollerContainerRef, containerSizes, getColumnsScrollData, getRowsScrollData]);
 
   const prevScrollTop = useRef(0);
   const prevScrollLeft = useRef(0);

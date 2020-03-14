@@ -8,6 +8,10 @@ Live examples available [here](https://vadim-sartakov.github.io/react-scroller/s
 
 Documentation available [here](https://vadim-sartakov.github.io/react-scroller/docs/).
 
+## Features
+- Rendering only visible subset of data;
+- Automatic scroll container resize;
+
 ## Scrollable list
 ```javascript
 import Scroller from '@vadim-sartakov/react-scroller';
@@ -27,7 +31,7 @@ const element = (
       defaultRowHeight={40}
       totalRows={listValue.length}
       value={listValue}
-      height={600}
+      height="100vh"
       overscroll={2}
       {...props} />
 );
@@ -45,8 +49,8 @@ const element = (
       totalRows={gridValue.length}
       totalColumns={gridValue[0].length}
       value={gridValue}
-      width={800}
-      height={600}
+      width="100%"
+      height="100vh"
       overscroll={2}
       {...props} />
 );
@@ -56,19 +60,19 @@ const element = (
 
 |Prop|Type|Optional|Description
 |---|---|---|---
-|value|any[]|false|Array of values
-|totalRows|number|false|Total number of rows
-|totalColumns|number|true|Total number of columns
-|defaultRowHeight|number|false|Default height of scroller cell
-|defaultColumnWidth|number|true|Default width of scroller cell
-|rowsSizes|number[]|true|Array of scroller cell heights
-|columnsSizes|number[]|true|Array of scroller cell widths
-|width|number|true|Scroller container width
-|height|number|false|Scroller container height
-|overscroll|number|false|Number of elements which should be rendered out of visible scroller container
-|lazy|boolean|false|If set to true than scroll container will be expanded only when reached end scroll threshold
-|RowComponent|React component|true|Custom row component for grid rows. Default is div.
-|CellComponent|React component|false|Cell component which will be rendered as scroller cell
+|value|any[]||Array of values
+|totalRows|number||Total number of rows
+|totalColumns|number|yes|Total number of columns
+|defaultRowHeight|number||Default height of scroller cell
+|defaultColumnWidth|number|yes|Default width of scroller cell
+|rowsSizes|number[]|yes|Array of scroller cell heights
+|columnsSizes|number[]|yes|Array of scroller cell widths
+|width|number, string|yes|Scroller container width. Could be any valid css string
+|height|number, string|yes|Scroller container height. Could be any valid css string
+|overscroll|number|yes|Number of elements which should be rendered out of visible scroller container
+|lazy|boolean|yes|If set to true than scroll container will be expanded only when reached end scroll threshold
+|RowComponent|React component|yes|Custom row component for grid rows. Default is div.
+|CellComponent|React component||Cell component which will be rendered as scroller cell
 
 ## Custom scroller component
 
@@ -103,7 +107,7 @@ const element = (
   <ListScroller
       value={listValue}
       defaultRowHeight={50}
-      height={600}
+      height="100vh"
       totalRows={listValue.length} />
 );
 

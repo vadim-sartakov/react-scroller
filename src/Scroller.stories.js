@@ -75,7 +75,7 @@ export const syncListWithDefaultSizes = props => (
       defaultRowHeight={40}
       totalRows={gridValue.length}
       value={listValue}
-      height={600}
+      height="100vh"
       overscroll={2}
       {...props} />
 );
@@ -86,7 +86,7 @@ export const syncListWithCustomSizes = props => (
       totalRows={gridValue.length}
       rowsSizes={rowsSizes}
       value={listValue}
-      height={600}
+      height="100vh"
       overscroll={2}
       {...props} />
 );
@@ -98,7 +98,7 @@ export const syncGridWithDefaultSizes = props => (
       totalRows={gridValue.length}
       totalColumns={gridValue[0].length}
       value={gridValue}
-      height={600}
+      height="100vh"
       overscroll={2}
       {...props} />
 );
@@ -112,7 +112,7 @@ export const syncGridWithCustomSizes = props => (
       totalRows={gridValue.length}
       totalColumns={gridValue[0].length}
       value={gridValue}
-      height={600}
+      height="100vh"
       overscroll={2}
       {...props} />
 );

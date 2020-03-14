@@ -12,10 +12,10 @@ export interface UseScrollerOptions {
   totalColumns?: number;
   rowsSizes: number[];
   columnsSizes: number[];
-  /** Scroll container height */
-  height: number;
-  /** Scroll container width */
-  width?: number;
+  /** Scroll container height. Could be any valid css string */
+  height?: number | string;
+  /** Scroll container width. Could be any valid css string */
+  width?: number | string;
   /**
    * Number of elements which should be rendered out of visible scroller container
    */
