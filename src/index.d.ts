@@ -110,6 +110,8 @@ export interface OutsideComponentProps {
 }
 
 export interface ScrollerProps extends UseScrollerOptions, ScrollerContainerProps {
+  style?: CSSProperties;
+  className?: string;
   /** Custom row component */
   RowComponent?: FunctionComponent;
   /** Props to pass to RowComponent */

@@ -13,6 +13,8 @@ const Scroller = forwardRef((inputProps, ref) => {
   };
 
   const {
+    style,
+    className,
     visibleRowsIndexes,
     visibleColumnsIndexes,
     onScroll,
@@ -50,6 +52,8 @@ const Scroller = forwardRef((inputProps, ref) => {
   return (
     <ScrollerContainer
         ref={scrollerContainerRef}
+        style={style}
+        className={className}
         value={value}
         rowsSizes={rowsSizes}
         columnsSizes={columnsSizes}
