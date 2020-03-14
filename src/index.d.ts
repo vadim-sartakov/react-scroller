@@ -104,6 +104,11 @@ export interface ScrollerCellProps {
 
 export declare const ScrollerCell: FunctionComponent<ScrollerCellProps>
 
+export interface OutsideComponentProps {
+  visibleRowsIndexes: number[];
+  visibleColumnsIndexes: number[];
+}
+
 export interface ScrollerProps extends UseScrollerOptions, ScrollerContainerProps {
   /** Custom row component */
   RowComponent?: FunctionComponent;
@@ -111,6 +116,7 @@ export interface ScrollerProps extends UseScrollerOptions, ScrollerContainerProp
   rowComponentProps?: Object;
   /** Cell component */
   CellComponent: FunctionComponent;
+  OutsideComponent?: FunctionComponent<OutsideComponentProps>;
 }
 
 declare const Scroller: FunctionComponent<ScrollerProps>
