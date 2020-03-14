@@ -68,7 +68,7 @@ const element = (
 |rowsSizes|number[]|yes|Array of scroller cell heights
 |columnsSizes|number[]|yes|Array of scroller cell widths
 |width|number, string|yes|Scroller container width. Could be any valid css string
-|height|number, string|yes|Scroller container height. Could be any valid css string
+|height|number, string||Scroller container height. Could be any valid css string
 |overscroll|number|yes|Number of elements which should be rendered out of visible scroller container
 |lazy|boolean|yes|If set to true than scroll container will be expanded only when reached end scroll threshold
 |RowComponent|React component|yes|Custom row component for grid rows. Default is div.

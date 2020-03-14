@@ -13,7 +13,7 @@ export interface UseScrollerOptions {
   rowsSizes: number[];
   columnsSizes: number[];
   /** Scroll container height. Could be any valid css string */
-  height?: number | string;
+  height: number | string;
   /** Scroll container width. Could be any valid css string */
   width?: number | string;
   /**
