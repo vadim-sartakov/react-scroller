@@ -118,6 +118,8 @@ export interface ScrollerProps extends UseScrollerOptions, ScrollerContainerProp
   rowComponentProps?: Object;
   /** Cell component */
   CellComponent: FunctionComponent;
+  /** Props to pass to CellComponent */
+  cellComponentProps: Object;
   OutsideComponent?: FunctionComponent<OutsideComponentProps>;
 }
 

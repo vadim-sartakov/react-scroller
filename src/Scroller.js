@@ -29,6 +29,7 @@ const Scroller = forwardRef((inputProps, ref) => {
     defaultColumnWidth,
     value,
     CellComponent,
+    cellComponentProps,
     RowComponent = 'div',
     rowComponentProps,
     OutsideComponent
@@ -37,7 +38,7 @@ const Scroller = forwardRef((inputProps, ref) => {
   const elements = visibleRowsIndexes.map(rowIndex => {
     if (visibleColumnsIndexes) {
       const columnsElements = visibleColumnsIndexes.map(columnIndex => {
-        return <ScrollerCell Component={CellComponent} key={`${rowIndex}-${columnIndex}`} rowIndex={rowIndex} columnIndex={columnIndex} />;
+        return <ScrollerCell Component={CellComponent} key={`${rowIndex}-${columnIndex}`} rowIndex={rowIndex} columnIndex={columnIndex} {...cellComponentProps} />;
       });
       return (
         <RowComponent key={rowIndex} {...rowComponentProps}>
@@ -45,7 +46,7 @@ const Scroller = forwardRef((inputProps, ref) => {
         </RowComponent>
       );
     } else {
-      return <ScrollerCell Component={CellComponent} key={rowIndex} rowIndex={rowIndex} />;
+      return <ScrollerCell Component={CellComponent} key={rowIndex} rowIndex={rowIndex} {...cellComponentProps} />;
     }
   });
 
