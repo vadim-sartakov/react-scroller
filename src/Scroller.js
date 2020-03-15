@@ -30,7 +30,6 @@ const Scroller = forwardRef((inputProps, ref) => {
     value,
     CellComponent,
     cellComponentProps,
-    staticContainer,
     RowComponent = 'div',
     rowComponentProps
   } = props;
@@ -63,13 +62,11 @@ const Scroller = forwardRef((inputProps, ref) => {
         onScroll={onScroll}
         width={width}
         height={height}>
-      {staticContainer ? elements : (
-        <div style={scrollAreaStyle}>
-          <div style={visibleAreaStyle}>
-            {elements}
-          </div>
+      <div style={scrollAreaStyle}>
+        <div style={visibleAreaStyle}>
+          {elements}
         </div>
-      )}
+      </div>
     </ScrollerContainer>
   )
 });

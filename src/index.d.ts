@@ -127,11 +127,6 @@ export interface ScrollerProps extends UseScrollerOptions, ScrollerContainerProp
   CellComponent: FunctionComponent;
   /** Props to pass to CellComponent */
   cellComponentProps: Object;
-  /**
-   * If static then scroller elements will be placed as direct children
-   * of scroller container instead of floating absolute positioned child.
-   */
-  staticContainer?: boolean;
 }
 
 declare const Scroller: FunctionComponent<ScrollerProps>
