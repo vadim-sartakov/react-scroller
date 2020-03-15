@@ -11,6 +11,8 @@ Documentation available [here](https://vadim-sartakov.github.io/react-scroller/d
 ## Features
 - Rendering only visible subset of data;
 - Automatic scroll container resize;
+- Lightweight;
+- Fast
 
 ## Scrollable list
 ```javascript
@@ -73,5 +75,6 @@ const element = (
 |overscroll|number|Yes|Number of elements which should be rendered out of visible scroller container
 |lazy|boolean|Yes|If set to true than scroll container will be expanded only when reached end scroll threshold
 |RowComponent|React component|Yes|Custom row component for grid rows. Default is div.
+|rowComponentProps|Object|Yes|Props to pass to row component
 |CellComponent|React component||Cell component which will be rendered as scroller cell
-|OutsideComponent|React component|Yes|Component which will be rendered outside of visible values
+|cellComponentProps|Object|Yes|Props to pass to cell component

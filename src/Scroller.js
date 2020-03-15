@@ -31,8 +31,7 @@ const Scroller = forwardRef((inputProps, ref) => {
     CellComponent,
     cellComponentProps,
     RowComponent = 'div',
-    rowComponentProps,
-    OutsideComponent
+    rowComponentProps
   } = props;
 
   const elements = visibleRowsIndexes.map(rowIndex => {
@@ -62,12 +61,12 @@ const Scroller = forwardRef((inputProps, ref) => {
         defaultColumnWidth={defaultColumnWidth}
         onScroll={onScroll}
         width={width}
-        height={height}
-        scrollAreaStyle={scrollAreaStyle}
-        visibleAreaStyle={visibleAreaStyle}
-        OutsideComponent={OutsideComponent}
-        externalComponentProps={{ visibleRowsIndexes, visibleColumnsIndexes }}>
-      {elements}
+        height={height}>
+      <div style={scrollAreaStyle}>
+        <div style={visibleAreaStyle}>
+          {elements}
+        </div>
+      </div>
     </ScrollerContainer>
   )
 });

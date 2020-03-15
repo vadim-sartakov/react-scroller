@@ -93,12 +93,6 @@ export interface ScrollerContainerProps {
   style?: CSSProperties;
   className?: string;
   onScroll: UIEventHandler;
-  scrollAreaStyle: CSSProperties;
-  visibleAreaStyle: CSSProperties;
-  /** Component which will be rendered outside of visible area */
-  OutsideComponent: FunctionComponent;
-  /** Props that will be passed to OutsideComponent */
-  outsideComponentProps: Object;
 }
 
 export declare const ScrollerContainer: FunctionComponent<ScrollerContainerProps>
@@ -133,7 +127,6 @@ export interface ScrollerProps extends UseScrollerOptions, ScrollerContainerProp
   CellComponent: FunctionComponent;
   /** Props to pass to CellComponent */
   cellComponentProps: Object;
-  OutsideComponent?: FunctionComponent<OutsideComponentProps>;
 }
 
 declare const Scroller: FunctionComponent<ScrollerProps>

@@ -77,6 +77,8 @@
 				<ul>
 					<li>Rendering only visible subset of data;</li>
 					<li>Automatic scroll container resize;</li>
+					<li>Lightweight;</li>
+					<li>Fast</li>
 				</ul>
 				<a href="#scrollable-list" id="scrollable-list" style="color: inherit; text-decoration: none;">
 					<h2>Scrollable list</h2>
@@ -211,16 +213,22 @@
 							<td>Custom row component for grid rows. Default is div.</td>
 						</tr>
 						<tr>
+							<td>rowComponentProps</td>
+							<td>Object</td>
+							<td>Yes</td>
+							<td>Props to pass to row component</td>
+						</tr>
+						<tr>
 							<td>CellComponent</td>
 							<td>React component</td>
 							<td></td>
 							<td>Cell component which will be rendered as scroller cell</td>
 						</tr>
 						<tr>
-							<td>OutsideComponent</td>
-							<td>React component</td>
+							<td>cellComponentProps</td>
+							<td>Object</td>
 							<td>Yes</td>
-							<td>Component which will be rendered outside of visible values</td>
+							<td>Props to pass to cell component</td>
 						</tr>
 				</tbody></table>
 			</div>
