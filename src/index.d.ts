@@ -1,4 +1,9 @@
-import { FunctionComponent, Context, MutableRefObject, UIEventHandler, CSSProperties } from 'react';
+import { Dispatch, SetStateAction, FunctionComponent, Context, MutableRefObject, UIEventHandler, CSSProperties } from 'react';
+
+export interface ScrollData {
+  offset: number;
+  visibleIndexes: number[]
+}
 
 export interface Cell {
   row: number;
@@ -34,6 +39,14 @@ export interface UseScrollerOptions {
    * If not specified, then local ref object will be created and returned as hook result
    */
   scrollerContainerRef?: MutableRefObject<Element>;
+  /** Controllable rows scroll data value */
+  rowsScrollData?: ScrollData;
+  /** Controllable rows scroll data change callback */
+  onRowsScrollDataChange?: Dispatch<SetStateAction<ScrollData>>;
+  /** Controllable columns scroll data value */
+  columnsScrollData?: ScrollData;
+  /** Controllable columns scroll data change callback */
+  onColumnsScrollDataChange?: Dispatch<SetStateAction<ScrollData>>;
 }
 
 export interface UseScrollerResult {

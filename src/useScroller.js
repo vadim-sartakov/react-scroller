@@ -22,7 +22,11 @@ const useScroller = ({
   onScroll,
   overscroll = 0,
   focusedCell,
-  scrollerContainerRef: scrollerContainerRefProp
+  scrollerContainerRef: scrollerContainerRefProp,
+  rowsScrollData: rowsScrollDataProp,
+  onRowsScrollDataChange: onRowsScrollDataChangeProp,
+  columnsScrollData: columnsScrollDataProp,
+  onColumnsScrollDataChange: onColumnsScrollDataChangeProp
 }) => {
   const scrollerContainerRefLocal = useRef();
   const scrollerContainerRef = scrollerContainerRefProp || scrollerContainerRefLocal;
@@ -43,7 +47,9 @@ const useScroller = ({
     }
   }, [containerSizes.width, columnsSizes, defaultColumnWidth, overscroll, totalColumns]);
 
-  const [columnsScrollData, setColumnsScrollData] = useState(getColumnsScrollData(0));
+  const [columnsScrollDataState, setColumnsScrollDataState] = useState(getColumnsScrollData(0));
+  const columnsScrollData = columnsScrollDataProp || columnsScrollDataState;
+  const onColumnsScrollDataChange = onColumnsScrollDataChangeProp || setColumnsScrollDataState;
 
   const getRowsScrollData = useCallback(scroll => {
     const containerSize = containerSizes.height;
@@ -54,7 +60,9 @@ const useScroller = ({
     }
   }, [containerSizes.height, defaultRowHeight, overscroll, rowsSizes, totalRows]);
 
-  const [rowsScrollData, setRowsScrollData] = useState(getRowsScrollData(0));
+  const [rowsScrollDataState, setRowsScrollDataState] = useState(getRowsScrollData(0));
+  const rowsScrollData = rowsScrollDataProp || rowsScrollDataState;
+  const onRowsScrollDataChange = onRowsScrollDataChangeProp || setRowsScrollDataState;
 
   const prevRowsScrollData = useRef();
   const prevColumnsScrollData = useRef();
@@ -95,13 +103,13 @@ const useScroller = ({
   useEffect(function updateScrollDataOnContainerSizeChange() {
     if (typeof width !== 'number') {
       const columnsScrollData = getColumnsScrollData(scrollerContainerRef.current.scrollLeft);
-      setColumnsScrollData(columnsScrollData);
+      onColumnsScrollDataChange(columnsScrollData);
     }
     if (typeof height !== 'number') {
       const rowsScrollData = getRowsScrollData(scrollerContainerRef.current.scrollTop);
-      setRowsScrollData(rowsScrollData);
+      onRowsScrollDataChange(rowsScrollData);
     }
-  }, [width, height, scrollerContainerRef, containerSizes, getColumnsScrollData, getRowsScrollData]);
+  }, [onColumnsScrollDataChange, onRowsScrollDataChange, width, height, scrollerContainerRef, containerSizes, getColumnsScrollData, getRowsScrollData]);
 
   const prevScrollTop = useRef(0);
   const prevScrollLeft = useRef(0);
@@ -129,7 +137,7 @@ const useScroller = ({
           overscroll
         });
       }
-      setColumnsScrollData(nextColumnsScrollData);
+      onColumnsScrollDataChange(nextColumnsScrollData);
     }
     
     if (rowsSizes.length) {
@@ -152,13 +160,15 @@ const useScroller = ({
         overscroll
       });
     }
-    setRowsScrollData(nextRowsScrollData);
+    onRowsScrollDataChange(nextRowsScrollData);
 
     prevScrollTop.current = e.target.scrollTop;
     prevScrollLeft.current = e.target.scrollLeft;
 
     if (onScroll) onScroll(e);
   }, [
+    onColumnsScrollDataChange,
+    onRowsScrollDataChange,
     containerSizes.height,
     containerSizes.width,
     columnsSizes,
