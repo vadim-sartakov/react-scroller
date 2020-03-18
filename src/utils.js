@@ -150,6 +150,8 @@ function findLastIndex({ targetScroll, offset, firstIndex, sizes, totalCount, de
     if (curOffset >= targetScroll + containerSize) lastIndex = curIndex;
     curIndex++;
   }
+  // Assuming we reached a last element
+  if (lastIndex === undefined) lastIndex = totalCount - 1;
   lastIndex = applyEndOverscroll(lastIndex, totalCount, overscroll);
   return lastIndex;
 };

@@ -80,7 +80,7 @@ export const syncListWithDefaultSizes = props => (
       {...props} />
 );
 
-export const syncListWithCustomSizes = props => (
+export const syncListWithRandomSizes = props => (
   <ListTestComponent
       defaultRowHeight={40}
       totalRows={gridValue.length}
@@ -104,7 +104,7 @@ export const syncGridWithDefaultSizes = props => (
       {...props} />
 );
 
-export const syncGridWithCustomSizes = props => (
+export const syncGridWithRandomSizes = props => (
   <GridTestComponent
       defaultRowHeight={40}
       defaultColumnWidth={150}
@@ -121,6 +121,6 @@ export const syncGridWithCustomSizes = props => (
 
 storiesOf('Scroller', module)
   .add('sync list with default row sizes', syncListWithDefaultSizes)
-  .add('sync list with custom row sizes', syncListWithCustomSizes)
+  .add('sync list with random row sizes', syncListWithRandomSizes)
   .add('sync grid with default sizes', syncGridWithDefaultSizes)
-  .add('sync grid with custom sizes', syncGridWithCustomSizes);
+  .add('sync grid with random sizes', syncGridWithRandomSizes);

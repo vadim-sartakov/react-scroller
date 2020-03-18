@@ -5,10 +5,10 @@ import {
   shiftScroll
 } from './utils';
 
-//             0   20  50  100 180 200 210  offsets
-//             20  50  100 180 200 210 260  scroll
+//             0   20  50  100 180 200 210 260 350 390 offsets
+//             20  50  100 180 200 210 260 350 390 420 scroll
 const sizes = [20, 30, 50, 80, 20, 10, 50, 90, 40, 30];  // 420 - total size
-//             0   1   2   3   4   5   6    index
+//             0   1   2   3   4   5   6   7   8   9  index
 
 describe('Scroller utils', () => {
   
@@ -66,6 +66,14 @@ describe('Scroller utils', () => {
       });
     });
 
+    it('should return last visible indexes when overscrolled', () => {
+      const result = getScrollDataWithDefaultSize({ containerSize: 50, defaultSize: 10, scroll: 80, totalCount: 10 });
+      expect(result).toEqual({
+        offset: 80,
+        visibleIndexes: [8, 9]
+      });
+    });
+
   });
 
   describe('getScrollDataWithCustomSizes', () => {
@@ -98,6 +106,14 @@ describe('Scroller utils', () => {
       expect(result).toEqual({
         offset: 20,
         visibleIndexes: [1, 2, 3, 4, 5, 6, 7, 8]
+      });
+    });
+
+    it('should return last visible indexes when overscrolled', () => {
+      const result = getScrollDataWithCustomSizes({ sizes, containerSize: 50, defaultSize: 10, scroll: 389, totalCount: 10 });
+      expect(result).toEqual({
+        offset: 350,
+        visibleIndexes: [8, 9]
       });
     });
   });

@@ -35,7 +35,10 @@ const useScroller = ({
 
   }, [focusedCell]);
 
-  const [containerSizes, setContainerSizes] = useState({ width, height });
+  const [containerSizes, setContainerSizes] = useState({
+    width: typeof width === 'number' ? width : 800,
+    height: typeof height === 'number' ? height: 600
+  });
 
   const getColumnsScrollData = useCallback(scroll => {
     if (!totalColumns) return;
