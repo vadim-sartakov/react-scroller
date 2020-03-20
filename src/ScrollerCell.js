@@ -14,7 +14,7 @@ const ScrollerCell = React.memo(forwardRef(({
   const nextStyle = { ...style, height, width };
   const rowValue = value[rowIndex];
   const cellValue = columnIndex !== undefined && rowValue && rowValue[columnIndex];
-  return <Component ref={ref} style={nextStyle} value={cellValue || rowValue} {...props} />;
+  return <Component ref={ref} style={nextStyle} value={cellValue || rowValue} rowIndex={rowIndex} columnIndex={columnIndex} {...props} />;
 }));
 
 export default ScrollerCell;

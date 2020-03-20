@@ -100,6 +100,8 @@ export declare const ScrollerContainer: FunctionComponent<ScrollerContainerProps
 export interface ScrollerCellComponentProps {
   style: { width: number; height: number };
   value: any;
+  rowIndex: number;
+  columnIndex: number;
 }
 
 export interface ScrollerCellProps {
