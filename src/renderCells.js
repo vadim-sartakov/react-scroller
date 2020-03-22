@@ -4,7 +4,7 @@ import ScrollerCell from './ScrollerCell';
 function renderCells({
   visibleRowsIndexes,
   visibleColumnsIndexes,
-  RowComponent,
+  RowComponent = 'div',
   rowComponentProps,
   CellComponent,
   cellComponentProps

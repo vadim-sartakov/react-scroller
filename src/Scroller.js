@@ -38,7 +38,7 @@ const Scroller = forwardRef((inputProps, ref) => {
     value,
     CellComponent,
     cellComponentProps,
-    RowComponent = 'div',
+    RowComponent,
     rowComponentProps,
     totalRows,
     totalColumns,
