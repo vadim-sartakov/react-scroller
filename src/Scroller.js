@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { useScroller, ScrollerContainer, ScrollerCell } from './';
+import { useScroller, ScrollerContainer } from './';
+import renderCells from './renderCells';
 
 const defaultArray = [];
 
@@ -31,22 +32,21 @@ const Scroller = forwardRef((inputProps, ref) => {
     CellComponent,
     cellComponentProps,
     RowComponent = 'div',
-    rowComponentProps
+    rowComponentProps,
+    totalRows,
+    totalColumns,
+    OuterComponent,
+    outerComponentProps,
+    ...restProps
   } = props;
 
-  const elements = visibleRowsIndexes.map(rowIndex => {
-    if (visibleColumnsIndexes) {
-      const columnsElements = visibleColumnsIndexes.map(columnIndex => {
-        return <ScrollerCell Component={CellComponent} key={`${rowIndex}-${columnIndex}`} rowIndex={rowIndex} columnIndex={columnIndex} {...cellComponentProps} />;
-      });
-      return (
-        <RowComponent key={rowIndex} {...rowComponentProps}>
-          {columnsElements}
-        </RowComponent>
-      );
-    } else {
-      return <ScrollerCell Component={CellComponent} key={rowIndex} rowIndex={rowIndex} {...cellComponentProps} />;
-    }
+  const elements = renderCells({
+    visibleRowsIndexes,
+    visibleColumnsIndexes,
+    RowComponent,
+    rowComponentProps,
+    CellComponent,
+    cellComponentProps
   });
 
   return (
@@ -61,12 +61,14 @@ const Scroller = forwardRef((inputProps, ref) => {
         defaultColumnWidth={defaultColumnWidth}
         onScroll={onScroll}
         width={width}
-        height={height}>
+        height={height}
+        {...restProps}>
       <div style={scrollAreaStyle}>
         <div style={visibleAreaStyle}>
           {elements}
         </div>
       </div>
+      {OuterComponent && <OuterComponent {...outerComponentProps} />}
     </ScrollerContainer>
   )
 });

@@ -1,4 +1,14 @@
-import { Dispatch, SetStateAction, FunctionComponent, Context, MutableRefObject, UIEventHandler, CSSProperties } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  FunctionComponent,
+  Context,
+  MutableRefObject,
+  UIEventHandler,
+  CSSProperties,
+  HTMLAttributes,
+  ReactElement
+} from 'react';
 
 export interface ScrollData {
   offset: number;
@@ -82,7 +92,7 @@ export interface ScrollerContextProps {
 
 export declare const ScrollerContext: Context<ScrollerContextProps>
 
-export interface ScrollerContainerProps {
+export interface ScrollerContainerProps extends HTMLAttributes {
   value: any[];
   width?: number;
   height: number;
@@ -90,8 +100,6 @@ export interface ScrollerContainerProps {
   defaultColumnWidth: number;
   rowsSizes: number[];
   columnsSizes?: number[];
-  style?: CSSProperties;
-  className?: string;
   onScroll: UIEventHandler;
 }
 
@@ -118,9 +126,9 @@ export interface OutsideComponentProps {
   visibleColumnsIndexes: number[];
 }
 
-export interface ScrollerProps extends UseScrollerOptions, ScrollerContainerProps {
-  style?: CSSProperties;
-  className?: string;
+export interface RenderCellsOptions {
+  visibleRowsIndexes: number[];
+  visibleColumnsIndexes: number[];
   /** Custom row component */
   RowComponent?: FunctionComponent;
   /** Props to pass to RowComponent */
@@ -129,6 +137,15 @@ export interface ScrollerProps extends UseScrollerOptions, ScrollerContainerProp
   CellComponent: FunctionComponent;
   /** Props to pass to CellComponent */
   cellComponentProps: Object;
+}
+
+export declare function renderCells(options: RenderCellsOptions): ReactElement;
+
+export interface ScrollerProps extends HTMLAttributes, UseScrollerOptions, ScrollerContainerProps, RenderCellsOptions {
+  /** Component to render on scroller container level outside of floating visible items */
+  OuterComponent?: FunctionComponent;
+  /** Props to pass to OuterComponent */
+  outerComponentProps?: Object;
 }
 
 declare const Scroller: FunctionComponent<ScrollerProps>

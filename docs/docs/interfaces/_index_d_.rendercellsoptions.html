@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ScrollData | @vadim-sartakov/react-scroller</title>
+	<title>RenderCellsOptions | @vadim-sartakov/react-scroller</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../modules/_index_d_.html">&quot;index.d&quot;</a>
 				</li>
 				<li>
-					<a href="_index_d_.scrolldata.html">ScrollData</a>
+					<a href="_index_d_.rendercellsoptions.html">RenderCellsOptions</a>
 				</li>
 			</ul>
-			<h1>Interface ScrollData</h1>
+			<h1>Interface RenderCellsOptions</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ScrollData</span>
+						<span class="target">RenderCellsOptions</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="_index_d_.scrollerprops.html" class="tsd-signature-type">ScrollerProps</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -82,8 +87,12 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.scrolldata.html#offset" class="tsd-kind-icon">offset</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.scrolldata.html#visibleindexes" class="tsd-kind-icon">visible<wbr>Indexes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.rendercellsoptions.html#cellcomponent" class="tsd-kind-icon">Cell<wbr>Component</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.rendercellsoptions.html#rowcomponent" class="tsd-kind-icon">Row<wbr>Component</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.rendercellsoptions.html#cellcomponentprops" class="tsd-kind-icon">cell<wbr>Component<wbr>Props</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.rendercellsoptions.html#rowcomponentprops" class="tsd-kind-icon">row<wbr>Component<wbr>Props</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.rendercellsoptions.html#visiblecolumnsindexes" class="tsd-kind-icon">visible<wbr>Columns<wbr>Indexes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_d_.rendercellsoptions.html#visiblerowsindexes" class="tsd-kind-icon">visible<wbr>Rows<wbr>Indexes</a></li>
 							</ul>
 						</section>
 					</div>
@@ -92,22 +101,82 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="offset" class="tsd-anchor"></a>
-					<h3>offset</h3>
-					<div class="tsd-signature tsd-kind-icon">offset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="cellcomponent" class="tsd-anchor"></a>
+					<h3>Cell<wbr>Component</h3>
+					<div class="tsd-signature tsd-kind-icon">Cell<wbr>Component<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FunctionComponent</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/3500700/src/index.d.ts#L14">index.d.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/3500700/src/index.d.ts#L137">index.d.ts:137</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Cell component</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="rowcomponent" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> Row<wbr>Component</h3>
+					<div class="tsd-signature tsd-kind-icon">Row<wbr>Component<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FunctionComponent</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/3500700/src/index.d.ts#L133">index.d.ts:133</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Custom row component</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="cellcomponentprops" class="tsd-anchor"></a>
+					<h3>cell<wbr>Component<wbr>Props</h3>
+					<div class="tsd-signature tsd-kind-icon">cell<wbr>Component<wbr>Props<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/3500700/src/index.d.ts#L139">index.d.ts:139</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Props to pass to CellComponent</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="rowcomponentprops" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> row<wbr>Component<wbr>Props</h3>
+					<div class="tsd-signature tsd-kind-icon">row<wbr>Component<wbr>Props<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/3500700/src/index.d.ts#L135">index.d.ts:135</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Props to pass to RowComponent</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="visiblecolumnsindexes" class="tsd-anchor"></a>
+					<h3>visible<wbr>Columns<wbr>Indexes</h3>
+					<div class="tsd-signature tsd-kind-icon">visible<wbr>Columns<wbr>Indexes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/3500700/src/index.d.ts#L131">index.d.ts:131</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="visibleindexes" class="tsd-anchor"></a>
-					<h3>visible<wbr>Indexes</h3>
-					<div class="tsd-signature tsd-kind-icon">visible<wbr>Indexes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
+					<a name="visiblerowsindexes" class="tsd-anchor"></a>
+					<h3>visible<wbr>Rows<wbr>Indexes</h3>
+					<div class="tsd-signature tsd-kind-icon">visible<wbr>Rows<wbr>Indexes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/3500700/src/index.d.ts#L15">index.d.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/vadim-sartakov/react-scroller/blob/3500700/src/index.d.ts#L130">index.d.ts:130</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -132,24 +201,36 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="_index_d_.outsidecomponentprops.html" class="tsd-kind-icon">Outside<wbr>Component<wbr>Props</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_index_d_.rendercellsoptions.html" class="tsd-kind-icon">Render<wbr>Cells<wbr>Options</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_index_d_.scrolldata.html" class="tsd-kind-icon">Scroll<wbr>Data</a>
+						<a href="_index_d_.rendercellsoptions.html" class="tsd-kind-icon">Render<wbr>Cells<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_index_d_.scrolldata.html#offset" class="tsd-kind-icon">offset</a>
+								<a href="_index_d_.rendercellsoptions.html#cellcomponent" class="tsd-kind-icon">Cell<wbr>Component</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_index_d_.scrolldata.html#visibleindexes" class="tsd-kind-icon">visible<wbr>Indexes</a>
+								<a href="_index_d_.rendercellsoptions.html#rowcomponent" class="tsd-kind-icon">Row<wbr>Component</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_index_d_.rendercellsoptions.html#cellcomponentprops" class="tsd-kind-icon">cell<wbr>Component<wbr>Props</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_index_d_.rendercellsoptions.html#rowcomponentprops" class="tsd-kind-icon">row<wbr>Component<wbr>Props</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_index_d_.rendercellsoptions.html#visiblecolumnsindexes" class="tsd-kind-icon">visible<wbr>Columns<wbr>Indexes</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_index_d_.rendercellsoptions.html#visiblerowsindexes" class="tsd-kind-icon">visible<wbr>Rows<wbr>Indexes</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_index_d_.scrolldata.html" class="tsd-kind-icon">Scroll<wbr>Data</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="_index_d_.scrollercellcomponentprops.html" class="tsd-kind-icon">Scroller<wbr>Cell<wbr>Component<wbr>Props</a>
 					</li>
