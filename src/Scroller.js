@@ -43,7 +43,8 @@ const Scroller = forwardRef((inputProps, ref) => {
     visibleColumnsIndexes,
     RowComponent,
     rowComponentProps,
-    cellComponentProps: { Component: CellComponent }
+    CellComponent,
+    cellComponentProps
   });
 
   return (
