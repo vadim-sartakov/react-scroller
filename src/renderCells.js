@@ -6,21 +6,17 @@ function renderCells({
   visibleColumnsIndexes,
   RowComponent = 'div',
   rowComponentProps,
-  CellComponent,
+  CellComponent = ScrollerCell,
   cellComponentProps
 }) {
   const elements = visibleRowsIndexes.map(rowIndex => {
     if (visibleColumnsIndexes) {
       const columnsElements = visibleColumnsIndexes.map(columnIndex => {
-        return <ScrollerCell Component={CellComponent} key={`${rowIndex}-${columnIndex}`} rowIndex={rowIndex} columnIndex={columnIndex} {...cellComponentProps} />;
+        return <CellComponent key={columnIndex} rowIndex={rowIndex} columnIndex={columnIndex} {...cellComponentProps} />;
       });
-      return (
-        <RowComponent key={rowIndex} {...rowComponentProps}>
-          {columnsElements}
-        </RowComponent>
-      );
+      return <RowComponent key={rowIndex} {...rowComponentProps}>{columnsElements}</RowComponent>;
     } else {
-      return <ScrollerCell Component={CellComponent} key={rowIndex} rowIndex={rowIndex} {...cellComponentProps} />;
+      return <CellComponent key={rowIndex} rowIndex={rowIndex} {...cellComponentProps} />;
     }
   });
   return elements;

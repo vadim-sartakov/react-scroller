@@ -5,61 +5,50 @@ import renderCells from './renderCells';
 const defaultArray = [];
 
 const Scroller = forwardRef((inputProps, ref) => {
-
-  const scrollerProps = useScroller({ ...inputProps, scrollerContainerRef: ref });
-
-  const props = {
-    ...inputProps,
-    ...scrollerProps
-  };
-
   const {
     style,
     className,
-    rowsScrollData,
-    onRowsScrollDataChange,
-    columnsScrollData,
-    onColumnsScrollDataChange,
-    visibleRowsIndexes,
-    visibleColumnsIndexes,
-    onScroll,
-    overscroll,
-    lazy,
-    focusedCell,
     width,
     height,
-    scrollAreaStyle,
-    visibleAreaStyle,
-    scrollerContainerRef,
     rowsSizes = defaultArray,
     columnsSizes = defaultArray,
+    value,
     defaultRowHeight,
     defaultColumnWidth,
-    value,
-    CellComponent,
-    cellComponentProps,
-    RowComponent,
-    rowComponentProps,
     totalRows,
     totalColumns,
+    focusedCell,
+    RowComponent,
+    rowComponentProps,
+    CellComponent,
+    cellComponentProps,
     PreOuterComponent,
     preOuterComponentProps,
     PostOuterComponent,
     postOuterComponentProps,
-    ...restProps
-  } = props;
+    ...restInputProps
+  } = inputProps;
+
+  const {
+    visibleRowsIndexes,
+    visibleColumnsIndexes,
+    onScroll,
+    scrollAreaStyle,
+    visibleAreaStyle,
+    scrollerContainerRef    
+  } = useScroller({ ...inputProps, scrollerContainerRef: ref });
 
   const elements = renderCells({
     visibleRowsIndexes,
     visibleColumnsIndexes,
     RowComponent,
     rowComponentProps,
-    CellComponent,
-    cellComponentProps
+    cellComponentProps: { Component: CellComponent }
   });
 
   return (
     <ScrollerContainer
+        {...restInputProps}
         ref={scrollerContainerRef}
         style={style}
         className={className}
@@ -70,8 +59,7 @@ const Scroller = forwardRef((inputProps, ref) => {
         defaultColumnWidth={defaultColumnWidth}
         onScroll={onScroll}
         width={width}
-        height={height}
-        {...restProps}>
+        height={height}>
       {PreOuterComponent && <PreOuterComponent {...preOuterComponentProps} />}
       <div style={scrollAreaStyle}>
         <div style={visibleAreaStyle}>
