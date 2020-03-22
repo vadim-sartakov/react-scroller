@@ -16,9 +16,16 @@ const Scroller = forwardRef((inputProps, ref) => {
   const {
     style,
     className,
+    rowsScrollData,
+    onRowsScrollDataChange,
+    columnsScrollData,
+    onColumnsScrollDataChange,
     visibleRowsIndexes,
     visibleColumnsIndexes,
     onScroll,
+    overscroll,
+    lazy,
+    focusedCell,
     width,
     height,
     scrollAreaStyle,
@@ -35,8 +42,10 @@ const Scroller = forwardRef((inputProps, ref) => {
     rowComponentProps,
     totalRows,
     totalColumns,
-    OuterComponent,
-    outerComponentProps,
+    PreOuterComponent,
+    preOuterComponentProps,
+    PostOuterComponent,
+    postOuterComponentProps,
     ...restProps
   } = props;
 
@@ -63,12 +72,13 @@ const Scroller = forwardRef((inputProps, ref) => {
         width={width}
         height={height}
         {...restProps}>
+      {PreOuterComponent && <PreOuterComponent {...preOuterComponentProps} />}
       <div style={scrollAreaStyle}>
         <div style={visibleAreaStyle}>
           {elements}
         </div>
       </div>
-      {OuterComponent && <OuterComponent {...outerComponentProps} />}
+      {PostOuterComponent && <PostOuterComponent {...postOuterComponentProps} />}
     </ScrollerContainer>
   )
 });
