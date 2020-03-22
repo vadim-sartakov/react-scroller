@@ -17,6 +17,8 @@ const Scroller = forwardRef((inputProps, ref) => {
     defaultColumnWidth,
     totalRows,
     totalColumns,
+    lazy,
+    overscroll,
     focusedCell,
     RowComponent,
     rowComponentProps,
@@ -26,6 +28,10 @@ const Scroller = forwardRef((inputProps, ref) => {
     preOuterComponentProps,
     PostOuterComponent,
     postOuterComponentProps,
+    rowsScrollData,
+    onRowsScrollDataChange,
+    columnsScrollData,
+    onColumnsScrollDataChange,
     ...restInputProps
   } = inputProps;
 
