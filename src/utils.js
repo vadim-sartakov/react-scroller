@@ -206,12 +206,28 @@ export function shiftScroll({ prevScrollData, prevScroll, sizes, scroll, contain
 };
 
 /**
+ * Calculates cell position (top or left absolute position)
  * @param {Object} options
- * @param {sizes[]} options.sizes
+ * @param {number[]} options.sizes
+ * @param {number} options.index
  * @param {number} options.defaultSize
  * @returns {number}
  */
-export function getItemsSize({ startIndex = 0, sizes, count, defaultSize }) {
+export function getCellPosition({ sizes, index, defaultSize }) {
+  return sizes && sizes.length && [...new Array(index).keys()].reduce((acc, key, index) => {
+    const curSize = sizes[index] || defaultSize;
+    return acc + curSize;
+  }, 0);
+};
+
+/**
+ * Calculates cells size
+ * @param {Object} options
+ * @param {number[]} options.sizes
+ * @param {number} options.defaultSize
+ * @returns {number}
+ */
+export function getCellsSize({ startIndex = 0, sizes, count, defaultSize }) {
   if (!count) return 0;
   return sizes && sizes.length ? [...new Array(count).keys()].reduce((acc, key, index) => {
     const curSize = sizes[index + startIndex] || defaultSize;

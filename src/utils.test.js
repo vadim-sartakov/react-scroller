@@ -2,7 +2,9 @@ import {
   getItemsCountOnPage,
   getScrollDataWithDefaultSize,
   getScrollDataWithCustomSizes,
-  shiftScroll
+  shiftScroll,
+  getCellPosition,
+  getCellsSize
 } from './utils';
 
 //             0   20  50  100 180 200 210 260 350 390 offsets
@@ -230,6 +232,22 @@ describe('Scroller utils', () => {
       });
     });
 
+  });
+
+  describe('getCellPosition', () => {
+    it('should calculate cells position', () => {
+      const sizes = [undefined, 30, 40, 50];
+      const result = getCellPosition({ sizes, index: 3, defaultSize: 10 });
+      expect(result).toBe(80);
+    });
+  });
+
+  describe('getCellsSize', () => {
+    it('should calculate cells size with specified index', () => {
+      const sizes = [20, undefined, 40, 50];
+      const result = getCellsSize({ sizes, startIndex: 1, count: 2, defaultSize: 10 });
+      expect(result).toBe(50);
+    });
   });
 
 });

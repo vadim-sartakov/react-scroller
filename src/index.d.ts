@@ -5,7 +5,6 @@ import {
   Context,
   MutableRefObject,
   UIEventHandler,
-  CSSProperties,
   HTMLAttributes,
   ReactElement
 } from 'react';
@@ -141,16 +140,7 @@ export interface RenderCellsOptions {
 
 export declare function renderCells(options: RenderCellsOptions): ReactElement;
 
-export interface ScrollerProps extends HTMLAttributes, UseScrollerOptions, ScrollerContainerProps, RenderCellsOptions {
-  /** Component to render at the start of scroller container outside of floating visible items */
-  PreOuterComponent?: FunctionComponent;
-  /** Props to pass to PreOuterComponent */
-  preOuterComponentProps?: Object;
-  /** Component to render at the end of scroller container outside of floating visible items */
-  PostOuterComponent?: FunctionComponent;
-  /** Props to pass to PreOuterComponent */
-  postOuterComponentProps?: Object;
-}
+export interface ScrollerProps extends HTMLAttributes, UseScrollerOptions, ScrollerContainerProps, RenderCellsOptions {}
 
 declare const Scroller: FunctionComponent<ScrollerProps>
 

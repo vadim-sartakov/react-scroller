@@ -24,10 +24,6 @@ const Scroller = forwardRef((inputProps, ref) => {
     rowComponentProps,
     CellComponent,
     cellComponentProps,
-    PreOuterComponent,
-    preOuterComponentProps,
-    PostOuterComponent,
-    postOuterComponentProps,
     rowsScrollData,
     onRowsScrollDataChange,
     columnsScrollData,
@@ -67,13 +63,11 @@ const Scroller = forwardRef((inputProps, ref) => {
         onScroll={onScroll}
         width={width}
         height={height}>
-      {PreOuterComponent && <PreOuterComponent {...preOuterComponentProps} />}
       <div style={scrollAreaStyle}>
         <div style={visibleAreaStyle}>
           {elements}
         </div>
       </div>
-      {PostOuterComponent && <PostOuterComponent {...postOuterComponentProps} />}
     </ScrollerContainer>
   )
 });

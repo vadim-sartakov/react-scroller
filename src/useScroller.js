@@ -4,7 +4,7 @@ import {
   getScrollDataWithDefaultSize,
   getScrollDataWithCustomSizes,
   shiftScroll,
-  getItemsSize
+  getCellsSize
 } from './utils';
 
 const defaultArray = [];
@@ -186,7 +186,7 @@ const useScroller = ({
 
   const visibleRowsSize = useMemo(() => {
     return lazy ?
-      getItemsSize({
+      getCellsSize({
         startIndex: rowsScrollData.visibleIndexes[0],
         sizes: rowsSizes,
         defaultSize: defaultRowHeight,
