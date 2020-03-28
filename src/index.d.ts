@@ -47,7 +47,7 @@ export interface UseScrollerOptions {
    * It is used by hook to control current scroll position if required (e.g. on focusing cell).
    * If not specified, then local ref object will be created and returned as hook result
    */
-  scrollerContainerRef?: MutableRefObject<Element>;
+  ref?: MutableRefObject<Element>;
   /** Controllable rows scroll data value */
   rowsScrollData?: ScrollData;
   /** Controllable rows scroll data change callback */

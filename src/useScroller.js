@@ -22,7 +22,7 @@ const useScroller = ({
   onScroll,
   overscroll = 0,
   focusedCell,
-  scrollerContainerRef: scrollerContainerRefProp,
+  ref: scrollerContainerRefProp,
   rowsScrollData: rowsScrollDataProp,
   onRowsScrollDataChange: onRowsScrollDataChangeProp,
   columnsScrollData: columnsScrollDataProp,
