@@ -1,11 +1,12 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import { useScroller, ScrollerContainer } from './';
 import renderCells from './renderCells';
 
 const defaultArray = [];
 
-const Scroller = forwardRef((inputProps, ref) => {
+const Scroller = inputProps => {
   const {
+    scrollerContainerRef: scrollerContainerRefInput,
     style,
     className,
     width,
@@ -42,7 +43,7 @@ const Scroller = forwardRef((inputProps, ref) => {
     scrollAreaStyle,
     visibleAreaStyle,
     scrollerContainerRef    
-  } = useScroller({ ...inputProps, scrollerContainerRef: ref });
+  } = useScroller({ ...inputProps, scrollerContainerRef: scrollerContainerRefInput });
 
   const elements = renderCells({
     visibleRowsIndexes,
@@ -56,7 +57,7 @@ const Scroller = forwardRef((inputProps, ref) => {
   return (
     <ScrollerContainer
         {...restInputProps}
-        ref={scrollerContainerRef}
+        ref={scrollerContainerRefInput ? undefined : scrollerContainerRef}
         style={style}
         className={className}
         value={value}
@@ -76,6 +77,6 @@ const Scroller = forwardRef((inputProps, ref) => {
       {PostOuterComponent && <PostOuterComponent {...postOuterComponentProps} />}
     </ScrollerContainer>
   )
-});
+};
 
 export default Scroller;
