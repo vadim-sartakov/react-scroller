@@ -104,14 +104,10 @@ const useScroller = ({
   }, [width, height, scrollerContainerRef, getColumnsScrollData]);
 
   useEffect(function updateScrollDataOnContainerSizeChange() {
-    if (typeof width !== 'number') {
-      const columnsScrollData = getColumnsScrollData(scrollerContainerRef.current.scrollLeft);
-      onColumnsScrollDataChange(columnsScrollData);
-    }
-    if (typeof height !== 'number') {
-      const rowsScrollData = getRowsScrollData(scrollerContainerRef.current.scrollTop);
-      onRowsScrollDataChange(rowsScrollData);
-    }
+    const columnsScrollData = getColumnsScrollData(scrollerContainerRef.current.scrollLeft);
+    onColumnsScrollDataChange(columnsScrollData);
+    const rowsScrollData = getRowsScrollData(scrollerContainerRef.current.scrollTop);
+    onRowsScrollDataChange(rowsScrollData);
   }, [onColumnsScrollDataChange, onRowsScrollDataChange, width, height, scrollerContainerRef, containerSizes, getColumnsScrollData, getRowsScrollData]);
 
   const prevScrollTop = useRef(0);
