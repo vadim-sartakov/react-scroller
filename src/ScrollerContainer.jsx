@@ -21,15 +21,19 @@ const ScrollerContainer = forwardRef(({
     defaultRowHeight,
     defaultColumnWidth,
     rowsSizes,
-    columnsSizes
+    columnsSizes,
   }), [value, defaultRowHeight, defaultColumnWidth, rowsSizes, columnsSizes]);
+
   return (
     <ScrollerContext.Provider value={contextValue}>
       <div
-          ref={ref}
-          style={{ width, height, overflow: height && 'auto', ...style }}
-          onScroll={onScroll}
-          {...props}>
+        ref={ref}
+        style={{
+          width, height, overflow: height && 'auto', ...style,
+        }}
+        onScroll={onScroll}
+        {...props}
+      >
         {children}
       </div>
     </ScrollerContext.Provider>

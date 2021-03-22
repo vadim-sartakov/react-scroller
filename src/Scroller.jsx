@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { useScroller, ScrollerContainer } from './';
+import useScroller from './useScroller';
+import ScrollerContainer from './ScrollerContainer';
 import renderCells from './renderCells';
 
 const defaultArray = [];
@@ -41,7 +42,7 @@ const Scroller = forwardRef((inputProps, ref) => {
     onScroll,
     scrollAreaStyle,
     visibleAreaStyle,
-    scrollerContainerRef    
+    scrollerContainerRef,
   } = useScroller({ ...inputProps, ref });
 
   const elements = renderCells({
@@ -50,23 +51,24 @@ const Scroller = forwardRef((inputProps, ref) => {
     RowComponent,
     rowComponentProps,
     CellComponent,
-    cellComponentProps
+    cellComponentProps,
   });
 
   return (
     <ScrollerContainer
-        {...restInputProps}
-        ref={scrollerContainerRef}
-        style={style}
-        className={className}
-        value={value}
-        rowsSizes={rowsSizes}
-        columnsSizes={columnsSizes}
-        defaultRowHeight={defaultRowHeight}
-        defaultColumnWidth={defaultColumnWidth}
-        onScroll={onScroll}
-        width={width}
-        height={height}>
+      {...restInputProps}
+      ref={scrollerContainerRef}
+      style={style}
+      className={className}
+      value={value}
+      rowsSizes={rowsSizes}
+      columnsSizes={columnsSizes}
+      defaultRowHeight={defaultRowHeight}
+      defaultColumnWidth={defaultColumnWidth}
+      onScroll={onScroll}
+      width={width}
+      height={height}
+    >
       {PreOuterComponent && <PreOuterComponent {...preOuterComponentProps} />}
       <div style={scrollAreaStyle}>
         <div style={visibleAreaStyle}>
@@ -75,7 +77,7 @@ const Scroller = forwardRef((inputProps, ref) => {
       </div>
       {PostOuterComponent && <PostOuterComponent {...postOuterComponentProps} />}
     </ScrollerContainer>
-  )
+  );
 });
 
 export default Scroller;

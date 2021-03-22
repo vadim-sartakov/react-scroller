@@ -8,13 +8,30 @@ const ScrollerCell = React.memo(forwardRef(({
   Component = 'div',
   ...props
 }, ref) => {
-  const { value, defaultColumnWidth, defaultRowHeight, rowsSizes, columnsSizes } = useContext(ScrollerContext);
+  const {
+    value,
+    defaultColumnWidth,
+    defaultRowHeight,
+    rowsSizes,
+    columnsSizes,
+  } = useContext(ScrollerContext);
+
   const width = columnsSizes[columnIndex] || defaultColumnWidth;
   const height = rowsSizes[rowIndex] || defaultRowHeight;
   const nextStyle = { ...style, height, width };
   const rowValue = value[rowIndex];
   const cellValue = columnIndex !== undefined && rowValue && rowValue[columnIndex];
-  return <Component ref={ref} style={nextStyle} value={cellValue || rowValue} rowIndex={rowIndex} columnIndex={columnIndex} {...props} />;
+
+  return (
+    <Component
+      ref={ref}
+      style={nextStyle}
+      value={cellValue || rowValue}
+      rowIndex={rowIndex}
+      columnIndex={columnIndex}
+      {...props}
+    />
+  );
 }));
 
 export default ScrollerCell;

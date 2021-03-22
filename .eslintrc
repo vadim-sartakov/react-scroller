@@ -1,0 +1,16 @@
+{
+  "extends": ["airbnb", "airbnb/hooks"],
+  "plugins": ["jest"],
+  "env": {
+    "jest/globals": true,
+    "browser": true
+  },
+  "rules": {
+    "no-shadow": "off",
+    "no-console": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off",
+    "no-unused-vars": "warn",
+    "no-plusplus": "off"
+  }
+}

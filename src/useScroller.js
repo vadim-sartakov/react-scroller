@@ -1,10 +1,12 @@
-import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
+import {
+  useRef, useEffect, useState, useMemo, useCallback,
+} from 'react';
 import {
   getCustomSizesTotal,
   getScrollDataWithDefaultSize,
   getScrollDataWithCustomSizes,
   shiftScroll,
-  getCellsSize
+  getCellsSize,
 } from './utils';
 
 const defaultArray = [];
@@ -26,41 +28,61 @@ const useScroller = ({
   rowsScrollData: rowsScrollDataProp,
   onRowsScrollDataChange: onRowsScrollDataChangeProp,
   columnsScrollData: columnsScrollDataProp,
-  onColumnsScrollDataChange: onColumnsScrollDataChangeProp
+  onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
 }) => {
   const scrollerContainerRefLocal = useRef();
   const scrollerContainerRef = scrollerContainerRefProp || scrollerContainerRefLocal;
-  
-  useEffect(function focusCell() {
+
+  useEffect(() => {
 
   }, [focusedCell]);
 
   const [containerSizes, setContainerSizes] = useState({
     width: typeof width === 'number' ? width : 800,
-    height: typeof height === 'number' ? height: 600
+    height: typeof height === 'number' ? height : 600,
   });
 
-  const getColumnsScrollData = useCallback(scroll => {
-    if (!totalColumns) return;
+  const getColumnsScrollData = useCallback((scroll) => {
+    if (!totalColumns) return undefined;
     const containerSize = containerSizes.width;
     if (columnsSizes.length) {
-      return getScrollDataWithCustomSizes({ scroll, sizes: columnsSizes, containerSize, defaultSize: defaultColumnWidth, totalCount: totalColumns, overscroll });
-    } else {
-      return getScrollDataWithDefaultSize({ scroll, containerSize, defaultSize: defaultColumnWidth, totalCount: totalColumns, overscroll })
+      return getScrollDataWithCustomSizes({
+        scroll,
+        sizes: columnsSizes,
+        containerSize,
+        defaultSize: defaultColumnWidth,
+        totalCount: totalColumns,
+        overscroll,
+      });
     }
+    return getScrollDataWithDefaultSize({
+      scroll,
+      containerSize,
+      defaultSize: defaultColumnWidth,
+      totalCount: totalColumns,
+      overscroll,
+    });
   }, [containerSizes.width, columnsSizes, defaultColumnWidth, overscroll, totalColumns]);
 
   const [columnsScrollDataState, setColumnsScrollDataState] = useState(getColumnsScrollData(0));
   const columnsScrollData = columnsScrollDataProp || columnsScrollDataState;
   const onColumnsScrollDataChange = onColumnsScrollDataChangeProp || setColumnsScrollDataState;
 
-  const getRowsScrollData = useCallback(scroll => {
+  const getRowsScrollData = useCallback((scroll) => {
     const containerSize = containerSizes.height;
     if (rowsSizes.length) {
-      return getScrollDataWithCustomSizes({ scroll, sizes: rowsSizes, containerSize, defaultSize: defaultRowHeight, totalCount: totalRows, overscroll });
-    } else {
-      return getScrollDataWithDefaultSize({ scroll, containerSize, defaultSize: defaultRowHeight, totalCount: totalRows, overscroll })
+      return getScrollDataWithCustomSizes({
+        scroll,
+        sizes: rowsSizes,
+        containerSize,
+        defaultSize: defaultRowHeight,
+        totalCount: totalRows,
+        overscroll,
+      });
     }
+    return getScrollDataWithDefaultSize({
+      scroll, containerSize, defaultSize: defaultRowHeight, totalCount: totalRows, overscroll,
+    });
   }, [containerSizes.height, defaultRowHeight, overscroll, rowsSizes, totalRows]);
 
   const [rowsScrollDataState, setRowsScrollDataState] = useState(getRowsScrollData(0));
@@ -72,20 +94,25 @@ const useScroller = ({
   prevRowsScrollData.current = { ...rowsScrollData };
   prevColumnsScrollData.current = { ...columnsScrollData };
 
-  useEffect(function observeContainerResize() {
+  useEffect(() => {
     // Do not recalculate if sizes specified explicitly as numbers by props
-    if (typeof width === 'number' && typeof height === 'number') return;
+    if (typeof width === 'number' && typeof height === 'number') return undefined;
 
     const updateContainerSize = () => {
       const scrollerContainerRect = scrollerContainerRef.current.getBoundingClientRect();
-      setContainerSizes(containerSizes => {
-        return containerSizes.width === scrollerContainerRect.width && containerSizes.height === scrollerContainerRect.height ?
-            containerSizes : { width: scrollerContainerRect.width, height: scrollerContainerRect.height }
-      });
+      setContainerSizes(
+        (containerSizes) => (
+          containerSizes.width === scrollerContainerRect.width
+          && containerSizes.height === scrollerContainerRect.height
+            ? containerSizes
+            : { width: scrollerContainerRect.width, height: scrollerContainerRect.height }
+        ),
+      );
     };
 
     const mutationCallback = (mutations, observer) => {
-      const changedScrollerItems = mutations.some(mutation => scrollerContainerRef.current.contains(mutation.target));
+      const changedScrollerItems = mutations
+        .some((mutation) => scrollerContainerRef.current.contains(mutation.target));
       if (!changedScrollerItems) updateContainerSize();
     };
 
@@ -103,18 +130,28 @@ const useScroller = ({
     };
   }, [width, height, scrollerContainerRef, getColumnsScrollData]);
 
-  useEffect(function updateScrollDataOnContainerSizeChange() {
+  useEffect(() => {
     const columnsScrollData = getColumnsScrollData(scrollerContainerRef.current.scrollLeft);
     onColumnsScrollDataChange(columnsScrollData);
     const rowsScrollData = getRowsScrollData(scrollerContainerRef.current.scrollTop);
     onRowsScrollDataChange(rowsScrollData);
-  }, [onColumnsScrollDataChange, onRowsScrollDataChange, width, height, scrollerContainerRef, containerSizes, getColumnsScrollData, getRowsScrollData]);
+  }, [
+    onColumnsScrollDataChange,
+    onRowsScrollDataChange,
+    width,
+    height,
+    scrollerContainerRef,
+    containerSizes,
+    getColumnsScrollData,
+    getRowsScrollData,
+  ]);
 
   const prevScrollTop = useRef(0);
   const prevScrollLeft = useRef(0);
 
-  const handleScroll = useCallback(e => {
-    let nextRowsScrollData, nextColumnsScrollData
+  const handleScroll = useCallback((e) => {
+    let nextRowsScrollData; let
+      nextColumnsScrollData;
     if (totalColumns) {
       if (columnsSizes.length) {
         nextColumnsScrollData = shiftScroll({
@@ -125,7 +162,7 @@ const useScroller = ({
           containerSize: containerSizes.width,
           totalCount: totalColumns,
           defaultSize: defaultColumnWidth,
-          overscroll
+          overscroll,
         });
       } else {
         nextColumnsScrollData = getScrollDataWithDefaultSize({
@@ -133,12 +170,12 @@ const useScroller = ({
           defaultSize: defaultColumnWidth,
           totalCount: totalColumns,
           scroll: e.target.scrollLeft,
-          overscroll
+          overscroll,
         });
       }
       onColumnsScrollDataChange(nextColumnsScrollData);
     }
-    
+
     if (rowsSizes.length) {
       nextRowsScrollData = shiftScroll({
         prevScrollData: prevRowsScrollData.current,
@@ -148,7 +185,7 @@ const useScroller = ({
         containerSize: containerSizes.height,
         totalCount: totalRows,
         defaultSize: defaultRowHeight,
-        overscroll
+        overscroll,
       });
     } else {
       nextRowsScrollData = getScrollDataWithDefaultSize({
@@ -156,7 +193,7 @@ const useScroller = ({
         defaultSize: defaultRowHeight,
         totalCount: totalRows,
         scroll: e.target.scrollTop,
-        overscroll
+        overscroll,
       });
     }
     onRowsScrollDataChange(nextRowsScrollData);
@@ -177,51 +214,47 @@ const useScroller = ({
     onScroll,
     overscroll,
     totalRows,
-    totalColumns
+    totalColumns,
   ]);
 
-  const visibleRowsSize = useMemo(() => {
-    return lazy ?
-      getCellsSize({
-        startIndex: rowsScrollData.visibleIndexes[0],
-        sizes: rowsSizes,
-        defaultSize: defaultRowHeight,
-        count: rowsScrollData.visibleIndexes.length
-      }) : 0;
-  }, [lazy, rowsScrollData, rowsSizes, defaultRowHeight]);
+  const visibleRowsSize = useMemo(() => (lazy
+    ? getCellsSize({
+      startIndex: rowsScrollData.visibleIndexes[0],
+      sizes: rowsSizes,
+      defaultSize: defaultRowHeight,
+      count: rowsScrollData.visibleIndexes.length,
+    }) : 0), [lazy, rowsScrollData, rowsSizes, defaultRowHeight]);
 
   const coverWidth = useMemo(() => {
-    if (!totalColumns) return;
+    if (!totalColumns) return undefined;
     if (columnsSizes.length) {
-      return getCustomSizesTotal({ sizes: columnsSizes, totalCount: totalColumns, defaultSize: defaultColumnWidth });
-    } else {
-      return totalColumns * defaultColumnWidth;
+      return getCustomSizesTotal(
+        { sizes: columnsSizes, totalCount: totalColumns, defaultSize: defaultColumnWidth },
+      );
     }
+    return totalColumns * defaultColumnWidth;
   }, [columnsSizes, defaultColumnWidth, totalColumns]);
 
   const coverHeight = useMemo(() => {
     if (rowsSizes.length) {
-      return getCustomSizesTotal({ sizes: rowsSizes, totalCount: totalRows, defaultSize: defaultRowHeight });
-    } else {
-      return totalRows * defaultRowHeight;
+      return getCustomSizesTotal(
+        { sizes: rowsSizes, totalCount: totalRows, defaultSize: defaultRowHeight },
+      );
     }
+    return totalRows * defaultRowHeight;
   }, [rowsSizes, defaultRowHeight, totalRows]);
 
-  const scrollAreaStyle = useMemo(() => {
-    return {
-      height: lazy ? rowsScrollData.offset + visibleRowsSize : coverHeight,
-      width: coverWidth,
-      position: 'relative'
-    }
-  }, [lazy, coverHeight, coverWidth, rowsScrollData.offset, visibleRowsSize]);
+  const scrollAreaStyle = useMemo(() => ({
+    height: lazy ? rowsScrollData.offset + visibleRowsSize : coverHeight,
+    width: coverWidth,
+    position: 'relative',
+  }), [lazy, coverHeight, coverWidth, rowsScrollData.offset, visibleRowsSize]);
 
-  const visibleAreaStyle = useMemo(() => {
-    return {
-      top: rowsScrollData.offset,
-      left: columnsScrollData && columnsScrollData.offset,
-      position: 'absolute'
-    };
-  }, [rowsScrollData.offset, columnsScrollData]);
+  const visibleAreaStyle = useMemo(() => ({
+    top: rowsScrollData.offset,
+    left: columnsScrollData && columnsScrollData.offset,
+    position: 'absolute',
+  }), [rowsScrollData.offset, columnsScrollData]);
 
   return {
     scrollerContainerRef,
@@ -229,9 +262,8 @@ const useScroller = ({
     visibleColumnsIndexes: columnsScrollData && columnsScrollData.visibleIndexes,
     onScroll: handleScroll,
     scrollAreaStyle,
-    visibleAreaStyle
+    visibleAreaStyle,
   };
-
 };
 
 export default useScroller;
