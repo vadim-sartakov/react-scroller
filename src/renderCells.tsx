@@ -1,5 +1,13 @@
 import React from 'react';
-import ScrollerCell from './ScrollerCell';
+import ScrollerCell, { ScrollerCellComponentProps } from './ScrollerCell';
+
+export interface RenderCellArgs {
+  visibleRowsIndexes: number[];
+  visibleColumnsIndexes: number[];
+  RowComponent: string | React.FC;
+  rowComponentProps: Object;
+  CellComponent: React.FC<ScrollerCellComponentProps>;
+}
 
 function renderCells({
   visibleRowsIndexes,
@@ -7,25 +15,28 @@ function renderCells({
   RowComponent = 'div',
   rowComponentProps,
   CellComponent,
-  cellComponentProps,
-}) {
+}: RenderCellArgs) {
   const elements = visibleRowsIndexes.map((rowIndex) => {
     if (visibleColumnsIndexes) {
-      const columnsElements = visibleColumnsIndexes
-        .map((columnIndex) => (
+      const columnsElements = visibleColumnsIndexes.map(
+        (columnIndex) => (
           <ScrollerCell
-            {...cellComponentProps}
             key={columnIndex}
             Component={CellComponent}
             rowIndex={rowIndex}
             columnIndex={columnIndex}
           />
-        ));
-      return <RowComponent {...rowComponentProps} key={rowIndex}>{columnsElements}</RowComponent>;
+        ),
+      );
+      return (
+        <RowComponent key={rowIndex} {...rowComponentProps}>
+          {columnsElements}
+        </RowComponent>
+      );
     }
+
     return (
       <ScrollerCell
-        {...cellComponentProps}
         key={rowIndex}
         Component={CellComponent}
         rowIndex={rowIndex}

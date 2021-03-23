@@ -1,17 +1,34 @@
-import {
-  useRef, useEffect, useState, useMemo, useCallback,
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
 } from 'react';
+import { ScrollData, ScrollerPropsBase } from 'types';
 import {
   getCustomSizesTotal,
   getScrollDataWithDefaultSize,
   getScrollDataWithCustomSizes,
   shiftScroll,
-  getCellsSize,
-} from './utils';
+} from 'utils';
 
-const defaultArray = [];
+export interface UseScrollerProps extends ScrollerPropsBase {
+  scrollerContainerRef?: React.MutableRefObject<HTMLDivElement>;
+}
 
-const useScroller = ({
+export interface UseScrollerResult {
+  scrollerContainerRef: React.MutableRefObject<HTMLDivElement>;
+  visibleRowsIndexes: number[];
+  visibleColumnsIndexes: number[];
+  onScroll: React.UIEventHandler<HTMLDivElement>;
+  scrollAreaStyle: React.CSSProperties;
+  visibleAreaStyle: React.CSSProperties;
+}
+
+const defaultArray: number[] = [];
+
+function useScroller({
   defaultRowHeight,
   defaultColumnWidth,
   totalRows,
@@ -20,21 +37,19 @@ const useScroller = ({
   columnsSizes = defaultArray,
   width,
   height,
-  lazy,
-  onScroll,
   overscroll = 0,
   focusedCell,
-  ref: scrollerContainerRefProp,
+  scrollerContainerRef: scrollerContainerRefProp,
   rowsScrollData: rowsScrollDataProp,
   onRowsScrollDataChange: onRowsScrollDataChangeProp,
   columnsScrollData: columnsScrollDataProp,
   onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
-}) => {
-  const scrollerContainerRefLocal = useRef();
+}: UseScrollerProps): UseScrollerResult {
+  const scrollerContainerRefLocal = useRef<HTMLDivElement>();
   const scrollerContainerRef = scrollerContainerRefProp || scrollerContainerRefLocal;
 
   useEffect(() => {
-
+    // TODO: Implement focused cell
   }, [focusedCell]);
 
   const [containerSizes, setContainerSizes] = useState({
@@ -89,8 +104,8 @@ const useScroller = ({
   const rowsScrollData = rowsScrollDataProp || rowsScrollDataState;
   const onRowsScrollDataChange = onRowsScrollDataChangeProp || setRowsScrollDataState;
 
-  const prevRowsScrollData = useRef();
-  const prevColumnsScrollData = useRef();
+  const prevRowsScrollData = useRef<ScrollData>();
+  const prevColumnsScrollData = useRef<ScrollData>();
   prevRowsScrollData.current = { ...rowsScrollData };
   prevColumnsScrollData.current = { ...columnsScrollData };
 
@@ -110,7 +125,7 @@ const useScroller = ({
       );
     };
 
-    const mutationCallback = (mutations, observer) => {
+    const mutationCallback: MutationCallback = (mutations) => {
       const changedScrollerItems = mutations
         .some((mutation) => scrollerContainerRef.current.contains(mutation.target));
       if (!changedScrollerItems) updateContainerSize();
@@ -173,6 +188,7 @@ const useScroller = ({
           overscroll,
         });
       }
+
       onColumnsScrollDataChange(nextColumnsScrollData);
     }
 
@@ -200,8 +216,6 @@ const useScroller = ({
 
     prevScrollTop.current = e.target.scrollTop;
     prevScrollLeft.current = e.target.scrollLeft;
-
-    if (onScroll) onScroll(e);
   }, [
     onColumnsScrollDataChange,
     onRowsScrollDataChange,
@@ -211,19 +225,10 @@ const useScroller = ({
     rowsSizes,
     defaultColumnWidth,
     defaultRowHeight,
-    onScroll,
     overscroll,
     totalRows,
     totalColumns,
   ]);
-
-  const visibleRowsSize = useMemo(() => (lazy
-    ? getCellsSize({
-      startIndex: rowsScrollData.visibleIndexes[0],
-      sizes: rowsSizes,
-      defaultSize: defaultRowHeight,
-      count: rowsScrollData.visibleIndexes.length,
-    }) : 0), [lazy, rowsScrollData, rowsSizes, defaultRowHeight]);
 
   const coverWidth = useMemo(() => {
     if (!totalColumns) return undefined;
@@ -244,13 +249,13 @@ const useScroller = ({
     return totalRows * defaultRowHeight;
   }, [rowsSizes, defaultRowHeight, totalRows]);
 
-  const scrollAreaStyle = useMemo(() => ({
-    height: lazy ? rowsScrollData.offset + visibleRowsSize : coverHeight,
+  const scrollAreaStyle: React.CSSProperties = useMemo(() => ({
+    height: coverHeight,
     width: coverWidth,
     position: 'relative',
-  }), [lazy, coverHeight, coverWidth, rowsScrollData.offset, visibleRowsSize]);
+  }), [coverHeight, coverWidth]);
 
-  const visibleAreaStyle = useMemo(() => ({
+  const visibleAreaStyle: React.CSSProperties = useMemo(() => ({
     top: rowsScrollData.offset,
     left: columnsScrollData && columnsScrollData.offset,
     position: 'absolute',
@@ -264,6 +269,6 @@ const useScroller = ({
     scrollAreaStyle,
     visibleAreaStyle,
   };
-};
+}
 
 export default useScroller;

@@ -1,9 +1,20 @@
 import React, { useMemo, forwardRef } from 'react';
 import ScrollerContext from './ScrollerContext';
+import { ScrollerPropsBase } from './types';
 
-const defaultArray = [];
+const defaultArray: number[] = [];
 
-const ScrollerContainer = forwardRef(({
+export interface ScrollContainerProps extends
+  React.HTMLAttributes<HTMLDivElement>, Pick<ScrollerPropsBase,
+  'value'
+  | 'width'
+  | 'height'
+  | 'defaultRowHeight'
+  | 'defaultColumnWidth'
+  | 'rowsSizes'
+  | 'columnsSizes'> {}
+
+const ScrollerContainer = forwardRef<HTMLDivElement, ScrollContainerProps>(({
   value,
   width,
   height,
@@ -13,7 +24,6 @@ const ScrollerContainer = forwardRef(({
   columnsSizes = defaultArray,
   onScroll,
   style,
-  children,
   ...props
 }, ref) => {
   const contextValue = useMemo(() => ({
@@ -29,13 +39,14 @@ const ScrollerContainer = forwardRef(({
       <div
         ref={ref}
         style={{
-          width, height, overflow: height && 'auto', ...style,
+          width,
+          height,
+          overflow: height && 'auto',
+          ...style,
         }}
         onScroll={onScroll}
         {...props}
-      >
-        {children}
-      </div>
+      />
     </ScrollerContext.Provider>
   );
 });

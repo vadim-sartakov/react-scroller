@@ -1,41 +1,51 @@
-/**
- * @param {number} totalCount
- * @param {number} itemsPerPage
- */
-export function getTotalPages(totalCount, itemsPerPage) {
+import { ScrollData } from 'types';
+
+export function getTotalPages(totalCount: number, itemsPerPage: number) {
   return Math.ceil(totalCount / itemsPerPage);
 }
 
-/**
- * @param {number} page
- * @param {number} itemsPerPage
- * @param {number} totalCount
- * @returns {number}
- */
-export function getItemsCountOnPage(page, itemsPerPage, totalCount) {
+export function getItemsCountOnPage(page: number, itemsPerPage: number, totalCount: number) {
   if (page === undefined) return 0;
   const totalPages = getTotalPages(totalCount, itemsPerPage);
   if (page >= totalPages) return 0;
   return page < totalPages - 1 ? itemsPerPage : totalCount - (page * itemsPerPage);
 }
 
-function applyStartOverscroll(startIndex, overscroll = 0) {
+function applyStartOverscroll(startIndex: number, overscroll = 0) {
   return Math.max(startIndex - overscroll, 0);
 }
 
-function applyEndOverscroll(endIndex, totalCount, overscroll = 0) {
+function applyEndOverscroll(endIndex: number, totalCount: number, overscroll = 0) {
   return Math.min(endIndex + overscroll, totalCount - 1);
 }
 
-function getVisibleIndexesRange(startIndex, endIndex) {
+function getVisibleIndexesRange(startIndex: number, endIndex: number) {
   const result = [];
   for (let i = startIndex; i <= endIndex; i++) result.push(i);
   return result;
 }
 
+interface FindLastIndexArgs {
+  targetScroll: number;
+  offset: number;
+  firstIndex: number;
+  sizes: number[];
+  totalCount: number;
+  defaultSize: number;
+  containerSize: number;
+  overscroll?: number;
+}
+
 function findLastIndex({
-  targetScroll, offset, firstIndex, sizes, totalCount, defaultSize, containerSize, overscroll = 0,
-}) {
+  targetScroll,
+  offset,
+  firstIndex,
+  sizes,
+  totalCount,
+  defaultSize,
+  containerSize,
+  overscroll = 0,
+}: FindLastIndexArgs) {
   let lastIndex;
   let curIndex = firstIndex;
   let curOffset = offset;
@@ -51,9 +61,17 @@ function findLastIndex({
   return lastIndex;
 }
 
+interface ReduceOverscrolledOffsetArgs {
+  offset: number;
+  overscroll: number;
+  firstIndex: number;
+  sizes: number[];
+  defaultSize: number;
+}
+
 function reduceOverscrolledOffset({
   offset, overscroll, firstIndex, sizes, defaultSize,
-}) {
+}: ReduceOverscrolledOffsetArgs) {
   let resultOffset = offset;
   if (overscroll) {
     for (let i = 1; i <= overscroll; i++) {
@@ -66,9 +84,19 @@ function reduceOverscrolledOffset({
   return resultOffset;
 }
 
+interface FindNextFirstIndexAndOffset {
+  startIndex: number;
+  startScroll: number;
+  targetScroll: number;
+  sizes: number[];
+  totalCount: number;
+  defaultSize: number;
+  overscroll?: number;
+}
+
 function findNextFirstIndexAndOffset({
   startIndex, startScroll, targetScroll, sizes, totalCount, defaultSize, overscroll = 0,
-}) {
+}: FindNextFirstIndexAndOffset) {
   let firstIndex; let
     offset;
   let curIndex = startIndex;
@@ -92,24 +120,17 @@ function findNextFirstIndexAndOffset({
   return { firstIndex, offset };
 }
 
-/**
- * @typedef ScrollData
- * @property {number} offset
- * @property {number[]} visibleIndexes
- */
+interface GetScrollDataWithDefaultSizeArgs {
+  containerSize: number;
+  defaultSize: number;
+  totalCount: number;
+  scroll: number;
+  overscroll?: number;
+}
 
-/**
- * @param {Object} options
- * @param {number} options.containerSize
- * @param {number} options.defaultSize
- * @param {number} options.totalCount
- * @param {number} options.scroll
- * @param {number} [options.overscroll=0]
- * @returns {ScrollData}
- */
 export function getScrollDataWithDefaultSize({
   containerSize, defaultSize, totalCount, scroll, overscroll = 0,
-}) {
+}: GetScrollDataWithDefaultSizeArgs): ScrollData {
   const visibleElementsCount = Math.ceil(containerSize / defaultSize);
   const maxIndex = totalCount - 1;
   let firstIndex = Math.max(Math.floor(scroll / defaultSize), 0);
@@ -121,26 +142,31 @@ export function getScrollDataWithDefaultSize({
   return { offset, visibleIndexes };
 }
 
-export function getCustomSizesTotal({ sizes, totalCount, defaultSize }) {
-  return [...new Array(totalCount).keys()].reduce((acc, key) => {
+interface GetCustomSizesTotalArgs {
+  sizes: number[];
+  totalCount: number;
+  defaultSize: number;
+}
+
+export function getCustomSizesTotal({ sizes, totalCount, defaultSize }: GetCustomSizesTotalArgs) {
+  return [...new Array(totalCount).keys()].reduce<number>((acc, key) => {
     const curSize = sizes[key] || defaultSize;
     return acc + curSize;
   }, 0);
 }
 
-/**
- * @param {Object} options
- * @param {number[]} options.sizes
- * @param {number} containerSize
- * @param {number} options.scroll
- * @param {number} options.defaultSize
- * @param {number} options.totalCount
- * @param {number} [options.overscroll=0]
- * @returns {ScrollData}
- */
+interface GetScrollDataWithCustomSizesArgs {
+  scroll: number;
+  sizes: number[];
+  containerSize: number;
+  defaultSize: number;
+  totalCount: number;
+  overscroll?: number;
+}
+
 export function getScrollDataWithCustomSizes({
   scroll: targetScroll, sizes, containerSize, defaultSize, totalCount, overscroll = 0,
-}) {
+}: GetScrollDataWithCustomSizesArgs): ScrollData {
   const { offset, firstIndex } = findNextFirstIndexAndOffset({
     startIndex: 0, startScroll: 0, targetScroll, totalCount, sizes, defaultSize, overscroll,
   });
@@ -151,9 +177,18 @@ export function getScrollDataWithCustomSizes({
   return { offset, visibleIndexes };
 }
 
+interface FindPrevFirstIndexAndOffsetArgs {
+  startIndex: number;
+  startScroll: number;
+  targetScroll: number;
+  sizes: number[];
+  defaultSize: number;
+  overscroll?: number;
+}
+
 function findPrevFirstIndexAndOffset({
   startIndex, startScroll, targetScroll, sizes, defaultSize, overscroll = 0,
-}) {
+}: FindPrevFirstIndexAndOffsetArgs) {
   let firstIndex; let
     offset;
   let curIndex = startIndex;
@@ -178,6 +213,17 @@ function findPrevFirstIndexAndOffset({
   return { firstIndex, offset };
 }
 
+interface ShiftScrollBackward {
+  startIndex: number;
+  startOffset: number;
+  targetScroll: number;
+  sizes: number[];
+  defaultSize: number;
+  totalCount: number;
+  containerSize: number;
+  overscroll?: number;
+}
+
 function shiftScrollBackward({
   startIndex,
   startOffset,
@@ -187,7 +233,7 @@ function shiftScrollBackward({
   totalCount,
   containerSize,
   overscroll = 0,
-}) {
+}: ShiftScrollBackward): ScrollData {
   const curSize = sizes[startIndex] || defaultSize;
   const { offset, firstIndex } = findPrevFirstIndexAndOffset({
     startIndex, startScroll: startOffset + curSize, targetScroll, sizes, defaultSize, overscroll,
@@ -199,6 +245,17 @@ function shiftScrollBackward({
   return { offset, visibleIndexes };
 }
 
+interface ShiftScrollForwardArgs {
+  startIndex: number;
+  startOffset: number;
+  targetScroll: number;
+  sizes: number[];
+  defaultSize: number;
+  totalCount: number;
+  containerSize: number;
+  overscroll?: number;
+}
+
 function shiftScrollForward({
   startIndex,
   startOffset,
@@ -208,7 +265,7 @@ function shiftScrollForward({
   totalCount,
   containerSize,
   overscroll = 0,
-}) {
+}: ShiftScrollForwardArgs): ScrollData {
   const { offset, firstIndex } = findNextFirstIndexAndOffset({
     startIndex, startScroll: startOffset, targetScroll, totalCount, sizes, defaultSize, overscroll,
   });
@@ -219,9 +276,20 @@ function shiftScrollForward({
   return { offset, visibleIndexes };
 }
 
+interface ShiftScrollArgs {
+  prevScrollData: ScrollData;
+  prevScroll: number;
+  sizes: number[];
+  scroll: number;
+  containerSize: number;
+  totalCount: number;
+  defaultSize: number;
+  overscroll?: number;
+}
+
 export function shiftScroll({
   prevScrollData, prevScroll, sizes, scroll, containerSize, totalCount, defaultSize, overscroll = 0,
-}) {
+}: ShiftScrollArgs) {
   const scrollDiff = scroll - prevScroll;
   const firstPrevIndex = prevScrollData.visibleIndexes[0];
 
@@ -232,7 +300,6 @@ export function shiftScroll({
       targetScroll: scroll,
       sizes,
       defaultSize,
-      scroll,
       containerSize,
       totalCount,
       overscroll,
@@ -254,46 +321,35 @@ export function shiftScroll({
   return prevScrollData;
 }
 
+interface GetCellPositionArgs {
+  sizes: number[];
+  index: number;
+  defaultSize: number;
+}
+
 /**
  * Calculates cell position (top or left absolute position)
- * @param {Object} options
- * @param {number[]} options.sizes
- * @param {number} options.index
- * @param {number} options.defaultSize
- * @returns {number}
  */
-export function getCellPosition({ sizes, index, defaultSize }) {
+export function getCellPosition({ sizes, index, defaultSize }: GetCellPositionArgs) {
   return sizes && sizes.length && [...new Array(index).keys()].reduce((acc, key, index) => {
     const curSize = sizes[index] || defaultSize;
     return acc + curSize;
   }, 0);
 }
 
-/**
- * Calculates cells size
- * @param {Object} options
- * @param {number[]} options.sizes
- * @param {number} options.defaultSize
- * @returns {number}
- */
+interface GetCellsSizeArgs {
+  startIndex?: number;
+  sizes: number[];
+  count: number;
+  defaultSize: number;
+}
+
 export function getCellsSize({
   startIndex = 0, sizes, count, defaultSize,
-}) {
+}: GetCellsSizeArgs) {
   if (!count) return 0;
   return sizes && sizes.length ? [...new Array(count).keys()].reduce((acc, key, index) => {
     const curSize = sizes[index + startIndex] || defaultSize;
     return acc + curSize;
   }, 0) : count * defaultSize;
 }
-
-/**
- * Gets items from the source values
- * @function
- * @param {Object[]} value
- * @param {number} page
- * @param {number} itemsPerPage
- * @returns {Object[]}
- */
-export const loadPage = (value, page, itemsPerPage) => (
-  value.slice(page * itemsPerPage, (page + 1) * itemsPerPage)
-);

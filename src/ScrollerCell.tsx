@@ -1,13 +1,25 @@
-import React, { useContext, forwardRef } from 'react';
+import React, { useContext } from 'react';
 import ScrollerContext from './ScrollerContext';
 
-const ScrollerCell = React.memo(forwardRef(({
+export interface ScrollerCellComponentProps {
+  value: any;
+  style: React.CSSProperties;
+  rowIndex?: number;
+  columnIndex?: number;
+}
+
+export interface ScrollerCellProps extends React.HTMLAttributes<HTMLElement> {
+  rowIndex: number;
+  columnIndex?: number;
+  Component?: React.FC<ScrollerCellComponentProps>;
+}
+
+const ScrollerCell: React.FC<ScrollerCellProps> = React.memo(({
   style,
   rowIndex,
   columnIndex,
-  Component = 'div',
-  ...props
-}, ref) => {
+  Component,
+}) => {
   const {
     value,
     defaultColumnWidth,
@@ -18,20 +30,18 @@ const ScrollerCell = React.memo(forwardRef(({
 
   const width = columnsSizes[columnIndex] || defaultColumnWidth;
   const height = rowsSizes[rowIndex] || defaultRowHeight;
-  const nextStyle = { ...style, height, width };
+  const nextStyle = { height, width, ...style };
   const rowValue = value[rowIndex];
   const cellValue = columnIndex !== undefined && rowValue && rowValue[columnIndex];
 
   return (
     <Component
-      ref={ref}
       style={nextStyle}
       value={cellValue || rowValue}
       rowIndex={rowIndex}
       columnIndex={columnIndex}
-      {...props}
     />
   );
-}));
+});
 
 export default ScrollerCell;
