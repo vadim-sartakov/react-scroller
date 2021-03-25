@@ -142,19 +142,6 @@ export function getScrollDataWithDefaultSize({
   return { offset, visibleIndexes };
 }
 
-interface GetCustomSizesTotalArgs {
-  sizes: number[];
-  totalCount: number;
-  defaultSize: number;
-}
-
-export function getCustomSizesTotal({ sizes, totalCount, defaultSize }: GetCustomSizesTotalArgs) {
-  return [...new Array(totalCount).keys()].reduce<number>((acc, key) => {
-    const curSize = sizes[key] || defaultSize;
-    return acc + curSize;
-  }, 0);
-}
-
 interface GetScrollDataWithCustomSizesArgs {
   scroll: number;
   sizes: number[];
@@ -319,6 +306,19 @@ export function shiftScroll({
     return { offset, visibleIndexes };
   }
   return prevScrollData;
+}
+
+interface GetCustomSizesTotalArgs {
+  sizes: number[];
+  totalCount: number;
+  defaultSize: number;
+}
+
+export function getCustomSizesTotal({ sizes, totalCount, defaultSize }: GetCustomSizesTotalArgs) {
+  return [...new Array(totalCount).keys()].reduce<number>((acc, key) => {
+    const curSize = sizes[key] || defaultSize;
+    return acc + curSize;
+  }, 0);
 }
 
 interface GetCellPositionArgs {

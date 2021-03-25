@@ -15,6 +15,7 @@
     "no-console": "warn",
     "react/prop-types": "off",
     "no-plusplus": "off",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "@typescript-eslint/lines-between-class-members": "off"
   }
 }
