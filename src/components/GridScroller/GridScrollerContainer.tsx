@@ -1,11 +1,11 @@
 import React, { useMemo, forwardRef } from 'react';
-import ScrollerContext from './ScrollerContext';
-import { ScrollerPropsBase } from './types';
+import GridScrollerContext from './GridScrollerContext';
+import { GridScrollerProps } from './types';
 
 const defaultArray: number[] = [];
 
-export interface ScrollContainerProps extends
-  React.HTMLAttributes<HTMLDivElement>, Pick<ScrollerPropsBase,
+export interface GridScrollerContainerProps extends
+  React.HTMLAttributes<HTMLDivElement>, Pick<GridScrollerProps,
   'value'
   | 'width'
   | 'height'
@@ -14,7 +14,7 @@ export interface ScrollContainerProps extends
   | 'rowsSizes'
   | 'columnsSizes'> {}
 
-const ScrollerContainer = forwardRef<HTMLDivElement, ScrollContainerProps>(({
+const GridScrollerContainer = forwardRef<HTMLDivElement, GridScrollerContainerProps>(({
   value,
   width,
   height,
@@ -35,7 +35,7 @@ const ScrollerContainer = forwardRef<HTMLDivElement, ScrollContainerProps>(({
   }), [value, defaultRowHeight, defaultColumnWidth, rowsSizes, columnsSizes]);
 
   return (
-    <ScrollerContext.Provider value={contextValue}>
+    <GridScrollerContext.Provider value={contextValue}>
       <div
         ref={ref}
         style={{
@@ -47,8 +47,8 @@ const ScrollerContainer = forwardRef<HTMLDivElement, ScrollContainerProps>(({
         onScroll={onScroll}
         {...props}
       />
-    </ScrollerContext.Provider>
+    </GridScrollerContext.Provider>
   );
 });
 
-export default ScrollerContainer;
+export default GridScrollerContainer;

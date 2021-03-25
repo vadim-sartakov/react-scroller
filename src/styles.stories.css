@@ -1,9 +1,0 @@
-.cell {
-  background-color: #fff;
-  border-bottom: solid 1px grey;
-  border-right: solid 1px grey;
-}
-
-.row {
-  display: flex;
-}

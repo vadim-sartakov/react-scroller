@@ -1,87 +1,67 @@
 import React, { forwardRef } from 'react';
-import { ScrollerPropsBase } from './types';
-import { ScrollerCellComponentProps } from './ScrollerCell';
-import useScroller from './useScroller';
-import ScrollerContainer from './ScrollerContainer';
-import renderCells from './renderCells';
+import { ListScrollerProps } from './types';
+import { ListScrollerRowComponentProps } from './ListScrollerRow';
+import useListScroller from './useListScroller';
+import ListScrollerContainer from './ListScrollerContainer';
+import renderRows from './renderRows';
 
 const defaultArray: number[] = [];
 
-export interface ScrollerProps extends ScrollerPropsBase, React.HTMLAttributes<HTMLDivElement> {
-  RowComponent?: string | React.FC;
+export interface ScrollerProps extends ListScrollerProps, React.HTMLAttributes<HTMLDivElement> {
+  RowComponent: React.FC<ListScrollerRowComponentProps>;
   rowComponentProps?: Object;
-  CellComponent: React.FC<ScrollerCellComponentProps>;
 }
 
-const Scroller = forwardRef<HTMLDivElement, ScrollerProps>(({
+const ListScroller = forwardRef<HTMLDivElement, ScrollerProps>(({
   style,
   className,
-  width,
   height,
   rowsSizes = defaultArray,
-  columnsSizes = defaultArray,
   value,
   defaultRowHeight,
-  defaultColumnWidth,
   totalRows,
-  totalColumns,
   overscroll,
   focusedCell,
   RowComponent,
   rowComponentProps,
-  CellComponent,
   rowsScrollData,
   onRowsScrollDataChange,
-  columnsScrollData,
-  onColumnsScrollDataChange,
   ...props
 }, ref) => {
   const {
     visibleRowsIndexes,
-    visibleColumnsIndexes,
     onScroll,
     scrollAreaStyle,
     visibleAreaStyle,
     scrollerContainerRef,
-  } = useScroller({
+  } = useListScroller({
     scrollerContainerRef: typeof ref === 'function' ? undefined : ref,
     value,
     height,
-    width,
     defaultRowHeight,
-    defaultColumnWidth,
     totalRows,
-    totalColumns,
     rowsSizes,
-    columnsSizes,
     overscroll,
     focusedCell,
     rowsScrollData,
     onRowsScrollDataChange,
-    columnsScrollData,
-    onColumnsScrollDataChange,
   });
 
-  const elements = renderCells({
+  const elements = renderRows({
     visibleRowsIndexes,
-    visibleColumnsIndexes,
     RowComponent,
     rowComponentProps,
-    CellComponent,
   });
 
   return (
-    <ScrollerContainer
+    <ListScrollerContainer
       ref={scrollerContainerRef}
       style={style}
       className={className}
       value={value}
       rowsSizes={rowsSizes}
-      columnsSizes={columnsSizes}
       defaultRowHeight={defaultRowHeight}
-      defaultColumnWidth={defaultColumnWidth}
       onScroll={onScroll}
-      width={width}
       height={height}
       {...props}
     >
@@ -90,8 +70,8 @@ const Scroller = forwardRef<HTMLDivElement, ScrollerProps>(({
           {elements}
         </div>
       </div>
-    </ScrollerContainer>
+    </ListScrollerContainer>
   );
 });
 
-export default Scroller;
+export default ListScroller;

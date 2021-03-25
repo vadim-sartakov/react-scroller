@@ -1,24 +1,26 @@
 import React, { useContext } from 'react';
-import ScrollerContext from './ScrollerContext';
+import ScrollerContext from './GridScrollerContext';
 
-export interface ScrollerCellComponentProps {
+export interface GridScrollerCellComponentProps {
   value: any;
   style: React.CSSProperties;
   rowIndex?: number;
   columnIndex?: number;
 }
 
-export interface ScrollerCellProps extends React.HTMLAttributes<HTMLElement> {
+export interface GridScrollerCellProps extends React.HTMLAttributes<HTMLElement> {
   rowIndex: number;
   columnIndex?: number;
-  Component?: React.FC<ScrollerCellComponentProps>;
+  Component?: React.FC<GridScrollerCellComponentProps>;
+  componentProps?: Object;
 }
 
-const ScrollerCell: React.FC<ScrollerCellProps> = React.memo(({
+const GridScrollerCell: React.FC<GridScrollerCellProps> = React.memo(({
   style,
   rowIndex,
   columnIndex,
   Component,
+  componentProps,
 }) => {
   const {
     value,
@@ -40,8 +42,9 @@ const ScrollerCell: React.FC<ScrollerCellProps> = React.memo(({
       value={cellValue || rowValue}
       rowIndex={rowIndex}
       columnIndex={columnIndex}
+      {...componentProps}
     />
   );
 });
 
-export default ScrollerCell;
+export default GridScrollerCell;

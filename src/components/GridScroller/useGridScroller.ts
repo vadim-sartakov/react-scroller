@@ -5,14 +5,14 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
-import { ScrollerPropsBase } from 'types';
-import { Scroller } from 'utils';
+import Scroller from 'Scroller';
+import { GridScrollerProps } from './types';
 
-export interface UseScrollerProps extends ScrollerPropsBase {
+export interface UseGridScrollerProps extends GridScrollerProps {
   scrollerContainerRef?: React.MutableRefObject<HTMLDivElement>;
 }
 
-export interface UseScrollerResult {
+export interface UseGridScrollerResult {
   scrollerContainerRef: React.MutableRefObject<HTMLDivElement>;
   visibleRowsIndexes: number[];
   visibleColumnsIndexes: number[];
@@ -23,7 +23,7 @@ export interface UseScrollerResult {
 
 const defaultArray: number[] = [];
 
-function useScroller({
+function useGridScroller({
   defaultRowHeight,
   defaultColumnWidth,
   totalRows,
@@ -33,19 +33,14 @@ function useScroller({
   width,
   height,
   overscroll = 0,
-  focusedCell,
   scrollerContainerRef: scrollerContainerRefProp,
   rowsScrollData: rowsScrollDataProp,
   onRowsScrollDataChange: onRowsScrollDataChangeProp,
   columnsScrollData: columnsScrollDataProp,
   onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
-}: UseScrollerProps): UseScrollerResult {
+}: UseGridScrollerProps): UseGridScrollerResult {
   const scrollerContainerRefLocal = useRef<HTMLDivElement>();
   const scrollerContainerRef = scrollerContainerRefProp || scrollerContainerRefLocal;
-
-  useEffect(() => {
-    // TODO: Implement focused cell
-  }, [focusedCell]);
 
   const rowsScrollerRef = useRef(new Scroller({
     defaultSize: defaultRowHeight,
@@ -72,17 +67,13 @@ function useScroller({
   const onRowsScrollDataChange = onRowsScrollDataChangeProp || setRowsScrollDataState;
 
   const [columnsScrollDataState, setColumnsScrollDataState] = useState(
-    totalColumns
-      ? columnsScrollerRef.current.scrollData
-      : undefined,
+    columnsScrollerRef.current.scrollData,
   );
   const columnsScrollData = columnsScrollDataProp || columnsScrollDataState;
   const onColumnsScrollDataChange = onColumnsScrollDataChangeProp || setColumnsScrollDataState;
 
   const [coverHeight, setCoverHeight] = useState(rowsScrollerRef.current.getTotalSize());
-  const [coverWidth, setCoverWidth] = useState(
-    totalColumns && columnsScrollerRef.current.getTotalSize(),
-  );
+  const [coverWidth, setCoverWidth] = useState(columnsScrollerRef.current.getTotalSize());
 
   useEffect(() => {
     rowsScrollerRef.current.initialize({
@@ -105,13 +96,12 @@ function useScroller({
   ]);
 
   useEffect(() => {
-    if (!totalColumns) return;
     columnsScrollerRef.current.initialize({
       scroll: scrollerContainerRef.current.scrollLeft,
       defaultSize: defaultColumnWidth,
       totalCount: totalColumns,
       overscroll,
-      containerSize: rowsScrollerRef.current.containerSize,
+      containerSize: columnsScrollerRef.current.containerSize,
       sizes: columnsSizes,
     });
     onColumnsScrollDataChange(columnsScrollerRef.current.scrollData);
@@ -138,9 +128,7 @@ function useScroller({
         onRowsScrollDataChange(nextRowsScrollData);
       }
 
-      if (
-        totalColumns && columnsScrollerRef.current.containerSize !== scrollerContainerRect.width
-      ) {
+      if (columnsScrollerRef.current.containerSize !== scrollerContainerRect.width) {
         const nextColumnsScrollData = columnsScrollerRef.current.updateContainerSize(
           scrollerContainerRect.width,
         ).scrollData;
@@ -180,12 +168,11 @@ function useScroller({
       .scrollData;
     onRowsScrollDataChange(nextRowsScrollData);
 
-    if (!totalColumns || columnsScrollerRef.current.scroll === e.currentTarget.scrollLeft) return;
     const nextColumnsScrollData = columnsScrollerRef.current
       .scrollTo(e.currentTarget.scrollLeft)
       .scrollData;
     onColumnsScrollDataChange(nextColumnsScrollData);
-  }, [onColumnsScrollDataChange, onRowsScrollDataChange, totalColumns]);
+  }, [onColumnsScrollDataChange, onRowsScrollDataChange]);
 
   const scrollAreaStyle: React.CSSProperties = useMemo(() => ({
     height: coverHeight,
@@ -209,4 +196,4 @@ function useScroller({
   };
 }
 
-export default useScroller;
+export default useGridScroller;

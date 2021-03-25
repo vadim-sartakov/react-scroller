@@ -1,22 +1,27 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import {
-  generateListValues,
+  generateGridValues,
   generateRandomSizes,
 } from 'test/utils';
-import Scroller from './Scroller';
-import { ScrollerCellComponentProps } from './ScrollerCell';
-import './styles.stories.css';
+import GridScroller from './GridScroller';
+import { GridScrollerCellComponentProps } from './GridScrollerCell';
 
 export default {
-  component: Scroller,
-  title: 'List',
+  component: GridScroller,
+  title: 'Scroller/Grid',
   argTypes: {
     totalRows: {
       defaultValue: 1000,
     },
+    totalColumns: {
+      defaultValue: 50,
+    },
     defaultRowHeight: {
       defaultValue: 40,
+    },
+    defaultColumnWidth: {
+      defaultValue: 120,
     },
     randomSizes: {
       control: {
@@ -27,7 +32,6 @@ export default {
     overscroll: {
       defaultValue: 2,
     },
-    defaultColumnWidth: { control: false },
     height: { control: false },
     width: { control: false },
     rowsScrollData: { control: false },
@@ -40,13 +44,12 @@ export default {
     rowComponentProps: { control: false },
     CellComponent: { control: false },
     value: { control: false },
-    totalColumns: { control: false },
     focusedCell: { control: false },
   },
 } as Meta;
 
-const ListCellComponent: React.FC<ScrollerCellComponentProps> = ({ value, style }) => (
-  <div style={style}>
+const GridCellComponent: React.FC<GridScrollerCellComponentProps> = ({ value, style }) => (
+  <div className="cell" style={style}>
     {value || 'Loading...'}
   </div>
 );
@@ -54,31 +57,43 @@ const ListCellComponent: React.FC<ScrollerCellComponentProps> = ({ value, style 
 interface ScrollerListProps {
   randomSizes?: boolean;
   totalRows: number;
+  totalColumns: number;
   defaultRowHeight: number;
+  defaultColumnWidth: number;
   overscroll?: number;
   height?: string | number;
+  width?: string | number;
 }
 
-const ListTemplate: Story<ScrollerListProps> = ({
+const GridTemplate: Story<ScrollerListProps> = ({
   randomSizes,
   totalRows = 1000,
+  totalColumns = 50,
   overscroll = 0,
   height = '100vh',
+  width,
   defaultRowHeight = 40,
+  defaultColumnWidth = 120,
 }) => {
-  const listValue = generateListValues(totalRows);
-  const rowsSizes = randomSizes ? generateRandomSizes(listValue.length, 40, 120) : [];
+  const gridValue = generateGridValues(totalRows, totalColumns);
+  const rowsSizes = randomSizes ? generateRandomSizes(gridValue.length, 40, 120) : [];
+  const columnsSizes = randomSizes ? generateRandomSizes(gridValue[0].length, 80, 250) : [];
   return (
-    <Scroller
-      CellComponent={ListCellComponent}
-      value={listValue}
+    <GridScroller
+      CellComponent={GridCellComponent}
+      value={gridValue}
       rowsSizes={rowsSizes}
+      columnsSizes={columnsSizes}
       overscroll={overscroll}
       height={height}
       defaultRowHeight={defaultRowHeight}
-      totalRows={listValue.length}
+      defaultColumnWidth={defaultColumnWidth}
+      totalRows={gridValue.length}
+      totalColumns={gridValue[0].length}
+      width={width}
+      rowComponentProps={{ className: 'row' }}
     />
   );
 };
 
-export const list = ListTemplate.bind({});
+export const grid = GridTemplate.bind({});
