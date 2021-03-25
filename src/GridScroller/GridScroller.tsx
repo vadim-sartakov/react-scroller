@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { GridScrollerProps } from './types';
+import { GridScrollerProps as GridScrollerPropsBase } from './types';
 import { GridScrollerCellComponentProps } from './GridScrollerCell';
 import useGridScroller from './useGridScroller';
 import GridScrollerContainer from './GridScrollerContainer';
@@ -7,14 +7,15 @@ import renderCells from './renderCells';
 
 const defaultArray: number[] = [];
 
-export interface ScrollerProps extends GridScrollerProps, React.HTMLAttributes<HTMLDivElement> {
+export interface GridScrollerProps extends
+  GridScrollerPropsBase, React.HTMLAttributes<HTMLDivElement> {
   RowComponent?: string | React.FC;
   rowComponentProps?: Object;
   CellComponent: React.FC<GridScrollerCellComponentProps>;
   cellComponentProps?: Object;
 }
 
-const GridScroller = forwardRef<HTMLDivElement, ScrollerProps>(({
+const GridScroller = forwardRef<HTMLDivElement, GridScrollerProps>(({
   style,
   className,
   width,

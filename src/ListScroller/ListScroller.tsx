@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { ListScrollerProps } from './types';
+import { ListScrollerProps as ListScrollerPropsBase } from './types';
 import { ListScrollerRowComponentProps } from './ListScrollerRow';
 import useListScroller from './useListScroller';
 import ListScrollerContainer from './ListScrollerContainer';
@@ -7,12 +7,13 @@ import renderRows from './renderRows';
 
 const defaultArray: number[] = [];
 
-export interface ScrollerProps extends ListScrollerProps, React.HTMLAttributes<HTMLDivElement> {
+export interface ListScrollerProps extends
+  ListScrollerPropsBase, React.HTMLAttributes<HTMLDivElement> {
   RowComponent: React.FC<ListScrollerRowComponentProps>;
   rowComponentProps?: Object;
 }
 
-const ListScroller = forwardRef<HTMLDivElement, ScrollerProps>(({
+const ListScroller = forwardRef<HTMLDivElement, ListScrollerProps>(({
   style,
   className,
   height,

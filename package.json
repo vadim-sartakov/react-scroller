@@ -1,8 +1,8 @@
 {
   "name": "@vadim-sartakov/react-scroller",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "types": "lib/index.ts",
   "repository": "https://github.com/vadim-sartakov/react-scroller",
   "homepage": "https://github.com/vadim-sartakov/react-scroller#readme",
   "author": "Vadim Sartakov",
