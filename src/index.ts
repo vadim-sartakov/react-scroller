@@ -1,2 +1,2 @@
-export * as ListScroller from './ListScroller';
-export * as GridScroller from './GridScroller';
+export * from './ListScroller';
+export * from './GridScroller';

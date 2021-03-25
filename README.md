@@ -16,21 +16,24 @@ Live examples available [here](https://vadim-sartakov.github.io/react-scroller/s
 ```javascript
 import { ListScroller } from '@vadim-sartakov/react-scroller';
 
-const ListCellComponent = ({ value, style }) => (
+const TOTAL_ROWS = 1000;
+
+const ListRowComponent = ({ value, style }) => (
   <div style={style}>
     {value}
   </div>
 );
 
-const listValue = [...new Array(1000).keys()];
+const listValue = [...new Array(TOTAL_ROWS).keys()];
 
 const element = (
   <ListScroller
     defaultRowHeight={40}
-    totalRows={listValue.length}
+    totalRows={TOTAL_ROWS}
     value={listValue}
     height="100vh"
     overscroll={2}
+    RowComponent={ListRowComponent}
   />
 );
 ```
@@ -52,6 +55,9 @@ const element = (
 ```javascript
 import { GridScroller } from '@vadim-sartakov/react-scroller';
 
+const TOTAL_ROWS = 1000;
+const TOTAL_COLUMNS = 50;
+
 const GridCellComponent = ({ value, style }) => (
   <div style={style}>
     {value}
@@ -59,16 +65,20 @@ const GridCellComponent = ({ value, style }) => (
 );
 
 // gridValue is a simple array of arrays
+const gridValue = [...new Array(TOTAL_ROWS).keys()]
+  .map(row => [...new Array(TOTAL_COLUMNS).keys()]);
+
 const element = (
-  <Scroller
+  <GridScroller
     defaultRowHeight={40}
     defaultColumnWidth={150}
-    totalRows={gridValue.length}
-    totalColumns={gridValue[0].length}
+    totalRows={TOTAL_ROWS}
+    totalColumns={TOTAL_COLUMNS}
     value={gridValue}
     width="100%"
     height="100vh"
     overscroll={2}
+    CellComponent={GridCellComponent}
   />
 );
 ```
