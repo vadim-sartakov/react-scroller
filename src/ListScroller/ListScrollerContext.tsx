@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
-export interface ListScrollerContextProps {
-  value: any[];
+export interface ListScrollerContextProps<T = any> {
+  value: T[];
   defaultRowHeight: number;
   rowsSizes?: number[];
 }

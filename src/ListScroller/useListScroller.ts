@@ -8,9 +8,7 @@ import React, {
 import Scroller from 'utils/Scroller';
 import { ListScrollerProps } from './types';
 
-export interface UseListScrollerProps extends ListScrollerProps {
-  scrollerContainerRef?: React.MutableRefObject<HTMLDivElement>;
-}
+export interface UseListScrollerProps<T> extends Omit<ListScrollerProps<T>, 'RowComponent' | 'rowComponentProps'> {}
 
 export interface UseListScrollerResult {
   scrollerContainerRef: React.MutableRefObject<HTMLDivElement>;
@@ -22,7 +20,7 @@ export interface UseListScrollerResult {
 
 const defaultArray: number[] = [];
 
-function useListScroller({
+function useListScroller<T>({
   defaultRowHeight,
   totalRows,
   rowsSizes = defaultArray,
@@ -31,7 +29,7 @@ function useListScroller({
   scrollerContainerRef: scrollerContainerRefProp,
   rowsScrollData: rowsScrollDataProp,
   onRowsScrollDataChange: onRowsScrollDataChangeProp,
-}: UseListScrollerProps): UseListScrollerResult {
+}: UseListScrollerProps<T>): UseListScrollerResult {
   const scrollerContainerRefLocal = useRef<HTMLDivElement>();
   const scrollerContainerRef = scrollerContainerRefProp || scrollerContainerRefLocal;
 

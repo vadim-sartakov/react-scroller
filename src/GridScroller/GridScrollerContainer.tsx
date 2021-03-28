@@ -1,20 +1,22 @@
-import React, { useMemo, forwardRef } from 'react';
+import React, { useMemo } from 'react';
 import GridScrollerContext from './GridScrollerContext';
 import { GridScrollerProps } from './types';
 
 const defaultArray: number[] = [];
 
-export interface GridScrollerContainerProps extends
-  React.HTMLAttributes<HTMLDivElement>, Pick<GridScrollerProps,
+export interface GridScrollerContainerProps<T> extends
+  React.HTMLAttributes<HTMLDivElement>, Pick<GridScrollerProps<T>,
   'value'
   | 'width'
   | 'height'
   | 'defaultRowHeight'
   | 'defaultColumnWidth'
   | 'rowsSizes'
-  | 'columnsSizes'> {}
+  | 'columnsSizes'> {
+  containerRef?: React.Ref<HTMLDivElement>,
+}
 
-const GridScrollerContainer = forwardRef<HTMLDivElement, GridScrollerContainerProps>(({
+const GridScrollerContainer = <T extends unknown>({
   value,
   width,
   height,
@@ -24,8 +26,9 @@ const GridScrollerContainer = forwardRef<HTMLDivElement, GridScrollerContainerPr
   columnsSizes = defaultArray,
   onScroll,
   style,
+  containerRef,
   ...props
-}, ref) => {
+}: GridScrollerContainerProps<T>) => {
   const contextValue = useMemo(() => ({
     value,
     defaultRowHeight,
@@ -37,7 +40,7 @@ const GridScrollerContainer = forwardRef<HTMLDivElement, GridScrollerContainerPr
   return (
     <GridScrollerContext.Provider value={contextValue}>
       <div
-        ref={ref}
+        ref={containerRef}
         style={{
           width,
           height,
@@ -49,6 +52,6 @@ const GridScrollerContainer = forwardRef<HTMLDivElement, GridScrollerContainerPr
       />
     </GridScrollerContext.Provider>
   );
-});
+};
 
 export default GridScrollerContainer;

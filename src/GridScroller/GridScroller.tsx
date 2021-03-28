@@ -1,23 +1,12 @@
-import React, { forwardRef } from 'react';
-import { GridScrollerProps as GridScrollerPropsBase } from './types';
-import { GridScrollerCellComponentProps } from './GridScrollerCell';
+import React from 'react';
+import { GridScrollerProps } from './types';
 import useGridScroller from './useGridScroller';
 import GridScrollerContainer from './GridScrollerContainer';
 import renderCells from './renderCells';
 
 const defaultArray: number[] = [];
 
-export interface GridScrollerProps extends
-  GridScrollerPropsBase, React.HTMLAttributes<HTMLDivElement> {
-  RowComponent?: string | React.FC;
-  rowComponentProps?: Object;
-  CellComponent: React.FC<GridScrollerCellComponentProps>;
-  cellComponentProps?: Object;
-}
-
-const GridScroller = forwardRef<HTMLDivElement, GridScrollerProps>(({
-  style,
-  className,
+const GridScroller = <T extends unknown>({
   width,
   height,
   rowsSizes = defaultArray,
@@ -37,8 +26,9 @@ const GridScroller = forwardRef<HTMLDivElement, GridScrollerProps>(({
   onRowsScrollDataChange,
   columnsScrollData,
   onColumnsScrollDataChange,
-  ...props
-}, ref) => {
+  scrollerContainerRef: scrollerContainerRefProp,
+  scrollerContainerProps,
+}: GridScrollerProps<T>): ReturnType<React.FC> => {
   const {
     visibleRowsIndexes,
     visibleColumnsIndexes,
@@ -47,7 +37,7 @@ const GridScroller = forwardRef<HTMLDivElement, GridScrollerProps>(({
     visibleAreaStyle,
     scrollerContainerRef,
   } = useGridScroller({
-    scrollerContainerRef: typeof ref === 'function' ? undefined : ref,
+    scrollerContainerRef: scrollerContainerRefProp,
     value,
     height,
     width,
@@ -76,9 +66,7 @@ const GridScroller = forwardRef<HTMLDivElement, GridScrollerProps>(({
 
   return (
     <GridScrollerContainer
-      ref={scrollerContainerRef}
-      style={style}
-      className={className}
+      containerRef={scrollerContainerRef}
       value={value}
       rowsSizes={rowsSizes}
       columnsSizes={columnsSizes}
@@ -87,7 +75,7 @@ const GridScroller = forwardRef<HTMLDivElement, GridScrollerProps>(({
       onScroll={onScroll}
       width={width}
       height={height}
-      {...props}
+      {...scrollerContainerProps}
     >
       <div style={scrollAreaStyle}>
         <div style={visibleAreaStyle}>
@@ -96,6 +84,6 @@ const GridScroller = forwardRef<HTMLDivElement, GridScrollerProps>(({
       </div>
     </GridScrollerContainer>
   );
-});
+};
 
 export default GridScroller;

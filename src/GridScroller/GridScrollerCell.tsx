@@ -1,27 +1,27 @@
 import React, { useContext } from 'react';
 import ScrollerContext from './GridScrollerContext';
 
-export interface GridScrollerCellComponentProps {
-  value: any;
+export interface GridScrollerCellComponentProps<T> {
+  value: T;
   style: React.CSSProperties;
   rowIndex?: number;
   columnIndex?: number;
 }
 
-export interface GridScrollerCellProps extends React.HTMLAttributes<HTMLElement> {
+export interface GridScrollerCellProps<T> extends React.HTMLAttributes<HTMLElement> {
   rowIndex: number;
   columnIndex?: number;
-  Component?: React.FC<GridScrollerCellComponentProps>;
+  Component?: React.FC<GridScrollerCellComponentProps<T>>;
   componentProps?: Object;
 }
 
-const GridScrollerCell: React.FC<GridScrollerCellProps> = React.memo(({
+const GridScrollerCell = <T extends unknown>({
   style,
   rowIndex,
   columnIndex,
   Component,
   componentProps,
-}) => {
+}: GridScrollerCellProps<T>): ReturnType<React.FC> => {
   const {
     value,
     defaultColumnWidth,
@@ -45,6 +45,8 @@ const GridScrollerCell: React.FC<GridScrollerCellProps> = React.memo(({
       {...componentProps}
     />
   );
-});
+};
 
-export default GridScrollerCell;
+const Wrapper = React.memo(GridScrollerCell) as typeof GridScrollerCell;
+
+export default Wrapper;

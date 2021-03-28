@@ -1,17 +1,17 @@
 import React from 'react';
 import ListScrollerRow, { ListScrollerRowComponentProps } from './ListScrollerRow';
 
-export interface RenderRowsArgs {
+export interface RenderRowsArgs<T> {
   visibleRowsIndexes: number[];
-  RowComponent: React.FC<ListScrollerRowComponentProps>;
+  RowComponent: React.FC<ListScrollerRowComponentProps<T>>;
   rowComponentProps: Object;
 }
 
-function renderRows({
+function renderRows<T>({
   visibleRowsIndexes,
   RowComponent,
   rowComponentProps,
-}: RenderRowsArgs) {
+}: RenderRowsArgs<T>) {
   const elements = visibleRowsIndexes.map((rowIndex) => (
     <ListScrollerRow
       key={rowIndex}

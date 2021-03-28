@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
-export interface GridScrollerContextProps {
-  value: any[][];
+export interface GridScrollerContextProps<T = any> {
+  value: T[][];
   defaultRowHeight: number;
   defaultColumnWidth: number;
   rowsSizes?: number[];

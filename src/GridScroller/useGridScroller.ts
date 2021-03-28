@@ -8,9 +8,13 @@ import React, {
 import Scroller from 'utils/Scroller';
 import { GridScrollerProps } from './types';
 
-export interface UseGridScrollerProps extends GridScrollerProps {
-  scrollerContainerRef?: React.MutableRefObject<HTMLDivElement>;
-}
+export interface UseGridScrollerProps<T> extends Omit<
+GridScrollerProps<T>,
+'RowComponent'
+| 'rowComponentProps'
+| 'CellComponent'
+| 'cellComponentProps'
+> {}
 
 export interface UseGridScrollerResult {
   scrollerContainerRef: React.MutableRefObject<HTMLDivElement>;
@@ -23,7 +27,7 @@ export interface UseGridScrollerResult {
 
 const defaultArray: number[] = [];
 
-function useGridScroller({
+function useGridScroller<T>({
   defaultRowHeight,
   defaultColumnWidth,
   totalRows,
@@ -38,7 +42,7 @@ function useGridScroller({
   onRowsScrollDataChange: onRowsScrollDataChangeProp,
   columnsScrollData: columnsScrollDataProp,
   onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
-}: UseGridScrollerProps): UseGridScrollerResult {
+}: UseGridScrollerProps<T>): UseGridScrollerResult {
   const scrollerContainerRefLocal = useRef<HTMLDivElement>();
   const scrollerContainerRef = scrollerContainerRefProp || scrollerContainerRefLocal;
 

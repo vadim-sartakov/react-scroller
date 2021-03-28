@@ -1,23 +1,23 @@
 import React from 'react';
 import GridScrollerCell, { GridScrollerCellComponentProps } from './GridScrollerCell';
 
-export interface RenderCellArgs {
+export interface RenderCellArgs<T> {
   visibleRowsIndexes: number[];
   visibleColumnsIndexes: number[];
   RowComponent: string | React.FC;
   rowComponentProps: Object;
-  CellComponent: React.FC<GridScrollerCellComponentProps>;
+  CellComponent: React.FC<GridScrollerCellComponentProps<T>>;
   cellComponentProps: Object;
 }
 
-function renderCells({
+function renderCells<T>({
   visibleRowsIndexes,
   visibleColumnsIndexes,
   RowComponent = 'div',
   rowComponentProps,
   CellComponent,
   cellComponentProps,
-}: RenderCellArgs) {
+}: RenderCellArgs<T>) {
   const elements = visibleRowsIndexes.map((rowIndex) => {
     const columnsElements = visibleColumnsIndexes.map(
       (columnIndex) => (

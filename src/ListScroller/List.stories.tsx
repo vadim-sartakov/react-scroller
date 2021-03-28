@@ -37,7 +37,7 @@ export default {
   },
 } as Meta;
 
-const RowComponent: React.FC<ListScrollerRowComponentProps> = ({ value, style }) => (
+const RowComponent: React.FC<ListScrollerRowComponentProps<string>> = ({ value, style }) => (
   <div style={style}>
     {value || 'Loading...'}
   </div>

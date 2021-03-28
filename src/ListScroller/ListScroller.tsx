@@ -1,23 +1,16 @@
-import React, { forwardRef } from 'react';
-import { ListScrollerProps as ListScrollerPropsBase } from './types';
-import { ListScrollerRowComponentProps } from './ListScrollerRow';
+import React from 'react';
+import { ListScrollerProps } from './types';
 import useListScroller from './useListScroller';
 import ListScrollerContainer from './ListScrollerContainer';
 import renderRows from './renderRows';
 
 const defaultArray: number[] = [];
 
-export interface ListScrollerProps extends
-  ListScrollerPropsBase, React.HTMLAttributes<HTMLDivElement> {
-  RowComponent: React.FC<ListScrollerRowComponentProps>;
-  rowComponentProps?: Object;
-}
-
-const ListScroller = forwardRef<HTMLDivElement, ListScrollerProps>(({
-  style,
-  className,
+const ListScroller = <T extends unknown>({
   height,
   rowsSizes = defaultArray,
+  scrollerContainerRef: scrollerContainerRefProp,
+  scrollerContainerProps,
   value,
   defaultRowHeight,
   totalRows,
@@ -27,8 +20,7 @@ const ListScroller = forwardRef<HTMLDivElement, ListScrollerProps>(({
   rowComponentProps,
   rowsScrollData,
   onRowsScrollDataChange,
-  ...props
-}, ref) => {
+}: ListScrollerProps<T>): ReturnType<React.FC> => {
   const {
     visibleRowsIndexes,
     onScroll,
@@ -36,7 +28,7 @@ const ListScroller = forwardRef<HTMLDivElement, ListScrollerProps>(({
     visibleAreaStyle,
     scrollerContainerRef,
   } = useListScroller({
-    scrollerContainerRef: typeof ref === 'function' ? undefined : ref,
+    scrollerContainerRef: scrollerContainerRefProp,
     value,
     height,
     defaultRowHeight,
@@ -56,15 +48,13 @@ const ListScroller = forwardRef<HTMLDivElement, ListScrollerProps>(({
 
   return (
     <ListScrollerContainer
-      ref={scrollerContainerRef}
-      style={style}
-      className={className}
       value={value}
       rowsSizes={rowsSizes}
       defaultRowHeight={defaultRowHeight}
       onScroll={onScroll}
       height={height}
-      {...props}
+      containerRef={scrollerContainerRef}
+      {...scrollerContainerProps}
     >
       <div style={scrollAreaStyle}>
         <div style={visibleAreaStyle}>
@@ -73,6 +63,6 @@ const ListScroller = forwardRef<HTMLDivElement, ListScrollerProps>(({
       </div>
     </ListScrollerContainer>
   );
-});
+};
 
 export default ListScroller;

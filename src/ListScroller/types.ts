@@ -1,7 +1,8 @@
 import { ScrollData, ScrollerPropsBase } from 'types';
+import { ListScrollerRowComponentProps } from './ListScrollerRow';
 
-export interface ListScrollerProps extends ScrollerPropsBase {
-  value: any[];
+export interface ListScrollerProps<T> extends ScrollerPropsBase {
+  value: T[];
   defaultRowHeight: number;
   totalRows: number;
   rowsSizes?: number[];
@@ -10,5 +11,8 @@ export interface ListScrollerProps extends ScrollerPropsBase {
   /* Controllable scroll data */
   rowsScrollData?: ScrollData;
   onRowsScrollDataChange?: (scrollData: ScrollData) => void;
+  scrollerContainerRef?: React.MutableRefObject<HTMLDivElement>;
   focusedCell?: number;
+  RowComponent: React.FC<ListScrollerRowComponentProps<T>>;
+  rowComponentProps?: Object;
 }

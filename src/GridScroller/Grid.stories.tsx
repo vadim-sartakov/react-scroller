@@ -48,7 +48,7 @@ export default {
   },
 } as Meta;
 
-const GridCellComponent: React.FC<GridScrollerCellComponentProps> = ({ value, style }) => (
+const GridCellComponent: React.FC<GridScrollerCellComponentProps<string>> = ({ value, style }) => (
   <div className="cell" style={style}>
     {value || 'Loading...'}
   </div>
