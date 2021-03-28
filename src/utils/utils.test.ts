@@ -1,5 +1,4 @@
 import {
-  getItemsCountOnPage,
   getScrollDataWithDefaultSize,
   getScrollDataWithCustomSizes,
   shiftScroll,
@@ -13,16 +12,6 @@ const sizes = [20, 30, 50, 80, 20, 10, 50, 90, 40, 30]; // 420 - total size
 //             0   1   2   3   4   5   6   7   8   9  index
 
 describe('Scroller utils', () => {
-  describe('getItemsCountOnPage', () => {
-    it('should return items per page count on middle page', () => {
-      expect(getItemsCountOnPage(1, 10, 35)).toBe(10);
-    });
-
-    it('should return only remained items on last page', () => {
-      expect(getItemsCountOnPage(3, 10, 35)).toBe(5);
-    });
-  });
-
   describe('getScrollDataWithDefaultSize', () => {
     it('should return first visible indexes with default overscroll', () => {
       const result = getScrollDataWithDefaultSize({

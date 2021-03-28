@@ -1,16 +1,5 @@
 import { ScrollData } from 'types';
 
-export function getTotalPages(totalCount: number, itemsPerPage: number) {
-  return Math.ceil(totalCount / itemsPerPage);
-}
-
-export function getItemsCountOnPage(page: number, itemsPerPage: number, totalCount: number) {
-  if (page === undefined) return 0;
-  const totalPages = getTotalPages(totalCount, itemsPerPage);
-  if (page >= totalPages) return 0;
-  return page < totalPages - 1 ? itemsPerPage : totalCount - (page * itemsPerPage);
-}
-
 function applyStartOverscroll(startIndex: number, overscroll = 0) {
   return Math.max(startIndex - overscroll, 0);
 }
