@@ -11,7 +11,8 @@ import { GridScrollerProps } from './types';
 
 export interface UseGridScrollerProps<T> extends Omit<
 GridScrollerProps<T>,
-'RowComponent'
+'value'
+| 'RowComponent'
 | 'rowComponentProps'
 | 'CellComponent'
 | 'cellComponentProps'

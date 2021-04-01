@@ -9,7 +9,7 @@ import Scroller from 'utils/Scroller';
 import ResizeObserver from 'utils/ResizeObserver';
 import { ListScrollerProps } from './types';
 
-export interface UseListScrollerProps<T> extends Omit<ListScrollerProps<T>, 'RowComponent' | 'rowComponentProps'> {}
+export interface UseListScrollerProps<T> extends Omit<ListScrollerProps<T>, 'value' | 'RowComponent' | 'rowComponentProps'> {}
 
 export interface UseListScrollerResult {
   scrollerContainerRef: React.MutableRefObject<HTMLDivElement>;

@@ -1,4 +1,4 @@
-import { ScrollData } from 'types';
+import { ScrollData, LoadPage } from 'types';
 import { ListScrollerProps } from 'ListScroller/types';
 import { GridScrollerCellComponentProps } from './GridScrollerCell';
 
@@ -18,4 +18,9 @@ export interface GridScrollerProps<T> extends Omit<ListScrollerProps<T>, 'value'
   rowComponentProps?: Object;
   CellComponent: React.FC<GridScrollerCellComponentProps<T>>;
   cellComponentProps?: Object;
+}
+
+export interface GridScrollerAsyncProps<T> extends Omit<GridScrollerProps<T>, 'value'> {
+  itemsPerPage: number;
+  loadPage: LoadPage<T>;
 }

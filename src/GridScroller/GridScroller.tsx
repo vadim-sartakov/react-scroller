@@ -1,17 +1,22 @@
 import React from 'react';
-import { GridScrollerProps } from './types';
+import { GridScrollerProps, GridScrollerAsyncProps } from './types';
 import useGridScroller from './useGridScroller';
 import GridScrollerContainer from './GridScrollerContainer';
 import renderCells from './renderCells';
 
+interface GridScrollerType {
+  <T>(props: GridScrollerProps<T>): ReturnType<React.FC>;
+  <T>(props: GridScrollerAsyncProps<T>): ReturnType<React.FC>;
+}
+
 const defaultArray: number[] = [];
 
-const GridScroller = <T extends unknown>({
+const GridScroller: GridScrollerType = <T extends unknown>({
   width,
   height,
+  value,
   rowsSizes = defaultArray,
   columnsSizes = defaultArray,
-  value,
   defaultRowHeight,
   defaultColumnWidth,
   totalRows,
@@ -28,7 +33,7 @@ const GridScroller = <T extends unknown>({
   onColumnsScrollDataChange,
   scrollerContainerRef: scrollerContainerRefProp,
   scrollerContainerProps,
-}: GridScrollerProps<T>): ReturnType<React.FC> => {
+}: GridScrollerAsyncProps<T> & GridScrollerProps<T>): ReturnType<React.FC> => {
   const {
     visibleRowsIndexes,
     visibleColumnsIndexes,
@@ -38,7 +43,6 @@ const GridScroller = <T extends unknown>({
     scrollerContainerRef,
   } = useGridScroller({
     scrollerContainerRef: scrollerContainerRefProp,
-    value,
     height,
     width,
     defaultRowHeight,

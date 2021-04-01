@@ -1,4 +1,4 @@
-import { Page } from 'types';
+import { LoadPage, Page } from 'types';
 
 export function getTotalPages(totalCount: number, itemsPerPage: number) {
   return Math.ceil(totalCount / itemsPerPage);
@@ -48,7 +48,7 @@ export function getPagesToLoad({
 interface LoadPagesArgs<T> {
   itemsPerPage: number;
   pagesToLoad: number[];
-  loadPage: (page: number, itemsPerPage: number) => Promise<T[]>;
+  loadPage: LoadPage<T>;
 }
 
 export async function loadPages<T>({

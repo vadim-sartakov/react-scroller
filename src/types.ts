@@ -10,6 +10,13 @@ export interface Page<T> {
   data: T[];
 }
 
+export type LoadPage<T> = (page: number, itemsPerPage: number) => Promise<T[]> | T[];
+
+export interface AsyncProps<T> {
+  itemsPerPage: number;
+  loadPage: LoadPage<T>;
+}
+
 export interface ScrollerPropsBase {
   scrollerContainerRef?: React.MutableRefObject<HTMLDivElement>;
   scrollerContainerProps?: React.HTMLAttributes<HTMLDivElement>;

@@ -1,4 +1,4 @@
-import { ScrollData, ScrollerPropsBase } from 'types';
+import { ScrollData, ScrollerPropsBase, LoadPage } from 'types';
 import { ListScrollerRowComponentProps } from './ListScrollerRow';
 
 export interface ListScrollerProps<T> extends ScrollerPropsBase {
@@ -15,4 +15,9 @@ export interface ListScrollerProps<T> extends ScrollerPropsBase {
   focusedCell?: number;
   RowComponent: React.FC<ListScrollerRowComponentProps<T>>;
   rowComponentProps?: Object;
+}
+
+export interface ListScrollerAsyncProps<T> extends Omit<ListScrollerProps<T>, 'value'> {
+  itemsPerPage: number;
+  loadPage: LoadPage<T>;
 }

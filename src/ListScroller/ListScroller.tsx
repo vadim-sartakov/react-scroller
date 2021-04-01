@@ -1,12 +1,17 @@
 import React from 'react';
-import { ListScrollerProps } from './types';
+import { ListScrollerProps, ListScrollerAsyncProps } from './types';
 import useListScroller from './useListScroller';
 import ListScrollerContainer from './ListScrollerContainer';
 import renderRows from './renderRows';
 
+interface ListScrollerType {
+  <T>(props: ListScrollerProps<T>): ReturnType<React.FC>;
+  <T>(props: ListScrollerAsyncProps<T>): ReturnType<React.FC>;
+}
+
 const defaultArray: number[] = [];
 
-const ListScroller = <T extends unknown>({
+const ListScroller: ListScrollerType = <T extends unknown>({
   height,
   rowsSizes = defaultArray,
   scrollerContainerRef: scrollerContainerRefProp,
@@ -20,7 +25,7 @@ const ListScroller = <T extends unknown>({
   rowComponentProps,
   rowsScrollData,
   onRowsScrollDataChange,
-}: ListScrollerProps<T>): ReturnType<React.FC> => {
+}: ListScrollerProps<T> & ListScrollerAsyncProps<T>): ReturnType<React.FC> => {
   const {
     visibleRowsIndexes,
     onScroll,
@@ -29,7 +34,6 @@ const ListScroller = <T extends unknown>({
     scrollerContainerRef,
   } = useListScroller({
     scrollerContainerRef: scrollerContainerRefProp,
-    value,
     height,
     defaultRowHeight,
     totalRows,
