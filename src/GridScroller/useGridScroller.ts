@@ -6,6 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import Scroller from 'utils/Scroller';
+import ResizeObserver from 'utils/ResizeObserver';
 import { GridScrollerProps } from './types';
 
 export interface UseGridScrollerProps<T> extends Omit<
@@ -123,6 +124,8 @@ function useGridScroller<T>({
     // Do not recalculate if sizes specified explicitly as numbers by props
     if (typeof width === 'number' && typeof height === 'number') return undefined;
 
+    const resizeObserver = new ResizeObserver(scrollerContainerRef.current);
+
     const updateContainerSize = () => {
       const scrollerContainerRect = scrollerContainerRef.current.getBoundingClientRect();
       if (rowsScrollerRef.current.containerSize !== scrollerContainerRect.height) {
@@ -140,30 +143,17 @@ function useGridScroller<T>({
       }
     };
 
-    const mutationCallback: MutationCallback = (mutations) => {
-      const changedScrollerItems = mutations.some(
-        (mutation) => scrollerContainerRef.current.contains(mutation.target),
-      );
-      if (!changedScrollerItems) updateContainerSize();
-    };
-
-    const observer = new MutationObserver(mutationCallback);
-    observer.observe(document.body, { attributes: true, childList: true, subtree: true });
-    window.addEventListener('resize', updateContainerSize);
+    resizeObserver.listen(updateContainerSize);
 
     // Initial update
     updateContainerSize();
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', updateContainerSize);
-    };
+    return () => resizeObserver.cleanup();
   }, [
     width,
     height,
     scrollerContainerRef,
     onRowsScrollDataChange,
     onColumnsScrollDataChange,
-    totalColumns,
   ]);
 
   const handleScroll: React.UIEventHandler<HTMLDivElement> = useCallback((e) => {
