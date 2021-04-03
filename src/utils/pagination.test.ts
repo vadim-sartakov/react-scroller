@@ -52,5 +52,23 @@ describe('Scroller pagination', () => {
       });
       expect(result).toEqual([0, 1, 2, 3]);
     });
+
+    it('should return 4, 5 pages at the end', () => {
+      const result = getPagesToLoad({
+        visibleIndexes: [20, 21, 22, 23, 24, 25],
+        itemsPerPage: 5,
+        totalPages: 5,
+      });
+      expect(result).toEqual([4, 5]);
+    });
+
+    it('should return 0, 1 pages on large items per page', () => {
+      const result = getPagesToLoad({
+        visibleIndexes: [3, 4, 5, 6, 7, 8, 9, 10, 11],
+        itemsPerPage: 10,
+        totalPages: 5,
+      });
+      expect(result).toEqual([0, 1]);
+    });
   });
 });

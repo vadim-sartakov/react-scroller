@@ -3,9 +3,11 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import {
   generateListValues,
   generateRandomSizes,
+  sleep,
+  loadPage,
 } from 'test/utils';
 import ListScroller from './ListScroller';
-import { ListScrollerProps } from './types';
+import { ListScrollerAsyncProps } from './types';
 
 export default {
   component: ListScroller,
@@ -35,25 +37,46 @@ export default {
       },
       defaultValue: 2,
     },
+    itemsPerPage: {
+      control: {
+        type: 'number',
+      },
+      defaultValue: 20,
+    },
+    loadDelay: {
+      control: {
+        type: 'number',
+      },
+      defaultValue: 1000,
+    },
   },
 } as Meta;
 
-interface ListScrollerStoryProps<T> extends ListScrollerProps<T> {
+interface ListScrollerStoryProps<T> extends ListScrollerAsyncProps<T> {
   randomSizes?: boolean;
+  loadDelay?: number;
 }
 
 const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
   randomSizes,
   totalRows = 1000,
   overscroll = 0,
+  itemsPerPage = 20,
   height = '100vh',
   defaultRowHeight = 40,
+  loadDelay = 1000,
 }) => {
   const listValue = generateListValues(totalRows);
   const rowsSizes = randomSizes ? generateRandomSizes(listValue.length, 40, 120) : [];
+  const loadPageAsync = async (page: number, itemsPerPage: number) => {
+    console.log('Loading page %s', page);
+    await sleep(loadDelay);
+    return loadPage(listValue, page, itemsPerPage);
+  };
   return (
-    <ListScroller
-      value={listValue}
+    <ListScroller<string>
+      loadPage={loadPageAsync}
+      itemsPerPage={itemsPerPage}
       rowsSizes={rowsSizes}
       overscroll={overscroll}
       height={height}
@@ -61,11 +84,11 @@ const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
       totalRows={listValue.length}
       render={({ value, style }) => (
         <div style={style}>
-          {value}
+          {value || 'Loading...'}
         </div>
       )}
     />
   );
 };
 
-export const sync = ListTemplate.bind({});
+export const asyncList = ListTemplate.bind({});

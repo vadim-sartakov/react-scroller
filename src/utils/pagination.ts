@@ -1,5 +1,3 @@
-import { LoadPage, Page } from 'types';
-
 export function getTotalPages(totalCount: number, itemsPerPage: number) {
   return Math.ceil(totalCount / itemsPerPage);
 }
@@ -28,8 +26,8 @@ export function getPagesToLoad({
   const result: number[] = [];
   for (
     let i = visibleIndexes[0];
-    i < visibleIndexes[visibleIndexes.length - 1];
-    i += itemsPerPage
+    i <= visibleIndexes[visibleIndexes.length - 1];
+    i += Math.min(itemsPerPage, visibleIndexes[visibleIndexes.length - 1] - visibleIndexes[0])
   ) {
     const page = Math.floor(i / itemsPerPage);
     result.push(page);
@@ -43,27 +41,4 @@ export function getPagesToLoad({
   }
 
   return result;
-}
-
-interface LoadPagesArgs<T> {
-  itemsPerPage: number;
-  pagesToLoad: number[];
-  loadPage: LoadPage<T>;
-}
-
-export async function loadPages<T>({
-  itemsPerPage,
-  pagesToLoad,
-  loadPage,
-}: LoadPagesArgs<T>) {
-  const loadPromises = pagesToLoad.map<Promise<Page<T>>>(
-    (page) => new Promise(
-      (resolve) => {
-        loadPage(page, itemsPerPage).then((data) => {
-          resolve({ page, data });
-        });
-      },
-    ),
-  );
-  return Promise.all(loadPromises);
 }

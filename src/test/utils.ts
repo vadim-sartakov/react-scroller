@@ -8,16 +8,6 @@ export function loadPage<T>(value: Array<T>, page: number, itemsPerPage: number)
   return value.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
 }
 
-export function loadPageAsync<T>(value: T[]) {
-  return (page: number, itemsPerPage: number) => new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('Loading async page %s', page);
-      const result = loadPage(value, page, itemsPerPage);
-      resolve(result);
-    }, 1000);
-  });
-}
-
 export function generateRandomSizes(count: number, start: number, end: number) {
   return [...new Array(count).keys()].map(() => getRandomInt(start, end));
 }
@@ -32,4 +22,8 @@ export function generateListValues(count: number) {
 
 export function generateGridValues(rowsCount: number, columnsCount: number) {
   return generateMeta(rowsCount).map((row) => generateMeta(columnsCount).map((column) => `Value ${row} - ${column}`));
+}
+
+export function sleep(timeout: number) {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
 }

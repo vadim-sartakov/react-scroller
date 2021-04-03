@@ -1,4 +1,5 @@
 import React from 'react';
+import useAsyncLoad from 'hooks/useAsyncLoad';
 import { ListScrollerProps, ListScrollerAsyncProps } from './types';
 import useListScroller from './useListScroller';
 import ListScrollerContainer from './ListScrollerContainer';
@@ -21,6 +22,8 @@ const ListScroller: ListScrollerType = <T extends unknown>({
   totalRows,
   overscroll,
   focusedCell,
+  itemsPerPage,
+  loadPage,
   RowComponent,
   rowComponentProps,
   render,
@@ -45,6 +48,13 @@ const ListScroller: ListScrollerType = <T extends unknown>({
     onRowsScrollDataChange,
   });
 
+  const { value: asyncValue } = useAsyncLoad({
+    visibleIndexes: visibleRowsIndexes,
+    itemsPerPage,
+    totalCount: totalRows,
+    loadPage,
+  });
+
   const elements = renderRows({
     visibleRowsIndexes,
     RowComponent,
@@ -54,7 +64,7 @@ const ListScroller: ListScrollerType = <T extends unknown>({
 
   return (
     <ListScrollerContainer
-      value={value}
+      value={value || asyncValue}
       rowsSizes={rowsSizes}
       defaultRowHeight={defaultRowHeight}
       onScroll={onScroll}
