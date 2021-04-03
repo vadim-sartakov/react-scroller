@@ -5,15 +5,22 @@ import {
   generateRandomSizes,
 } from 'test/utils';
 import ListScroller from './ListScroller';
+import { ListScrollerProps } from './types';
 
 export default {
   component: ListScroller,
   title: 'Scroller/List',
   argTypes: {
     totalRows: {
+      control: {
+        type: 'number',
+      },
       defaultValue: 1000,
     },
     defaultRowHeight: {
+      control: {
+        type: 'number',
+      },
       defaultValue: 40,
     },
     randomSizes: {
@@ -23,6 +30,9 @@ export default {
       name: 'Random sizes',
     },
     overscroll: {
+      control: {
+        type: 'number',
+      },
       defaultValue: 2,
     },
     height: { control: false },
@@ -31,20 +41,17 @@ export default {
     rowsSizes: { control: false },
     RowComponent: { control: false },
     rowComponentProps: { control: false },
+    render: { control: false },
     value: { control: false },
     focusedCell: { control: false },
   },
 } as Meta;
 
-interface ScrollerListProps {
+interface ListScrollerStoryProps<T> extends ListScrollerProps<T> {
   randomSizes?: boolean;
-  totalRows: number;
-  defaultRowHeight: number;
-  overscroll?: number;
-  height?: string | number;
 }
 
-const ListTemplate: Story<ScrollerListProps> = ({
+const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
   randomSizes,
   totalRows = 1000,
   overscroll = 0,

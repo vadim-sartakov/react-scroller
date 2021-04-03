@@ -5,21 +5,34 @@ import {
   generateRandomSizes,
 } from 'test/utils';
 import GridScroller from './GridScroller';
+import { GridScrollerProps } from './types';
 
 export default {
   component: GridScroller,
   title: 'Scroller/Grid',
   argTypes: {
     totalRows: {
+      control: {
+        type: 'number',
+      },
       defaultValue: 1000,
     },
     totalColumns: {
+      control: {
+        type: 'number',
+      },
       defaultValue: 50,
     },
     defaultRowHeight: {
+      control: {
+        type: 'number',
+      },
       defaultValue: 40,
     },
     defaultColumnWidth: {
+      control: {
+        type: 'number',
+      },
       defaultValue: 120,
     },
     randomSizes: {
@@ -29,6 +42,9 @@ export default {
       name: 'Random sizes',
     },
     overscroll: {
+      control: {
+        type: 'number',
+      },
       defaultValue: 2,
     },
     height: { control: false },
@@ -42,23 +58,17 @@ export default {
     RowComponent: { control: false },
     rowComponentProps: { control: false },
     CellComponent: { control: false },
+    render: { control: false },
     value: { control: false },
     focusedCell: { control: false },
   },
 } as Meta;
 
-interface ScrollerListProps {
+interface GridScrollerStoryProps<T> extends GridScrollerProps<T> {
   randomSizes?: boolean;
-  totalRows: number;
-  totalColumns: number;
-  defaultRowHeight: number;
-  defaultColumnWidth: number;
-  overscroll?: number;
-  height?: string | number;
-  width?: string | number;
 }
 
-const GridTemplate: Story<ScrollerListProps> = ({
+const GridTemplate: Story<GridScrollerStoryProps<any>> = ({
   randomSizes,
   totalRows = 1000,
   totalColumns = 50,
