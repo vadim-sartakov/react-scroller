@@ -1,26 +1,25 @@
 import React, { useContext, useMemo } from 'react';
 import ListScrollerContext from './ListScrollerContext';
 
-export interface ListScrollerRowComponentProps<T> {
+export interface ListScrollerRenderProps<T> {
   value: T;
   style: React.CSSProperties;
-  rowIndex?: number;
-  columnIndex?: number;
+  rowIndex: number;
 }
 
 export interface ListScrollerRowProps<T> extends React.HTMLAttributes<HTMLElement> {
   rowIndex: number;
-  columnIndex?: number;
-  RowComponent?: React.FC<ListScrollerRowComponentProps<T>>;
+  RowComponent?: React.FC<ListScrollerRenderProps<T>>;
   rowComponentProps?: Object;
+  render?: (props: ListScrollerRenderProps<T>) => ReturnType<React.FC>;
 }
 
 const ListScrollerRow = <T extends unknown>({
   style,
   rowIndex,
-  columnIndex,
   RowComponent,
   rowComponentProps,
+  render,
 }: ListScrollerRowProps<T>): ReturnType<React.FC> => {
   const {
     value,
@@ -31,17 +30,25 @@ const ListScrollerRow = <T extends unknown>({
   const height = rowsSizes[rowIndex] || defaultRowHeight;
   const nextStyle = useMemo(() => ({ height, ...style }), [height, style]);
   const rowValue = value[rowIndex];
-  const cellValue = columnIndex !== undefined && rowValue && rowValue[columnIndex];
 
-  return (
-    <RowComponent
-      style={nextStyle}
-      value={cellValue || rowValue}
-      rowIndex={rowIndex}
-      columnIndex={columnIndex}
-      {...rowComponentProps}
-    />
-  );
+  if (RowComponent) {
+    return (
+      <RowComponent
+        style={nextStyle}
+        value={rowValue}
+        rowIndex={rowIndex}
+        {...rowComponentProps}
+      />
+    );
+  } else if (render) {
+    return render({
+      rowIndex,
+      style: nextStyle,
+      value: rowValue,
+    });
+  } else {
+    throw Error('Either Component prop or render should be provided');
+  }
 };
 
 const Wrapper = React.memo(ListScrollerRow) as typeof ListScrollerRow;

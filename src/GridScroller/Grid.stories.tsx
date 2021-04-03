@@ -5,7 +5,6 @@ import {
   generateRandomSizes,
 } from 'test/utils';
 import GridScroller from './GridScroller';
-import { GridScrollerCellComponentProps } from './GridScrollerCell';
 
 export default {
   component: GridScroller,
@@ -48,12 +47,6 @@ export default {
   },
 } as Meta;
 
-const GridCellComponent: React.FC<GridScrollerCellComponentProps<string>> = ({ value, style }) => (
-  <div className="cell" style={style}>
-    {value || 'Loading...'}
-  </div>
-);
-
 interface ScrollerListProps {
   randomSizes?: boolean;
   totalRows: number;
@@ -80,7 +73,6 @@ const GridTemplate: Story<ScrollerListProps> = ({
   const columnsSizes = randomSizes ? generateRandomSizes(gridValue[0].length, 80, 250) : [];
   return (
     <GridScroller
-      CellComponent={GridCellComponent}
       value={gridValue}
       rowsSizes={rowsSizes}
       columnsSizes={columnsSizes}
@@ -92,6 +84,11 @@ const GridTemplate: Story<ScrollerListProps> = ({
       totalColumns={gridValue[0].length}
       width={width}
       rowComponentProps={{ className: 'row' }}
+      render={({ value, style }) => (
+        <div className="cell" style={style}>
+          {value}
+        </div>
+      )}
     />
   );
 };

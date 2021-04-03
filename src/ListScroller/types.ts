@@ -1,5 +1,5 @@
 import { ScrollData, ScrollerPropsBase, LoadPage } from 'types';
-import { ListScrollerRowComponentProps } from './ListScrollerRow';
+import { ListScrollerRenderProps } from './ListScrollerRow';
 
 export interface ListScrollerProps<T> extends ScrollerPropsBase {
   value: T[];
@@ -13,8 +13,9 @@ export interface ListScrollerProps<T> extends ScrollerPropsBase {
   onRowsScrollDataChange?: (scrollData: ScrollData) => void;
   scrollerContainerRef?: React.MutableRefObject<HTMLDivElement>;
   focusedCell?: number;
-  RowComponent: React.FC<ListScrollerRowComponentProps<T>>;
+  RowComponent?: React.FC<ListScrollerRenderProps<T>>;
   rowComponentProps?: Object;
+  render?: (props: ListScrollerRenderProps<T>) => ReturnType<React.FC>;
 }
 
 export interface ListScrollerAsyncProps<T> extends Omit<ListScrollerProps<T>, 'value'> {

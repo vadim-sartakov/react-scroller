@@ -23,6 +23,7 @@ const ListScroller: ListScrollerType = <T extends unknown>({
   focusedCell,
   RowComponent,
   rowComponentProps,
+  render,
   rowsScrollData,
   onRowsScrollDataChange,
 }: ListScrollerProps<T> & ListScrollerAsyncProps<T>): ReturnType<React.FC> => {
@@ -48,6 +49,7 @@ const ListScroller: ListScrollerType = <T extends unknown>({
     visibleRowsIndexes,
     RowComponent,
     rowComponentProps,
+    render,
   });
 
   return (

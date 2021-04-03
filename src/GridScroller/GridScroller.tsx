@@ -27,6 +27,7 @@ const GridScroller: GridScrollerType = <T extends unknown>({
   rowComponentProps,
   CellComponent,
   cellComponentProps,
+  render,
   rowsScrollData,
   onRowsScrollDataChange,
   columnsScrollData,
@@ -66,6 +67,7 @@ const GridScroller: GridScrollerType = <T extends unknown>({
     rowComponentProps,
     CellComponent,
     cellComponentProps,
+    render,
   });
 
   return (

@@ -5,7 +5,6 @@ import {
   generateRandomSizes,
 } from 'test/utils';
 import ListScroller from './ListScroller';
-import { ListScrollerRowComponentProps } from './ListScrollerRow';
 
 export default {
   component: ListScroller,
@@ -37,12 +36,6 @@ export default {
   },
 } as Meta;
 
-const RowComponent: React.FC<ListScrollerRowComponentProps<string>> = ({ value, style }) => (
-  <div style={style}>
-    {value || 'Loading...'}
-  </div>
-);
-
 interface ScrollerListProps {
   randomSizes?: boolean;
   totalRows: number;
@@ -62,13 +55,17 @@ const ListTemplate: Story<ScrollerListProps> = ({
   const rowsSizes = randomSizes ? generateRandomSizes(listValue.length, 40, 120) : [];
   return (
     <ListScroller
-      RowComponent={RowComponent}
       value={listValue}
       rowsSizes={rowsSizes}
       overscroll={overscroll}
       height={height}
       defaultRowHeight={defaultRowHeight}
       totalRows={listValue.length}
+      render={({ value, style }) => (
+        <div style={style}>
+          {value}
+        </div>
+      )}
     />
   );
 };
