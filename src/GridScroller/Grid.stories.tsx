@@ -9,7 +9,7 @@ import { GridScrollerProps } from './types';
 
 export default {
   component: GridScroller,
-  title: 'Scroller/Grid',
+  title: 'Scroller/Grid/Sync',
   argTypes: {
     totalRows: {
       control: {
@@ -89,4 +89,4 @@ const GridTemplate: Story<GridScrollerStoryProps<any>> = ({
   );
 };
 
-export const grid = GridTemplate.bind({});
+export const sync = GridTemplate.bind({});

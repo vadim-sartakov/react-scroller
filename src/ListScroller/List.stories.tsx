@@ -9,7 +9,7 @@ import { ListScrollerProps } from './types';
 
 export default {
   component: ListScroller,
-  title: 'Scroller/List',
+  title: 'Scroller/List/Sync',
   argTypes: {
     totalRows: {
       control: {

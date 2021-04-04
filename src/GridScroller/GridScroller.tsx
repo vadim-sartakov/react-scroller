@@ -1,5 +1,6 @@
 import React from 'react';
 import useResizer from 'hooks/useResizer';
+import useAsyncLoad from 'hooks/useAsyncLoad';
 import {
   GridScrollerProps,
   GridScrollerAsyncProps,
@@ -39,6 +40,8 @@ const GridScroller: GridScrollerType = <T extends unknown>({
   width,
   height,
   value,
+  itemsPerPage,
+  loadPage,
   rowsSizes = defaultArray,
   columnsSizes = defaultArray,
   defaultRowHeight,
@@ -101,6 +104,13 @@ GridScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
     onColumnsScrollDataChange,
   });
 
+  const { value: asyncValue } = useAsyncLoad<T[]>({
+    visibleIndexes: visibleRowsIndexes,
+    itemsPerPage,
+    totalCount: totalRows,
+    loadPage,
+  });
+
   const elements = render ? renderCells({
     visibleRowsIndexes,
     visibleColumnsIndexes,
@@ -119,7 +129,7 @@ GridScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
   return (
     <GridScrollerContainer
       containerRef={scrollerContainerRef}
-      value={value}
+      value={value || asyncValue}
       rowsSizes={rowsSizes}
       columnsSizes={columnsSizes}
       defaultRowHeight={defaultRowHeight}

@@ -17,7 +17,7 @@ export interface GridScrollerProps<T> extends Omit<ListScrollerProps<T>, 'value'
 
 export interface GridScrollerAsyncProps<T> extends Omit<GridScrollerProps<T>, 'value'> {
   itemsPerPage: number;
-  loadPage: LoadPage<T>;
+  loadPage: LoadPage<T[]>;
 }
 
 export interface GridScrollerCellRenderProps<T> {
