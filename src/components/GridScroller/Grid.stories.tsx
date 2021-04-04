@@ -47,6 +47,13 @@ export default {
       },
       defaultValue: 2,
     },
+    focusedCell: {
+      type: 'object',
+      control: {
+        type: 'object',
+      },
+      defaultValue: { row: 0, cell: 0 },
+    },
   },
 } as Meta;
 
@@ -59,6 +66,7 @@ const GridTemplate: Story<GridScrollerStoryProps<any>> = ({
   totalRows = 1000,
   totalColumns = 50,
   overscroll = 0,
+  focusedCell,
   height = '100vh',
   width,
   defaultRowHeight = 40,
@@ -73,6 +81,7 @@ const GridTemplate: Story<GridScrollerStoryProps<any>> = ({
       rowsSizes={rowsSizes}
       columnsSizes={columnsSizes}
       overscroll={overscroll}
+      focusedCell={focusedCell}
       height={height}
       defaultRowHeight={defaultRowHeight}
       defaultColumnWidth={defaultColumnWidth}

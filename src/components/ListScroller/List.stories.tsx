@@ -35,6 +35,11 @@ export default {
       },
       defaultValue: 2,
     },
+    focusedCell: {
+      control: {
+        type: 'number',
+      },
+    },
   },
 } as Meta;
 
@@ -44,6 +49,7 @@ interface ListScrollerStoryProps<T> extends ListScrollerProps<T> {
 
 const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
   randomSizes,
+  focusedCell,
   totalRows = 1000,
   overscroll = 0,
   height = '100vh',
@@ -59,6 +65,7 @@ const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
       height={height}
       defaultRowHeight={defaultRowHeight}
       totalRows={listValue.length}
+      focusedCell={focusedCell}
       render={({ value, style }) => (
         <div style={style}>
           {value}

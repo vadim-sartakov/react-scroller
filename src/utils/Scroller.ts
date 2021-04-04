@@ -4,6 +4,7 @@ import {
   getScrollDataWithCustomSizes,
   shiftScroll,
   getCustomSizesTotal,
+  getCellPosition,
 } from './utils';
 
 interface ScrollerArgs {
@@ -73,6 +74,21 @@ class Scroller {
 
     this.scrollData = nextScrollData;
     return this;
+  }
+
+  scrollToIndex(index: number, position: 'start' | 'center' | 'end' = 'center') {
+    let nextScroll = getCellPosition({ ...this, index });
+    const itemSize = (this.sizes?.[index] || this.defaultSize);
+    switch (position) {
+      case 'center':
+        nextScroll -= (this.containerSize / 2) - (itemSize / 2);
+        break;
+      case 'end':
+        nextScroll -= this.containerSize - itemSize;
+        break;
+      default:
+    }
+    this.scrollTo(nextScroll);
   }
 
   updateContainerSize(containerSize: number) {

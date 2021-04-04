@@ -37,6 +37,11 @@ export default {
       },
       defaultValue: 2,
     },
+    focusedCell: {
+      control: {
+        type: 'number',
+      },
+    },
     itemsPerPage: {
       control: {
         type: 'number',
@@ -61,6 +66,7 @@ const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
   randomSizes,
   totalRows = 1000,
   overscroll = 0,
+  focusedCell,
   itemsPerPage = 20,
   height = '100vh',
   defaultRowHeight = 40,
@@ -80,6 +86,7 @@ const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
       rowsSizes={rowsSizes}
       overscroll={overscroll}
       height={height}
+      focusedCell={focusedCell}
       defaultRowHeight={defaultRowHeight}
       totalRows={listValue.length}
       render={({ value, style }) => (

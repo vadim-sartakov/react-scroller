@@ -46,6 +46,7 @@ const useScroller: UseGridScrollerType = ({
   width,
   height,
   overscroll = 0,
+  focusedCell,
   scrollerContainerRef: scrollerContainerRefProp,
   rowsScrollData: rowsScrollDataProp,
   onRowsScrollDataChange: onRowsScrollDataChangeProp,
@@ -130,6 +131,22 @@ const useScroller: UseGridScrollerType = ({
     onColumnsScrollDataChange,
     scrollerContainerRef,
   ]);
+
+  useEffect(() => {
+    if (!focusedCell) return;
+
+    if (typeof focusedCell === 'number') {
+      rowsScrollerRef.current.scrollToIndex(focusedCell);
+      scrollerContainerRef.current.scrollTop = rowsScrollerRef.current.scroll;
+    } else {
+      rowsScrollerRef.current.scrollToIndex(focusedCell.row);
+      columnsScrollerRef.current.scrollToIndex(focusedCell.cell);
+      scrollerContainerRef.current.scrollTo({
+        top: rowsScrollerRef.current.scroll,
+        left: columnsScrollerRef.current.scroll,
+      });
+    }
+  }, [scrollerContainerRef, focusedCell]);
 
   const handleScroll: React.UIEventHandler<HTMLDivElement> = useCallback((e) => {
     const nextRowsScrollData = rowsScrollerRef.current

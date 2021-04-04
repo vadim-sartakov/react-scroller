@@ -320,10 +320,10 @@ interface GetCellPositionArgs {
  * Calculates cell position (top or left absolute position)
  */
 export function getCellPosition({ sizes, index, defaultSize }: GetCellPositionArgs) {
-  return sizes && sizes.length && [...new Array(index).keys()].reduce((acc, key, index) => {
+  return sizes?.length ? [...new Array(index).keys()].reduce((acc, key, index) => {
     const curSize = sizes[index] || defaultSize;
     return acc + curSize;
-  }, 0);
+  }, 0) : index * defaultSize;
 }
 
 interface GetCellsSizeArgs {
