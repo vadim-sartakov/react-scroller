@@ -1,8 +1,7 @@
 import { ScrollData, LoadPage } from 'types';
 import { ListScrollerProps } from 'ListScroller/types';
-import { GridScrollerCellRenderProps } from './GridScrollerCell';
 
-export interface GridScrollerProps<T> extends Omit<ListScrollerProps<T>, 'value' | 'focusedCell' | 'RowComponent' | 'rowComponentProps'> {
+export interface GridScrollerProps<T> extends Omit<ListScrollerProps<T>, 'value' | 'focusedCell'> {
   value: T[][];
   defaultColumnWidth: number;
   totalColumns: number;
@@ -14,14 +13,30 @@ export interface GridScrollerProps<T> extends Omit<ListScrollerProps<T>, 'value'
   onColumnsScrollDataChange?: (scrollData: ScrollData) => void;
   /* Number of elements which should be rendered out of visible scroller container */
   focusedCell?: { row: number, cell: number };
-  RowComponent?: string | React.FC;
-  rowComponentProps?: Object;
-  CellComponent?: React.FC<GridScrollerCellRenderProps<T>>;
-  cellComponentProps?: Object;
-  render?: (props: GridScrollerCellRenderProps<T>) => ReturnType<React.FC>;
 }
 
 export interface GridScrollerAsyncProps<T> extends Omit<GridScrollerProps<T>, 'value'> {
   itemsPerPage: number;
   loadPage: LoadPage<T>;
+}
+
+export interface GridScrollerCellRenderProps<T> {
+  value: T;
+  style: React.CSSProperties;
+  rowIndex: number;
+  columnIndex: number;
+}
+
+export interface GridScrollerRowRenderProps {
+  RowComponent?: string | React.FC;
+  rowComponentProps?: Record<string, unknown>;
+}
+
+export interface GridScrollerComponentRenderProps<T> {
+  CellComponent: React.FC<GridScrollerCellRenderProps<T>>;
+  cellComponentProps?: Record<string, unknown>;
+}
+
+export interface GridScrollerRenderFuncProps<T> {
+  render: (props: GridScrollerCellRenderProps<T>) => ReturnType<React.FC>;
 }

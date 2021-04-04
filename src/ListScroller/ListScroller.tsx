@@ -1,13 +1,20 @@
 import React from 'react';
 import useAsyncLoad from 'hooks/useAsyncLoad';
-import { ListScrollerProps, ListScrollerAsyncProps } from './types';
+import {
+  ListScrollerProps,
+  ListScrollerAsyncProps,
+  ListScrollerComponentRenderProps,
+  ListScrollerRenderFuncProps,
+} from './types';
 import useListScroller from './useListScroller';
 import ListScrollerContainer from './ListScrollerContainer';
 import renderRows from './renderRows';
 
 interface ListScrollerType {
-  <T>(props: ListScrollerProps<T>): ReturnType<React.FC>;
-  <T>(props: ListScrollerAsyncProps<T>): ReturnType<React.FC>;
+  <T>(props: ListScrollerProps<T> & ListScrollerComponentRenderProps<T>): ReturnType<React.FC>;
+  <T>(props: ListScrollerProps<T> & ListScrollerRenderFuncProps<T>): ReturnType<React.FC>;
+  <T>(props: ListScrollerAsyncProps<T> & ListScrollerComponentRenderProps<T>): ReturnType<React.FC>;
+  <T>(props: ListScrollerAsyncProps<T> & ListScrollerRenderFuncProps<T>): ReturnType<React.FC>;
 }
 
 const defaultArray: number[] = [];
@@ -29,7 +36,10 @@ const ListScroller: ListScrollerType = <T extends unknown>({
   render,
   rowsScrollData,
   onRowsScrollDataChange,
-}: ListScrollerProps<T> & ListScrollerAsyncProps<T>): ReturnType<React.FC> => {
+}: ListScrollerProps<T> &
+ListScrollerAsyncProps<T> &
+ListScrollerComponentRenderProps<T> &
+ListScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
   const {
     visibleRowsIndexes,
     onScroll,
@@ -55,11 +65,13 @@ const ListScroller: ListScrollerType = <T extends unknown>({
     loadPage,
   });
 
-  const elements = renderRows({
+  const elements = render ? renderRows({
+    visibleRowsIndexes,
+    render,
+  }) : renderRows({
     visibleRowsIndexes,
     RowComponent,
     rowComponentProps,
-    render,
   });
 
   return (

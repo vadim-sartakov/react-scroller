@@ -9,9 +9,9 @@ import Scroller from 'utils/Scroller';
 import ResizeObserver from 'utils/ResizeObserver';
 import { ListScrollerProps } from './types';
 
-export interface UseListScrollerProps<T> extends Omit<ListScrollerProps<T>, 'value' | 'RowComponent' | 'rowComponentProps' | 'render'> {}
+type UseListScrollerProps<T> = Omit<ListScrollerProps<T>, 'value'>;
 
-export interface UseListScrollerResult {
+interface UseListScrollerResult {
   scrollerContainerRef: React.MutableRefObject<HTMLDivElement>;
   visibleRowsIndexes: number[];
   onScroll: React.UIEventHandler<HTMLDivElement>;

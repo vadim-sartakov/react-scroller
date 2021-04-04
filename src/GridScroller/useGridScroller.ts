@@ -9,16 +9,9 @@ import Scroller from 'utils/Scroller';
 import ResizeObserver from 'utils/ResizeObserver';
 import { GridScrollerProps } from './types';
 
-export interface UseGridScrollerProps<T> extends Omit<
-GridScrollerProps<T>,
-'value'
-| 'RowComponent'
-| 'rowComponentProps'
-| 'CellComponent'
-| 'cellComponentProps'
-> {}
+type UseGridScrollerProps<T> = Omit<GridScrollerProps<T>, 'value'>;
 
-export interface UseGridScrollerResult {
+interface UseGridScrollerResult {
   scrollerContainerRef: React.MutableRefObject<HTMLDivElement>;
   visibleRowsIndexes: number[];
   visibleColumnsIndexes: number[];

@@ -1,12 +1,35 @@
 import React from 'react';
-import { GridScrollerProps, GridScrollerAsyncProps } from './types';
+import {
+  GridScrollerProps,
+  GridScrollerAsyncProps,
+  GridScrollerComponentRenderProps,
+  GridScrollerRowRenderProps,
+  GridScrollerRenderFuncProps,
+} from './types';
 import useGridScroller from './useGridScroller';
 import GridScrollerContainer from './GridScrollerContainer';
 import renderCells from './renderCells';
 
+interface GridScrollerBase<T> extends GridScrollerProps<T>, GridScrollerRowRenderProps {}
+interface GridScrollerAsyncBase<T> extends GridScrollerAsyncProps<T>, GridScrollerRowRenderProps {}
+
 interface GridScrollerType {
-  <T>(props: GridScrollerProps<T>): ReturnType<React.FC>;
-  <T>(props: GridScrollerAsyncProps<T>): ReturnType<React.FC>;
+  <T>(
+    props: GridScrollerBase<T> &
+    GridScrollerComponentRenderProps<T>
+  ): ReturnType<React.FC>;
+  <T>(
+    props: GridScrollerBase<T> &
+    GridScrollerRenderFuncProps<T>
+  ): ReturnType<React.FC>;
+  <T>(
+    props: GridScrollerAsyncBase<T> &
+    GridScrollerComponentRenderProps<T>
+  ): ReturnType<React.FC>;
+  <T>(
+    props: GridScrollerAsyncBase<T> &
+    GridScrollerRenderFuncProps<T>
+  ): ReturnType<React.FC>;
 }
 
 const defaultArray: number[] = [];
@@ -34,7 +57,10 @@ const GridScroller: GridScrollerType = <T extends unknown>({
   onColumnsScrollDataChange,
   scrollerContainerRef: scrollerContainerRefProp,
   scrollerContainerProps,
-}: GridScrollerAsyncProps<T> & GridScrollerProps<T>): ReturnType<React.FC> => {
+}: GridScrollerBase<T> &
+GridScrollerAsyncBase<T> &
+GridScrollerComponentRenderProps<T> &
+GridScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
   const {
     visibleRowsIndexes,
     visibleColumnsIndexes,
@@ -60,14 +86,19 @@ const GridScroller: GridScrollerType = <T extends unknown>({
     onColumnsScrollDataChange,
   });
 
-  const elements = renderCells({
+  const elements = render ? renderCells({
+    visibleRowsIndexes,
+    visibleColumnsIndexes,
+    RowComponent,
+    rowComponentProps,
+    render,
+  }) : renderCells({
     visibleRowsIndexes,
     visibleColumnsIndexes,
     RowComponent,
     rowComponentProps,
     CellComponent,
     cellComponentProps,
-    render,
   });
 
   return (

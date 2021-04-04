@@ -21,7 +21,7 @@ class AsyncLoader<T> {
   loadPage: LoadPage<T>;
   overscrollPages: number;
 
-  canceled: boolean = false;
+  canceled = false;
 
   constructor(args: AsyncLoaderProps<T>) {
     this.initialize(args);

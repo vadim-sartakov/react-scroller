@@ -1,26 +1,25 @@
 import React, { useContext, useMemo } from 'react';
+import { ListScrollerComponentRenderProps, ListScrollerRenderFuncProps } from './types';
 import ListScrollerContext from './ListScrollerContext';
 
-export interface ListScrollerRenderProps<T> {
-  value: T;
-  style: React.CSSProperties;
+interface ListScrollerRowProps extends React.HTMLAttributes<HTMLElement> {
   rowIndex: number;
 }
 
-export interface ListScrollerRowProps<T> extends React.HTMLAttributes<HTMLElement> {
-  rowIndex: number;
-  RowComponent?: React.FC<ListScrollerRenderProps<T>>;
-  rowComponentProps?: Object;
-  render?: (props: ListScrollerRenderProps<T>) => ReturnType<React.FC>;
+interface ListScrollerRowType {
+  <T>(props: ListScrollerRowProps & ListScrollerComponentRenderProps<T>): ReturnType<React.FC>;
+  <T>(props: ListScrollerRowProps & ListScrollerRenderFuncProps<T>): ReturnType<React.FC>;
 }
 
-const ListScrollerRow = <T extends unknown>({
+const ListScrollerRow: ListScrollerRowType = <T extends unknown>({
   style,
   rowIndex,
   RowComponent,
   rowComponentProps,
   render,
-}: ListScrollerRowProps<T>): ReturnType<React.FC> => {
+}: ListScrollerRowProps &
+ListScrollerComponentRenderProps<T> &
+ListScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
   const {
     value,
     defaultRowHeight,
@@ -51,6 +50,6 @@ const ListScrollerRow = <T extends unknown>({
   }
 };
 
-const Wrapper = React.memo(ListScrollerRow) as typeof ListScrollerRow;
+const Wrapper = React.memo(ListScrollerRow) as unknown as ListScrollerRowType;
 
 export default Wrapper;

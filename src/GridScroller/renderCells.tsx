@@ -1,17 +1,22 @@
 import React from 'react';
-import GridScrollerCell, { GridScrollerCellRenderProps } from './GridScrollerCell';
+import {
+  GridScrollerRowRenderProps,
+  GridScrollerComponentRenderProps,
+  GridScrollerRenderFuncProps,
+} from './types';
+import GridScrollerCell from './GridScrollerCell';
 
-export interface RenderCellArgs<T> {
+interface RenderCellsArgs extends GridScrollerRowRenderProps {
   visibleRowsIndexes: number[];
   visibleColumnsIndexes: number[];
-  RowComponent: string | React.FC;
-  rowComponentProps: Object;
-  CellComponent: React.FC<GridScrollerCellRenderProps<T>>;
-  cellComponentProps: Object;
-  render: (props: GridScrollerCellRenderProps<T>) => ReturnType<React.FC>;
 }
 
-function renderCells<T>({
+interface RenderCellsType {
+  <T>(args: RenderCellsArgs & GridScrollerComponentRenderProps<T>): ReturnType<React.FC>[];
+  <T>(args: RenderCellsArgs & GridScrollerRenderFuncProps<T>): ReturnType<React.FC>[];
+}
+
+const renderCells: RenderCellsType = <T extends unknown>({
   visibleRowsIndexes,
   visibleColumnsIndexes,
   RowComponent = 'div',
@@ -19,24 +24,28 @@ function renderCells<T>({
   CellComponent,
   cellComponentProps,
   render,
-}: RenderCellArgs<T>) {
+}: RenderCellsArgs & GridScrollerComponentRenderProps<T> & GridScrollerRenderFuncProps<T>) => {
   const elements = visibleRowsIndexes.map((rowIndex, curRowIndex) => (
     <RowComponent key={curRowIndex} {...rowComponentProps}>
       {visibleColumnsIndexes.map(
         (columnIndex, curColumnIndex) => (
           <GridScrollerCell
             key={curColumnIndex}
-            Component={CellComponent}
-            componentProps={cellComponentProps}
-            render={render}
             rowIndex={rowIndex}
             columnIndex={columnIndex}
+            {...render && {
+              render,
+            }}
+            {...!render && {
+              CellComponent,
+              cellComponentProps,
+            }}
           />
         ),
       )}
     </RowComponent>
   ));
   return elements;
-}
+};
 
 export default renderCells;
