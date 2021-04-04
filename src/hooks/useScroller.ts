@@ -7,8 +7,8 @@ import React, {
 } from 'react';
 import { ScrollData } from 'types';
 import Scroller from 'utils/Scroller';
-import { ListScrollerProps } from 'ListScroller/types';
-import { GridScrollerProps } from 'GridScroller/types';
+import { ListScrollerProps } from 'components/ListScroller/types';
+import { GridScrollerProps } from 'components/GridScroller/types';
 
 type UseListScrollerProps = Omit<ListScrollerProps<any>, 'value'>;
 type UseGridScrollerProps = Omit<GridScrollerProps<any>, 'value'>;
