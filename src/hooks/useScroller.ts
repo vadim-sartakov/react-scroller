@@ -7,26 +7,36 @@ import React, {
 } from 'react';
 import { ScrollData } from 'types';
 import Scroller from 'utils/Scroller';
-import { GridScrollerProps } from './types';
+import { ListScrollerProps } from 'ListScroller/types';
+import { GridScrollerProps } from 'GridScroller/types';
 
-type UseGridScrollerProps<T> = Omit<GridScrollerProps<T>, 'value'>;
+type UseListScrollerProps = Omit<ListScrollerProps<any>, 'value'>;
+type UseGridScrollerProps = Omit<GridScrollerProps<any>, 'value'>;
 
-interface UseGridScrollerResult {
+interface UseListScrollerResult {
   scrollerContainerRef: React.MutableRefObject<HTMLDivElement>;
   visibleRowsIndexes: number[];
-  visibleColumnsIndexes: number[];
   onScroll: React.UIEventHandler<HTMLDivElement>;
   scrollAreaStyle: React.CSSProperties;
   visibleAreaStyle: React.CSSProperties;
   rowsScroller: Scroller;
-  columnsScroller: Scroller;
   onRowsScrollDataChange: (scrollData: ScrollData) => void;
+}
+
+interface UseGridScrollerResult extends UseListScrollerResult {
+  visibleColumnsIndexes: number[];
+  columnsScroller: Scroller;
   onColumnsScrollDataChange: (scrollData: ScrollData) => void;
 }
 
+type UseGridScrollerType = {
+  (props: UseListScrollerProps): UseListScrollerResult;
+  (props: UseGridScrollerProps): UseGridScrollerResult;
+};
+
 const defaultArray: number[] = [];
 
-function useGridScroller<T>({
+const useScroller: UseGridScrollerType = ({
   defaultRowHeight,
   defaultColumnWidth,
   totalRows,
@@ -41,7 +51,7 @@ function useGridScroller<T>({
   onRowsScrollDataChange: onRowsScrollDataChangeProp,
   columnsScrollData: columnsScrollDataProp,
   onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
-}: UseGridScrollerProps<T>): UseGridScrollerResult {
+}: UseListScrollerProps & UseGridScrollerProps) => {
   const scrollerContainerRefLocal = useRef<HTMLDivElement>();
   const scrollerContainerRef = scrollerContainerRefProp || scrollerContainerRefLocal;
 
@@ -54,7 +64,7 @@ function useGridScroller<T>({
     sizes: rowsSizes,
   }));
 
-  const columnsScrollerRef = useRef(new Scroller({
+  const columnsScrollerRef = useRef(totalColumns && new Scroller({
     defaultSize: defaultColumnWidth,
     scroll: 0,
     containerSize: typeof width === 'number' ? width : 800,
@@ -70,13 +80,15 @@ function useGridScroller<T>({
   const onRowsScrollDataChange = onRowsScrollDataChangeProp || setRowsScrollDataState;
 
   const [columnsScrollDataState, setColumnsScrollDataState] = useState(
-    columnsScrollerRef.current.scrollData,
+    totalColumns && columnsScrollerRef.current.scrollData,
   );
   const columnsScrollData = columnsScrollDataProp || columnsScrollDataState;
   const onColumnsScrollDataChange = onColumnsScrollDataChangeProp || setColumnsScrollDataState;
 
   const [coverHeight, setCoverHeight] = useState(rowsScrollerRef.current.getTotalSize());
-  const [coverWidth, setCoverWidth] = useState(columnsScrollerRef.current.getTotalSize());
+  const [coverWidth, setCoverWidth] = useState(
+    totalColumns && columnsScrollerRef.current.getTotalSize(),
+  );
 
   useEffect(() => {
     rowsScrollerRef.current.initialize({
@@ -99,6 +111,7 @@ function useGridScroller<T>({
   ]);
 
   useEffect(() => {
+    if (!totalColumns) return;
     columnsScrollerRef.current.initialize({
       scroll: scrollerContainerRef.current.scrollLeft,
       defaultSize: defaultColumnWidth,
@@ -124,11 +137,13 @@ function useGridScroller<T>({
       .scrollData;
     onRowsScrollDataChange(nextRowsScrollData);
 
+    if (!totalColumns) return;
+
     const nextColumnsScrollData = columnsScrollerRef.current
       .scrollTo(e.currentTarget.scrollLeft)
       .scrollData;
     onColumnsScrollDataChange(nextColumnsScrollData);
-  }, [onColumnsScrollDataChange, onRowsScrollDataChange]);
+  }, [totalColumns, onColumnsScrollDataChange, onRowsScrollDataChange]);
 
   const scrollAreaStyle: React.CSSProperties = useMemo(() => ({
     height: coverHeight,
@@ -145,15 +160,17 @@ function useGridScroller<T>({
   return {
     scrollerContainerRef,
     visibleRowsIndexes: rowsScrollData.visibleIndexes,
-    visibleColumnsIndexes: columnsScrollData && columnsScrollData.visibleIndexes,
     onScroll: handleScroll,
     scrollAreaStyle,
     visibleAreaStyle,
     onRowsScrollDataChange,
-    onColumnsScrollDataChange,
     rowsScroller: rowsScrollerRef.current,
-    columnsScroller: columnsScrollerRef.current,
+    ...totalColumns && {
+      visibleColumnsIndexes: columnsScrollData.visibleIndexes,
+      columnsScroller: columnsScrollerRef.current,
+      onColumnsScrollDataChange,
+    },
   };
-}
+};
 
-export default useGridScroller;
+export default useScroller;

@@ -1,4 +1,5 @@
 import React from 'react';
+import useScroller from 'hooks/useScroller';
 import useAsyncLoad from 'hooks/useAsyncLoad';
 import useResizer from 'hooks/useResizer';
 import {
@@ -7,7 +8,6 @@ import {
   ListScrollerComponentRenderProps,
   ListScrollerRenderFuncProps,
 } from './types';
-import useListScroller from './useListScroller';
 import ListScrollerContainer from './ListScrollerContainer';
 import renderRows from './renderRows';
 
@@ -49,7 +49,7 @@ ListScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
     scrollerContainerRef,
     rowsScroller,
     onRowsScrollDataChange,
-  } = useListScroller({
+  } = useScroller({
     scrollerContainerRef: scrollerContainerRefProp,
     height,
     defaultRowHeight,

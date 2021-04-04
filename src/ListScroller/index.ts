@@ -1,7 +1,5 @@
 export * from './types';
 
-export { default as useListScroller } from './useListScroller';
-
 export * from './ListScrollerContext';
 export { default as ListScrollerContext } from './ListScrollerContext';
 

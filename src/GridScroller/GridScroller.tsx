@@ -1,6 +1,7 @@
 import React from 'react';
 import useResizer from 'hooks/useResizer';
 import useAsyncLoad from 'hooks/useAsyncLoad';
+import useScroller from 'hooks/useScroller';
 import {
   GridScrollerProps,
   GridScrollerAsyncProps,
@@ -8,7 +9,6 @@ import {
   GridScrollerRowRenderProps,
   GridScrollerRenderFuncProps,
 } from './types';
-import useGridScroller from './useGridScroller';
 import GridScrollerContainer from './GridScrollerContainer';
 import renderCells from './renderCells';
 
@@ -16,22 +16,10 @@ interface GridScrollerBase<T> extends GridScrollerProps<T>, GridScrollerRowRende
 interface GridScrollerAsyncBase<T> extends GridScrollerAsyncProps<T>, GridScrollerRowRenderProps {}
 
 interface GridScrollerType {
-  <T>(
-    props: GridScrollerBase<T> &
-    GridScrollerComponentRenderProps<T>
-  ): ReturnType<React.FC>;
-  <T>(
-    props: GridScrollerBase<T> &
-    GridScrollerRenderFuncProps<T>
-  ): ReturnType<React.FC>;
-  <T>(
-    props: GridScrollerAsyncBase<T> &
-    GridScrollerComponentRenderProps<T>
-  ): ReturnType<React.FC>;
-  <T>(
-    props: GridScrollerAsyncBase<T> &
-    GridScrollerRenderFuncProps<T>
-  ): ReturnType<React.FC>;
+  <T>(props: GridScrollerBase<T> & GridScrollerComponentRenderProps<T>): ReturnType<React.FC>;
+  <T>(props: GridScrollerBase<T> & GridScrollerRenderFuncProps<T>): ReturnType<React.FC>;
+  <T>(props: GridScrollerAsyncBase<T> & GridScrollerComponentRenderProps<T>): ReturnType<React.FC>;
+  <T>(props: GridScrollerAsyncBase<T> & GridScrollerRenderFuncProps<T>): ReturnType<React.FC>;
 }
 
 const defaultArray: number[] = [];
@@ -76,7 +64,7 @@ GridScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
     onColumnsScrollDataChange,
     rowsScroller,
     columnsScroller,
-  } = useGridScroller({
+  } = useScroller({
     scrollerContainerRef: scrollerContainerRefProp,
     height,
     width,
