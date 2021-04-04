@@ -11,7 +11,7 @@ import { ListScrollerAsyncProps } from './types';
 
 export default {
   component: ListScroller,
-  title: 'Scroller/List/Async List',
+  title: 'Scroller/List/Async',
   argTypes: {
     totalRows: {
       control: {
@@ -91,4 +91,4 @@ const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
   );
 };
 
-export const asyncList = ListTemplate.bind({});
+export const async = ListTemplate.bind({});
