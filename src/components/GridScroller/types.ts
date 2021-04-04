@@ -1,5 +1,5 @@
 import { ScrollData, LoadPage } from 'types';
-import { ListScrollerProps } from 'ListScroller/types';
+import { ListScrollerProps } from 'components/ListScroller/types';
 
 export interface GridScrollerProps<T> extends Omit<ListScrollerProps<T>, 'value' | 'focusedCell'> {
   value: T[][];
