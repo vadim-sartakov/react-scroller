@@ -6,17 +6,19 @@ import React, {
   useCallback,
 } from 'react';
 import Scroller from 'utils/Scroller';
-import ResizeObserver from 'utils/ResizeObserver';
+import { ScrollData } from 'types';
 import { ListScrollerProps } from './types';
 
 type UseListScrollerProps<T> = Omit<ListScrollerProps<T>, 'value'>;
 
 interface UseListScrollerResult {
   scrollerContainerRef: React.MutableRefObject<HTMLDivElement>;
+  rowsScroller: Scroller;
   visibleRowsIndexes: number[];
   onScroll: React.UIEventHandler<HTMLDivElement>;
   scrollAreaStyle: React.CSSProperties;
   visibleAreaStyle: React.CSSProperties;
+  onRowsScrollDataChange: (scrollData: ScrollData) => void;
 }
 
 const defaultArray: number[] = [];
@@ -71,29 +73,6 @@ function useListScroller<T>({
     scrollerContainerRef,
   ]);
 
-  useEffect(() => {
-    // Do not recalculate if sizes specified explicitly as numbers by props
-    if (typeof height === 'number') return undefined;
-
-    const resizeObserver = new ResizeObserver(scrollerContainerRef.current);
-
-    const updateContainerSize = () => {
-      const scrollerContainerRect = scrollerContainerRef.current.getBoundingClientRect();
-      if (rowsScrollerRef.current.containerSize !== scrollerContainerRect.height) {
-        const nextRowsScrollData = rowsScrollerRef.current.updateContainerSize(
-          scrollerContainerRect.height,
-        ).scrollData;
-        onRowsScrollDataChange(nextRowsScrollData);
-      }
-    };
-
-    resizeObserver.listen(updateContainerSize);
-
-    // Initial update
-    updateContainerSize();
-    return () => resizeObserver.cleanup();
-  }, [height, scrollerContainerRef, onRowsScrollDataChange]);
-
   const handleScroll: React.UIEventHandler<HTMLDivElement> = useCallback((e) => {
     const nextRowsScrollData = rowsScrollerRef.current
       .scrollTo(e.currentTarget.scrollTop)
@@ -117,6 +96,8 @@ function useListScroller<T>({
     onScroll: handleScroll,
     scrollAreaStyle,
     visibleAreaStyle,
+    rowsScroller: rowsScrollerRef.current,
+    onRowsScrollDataChange,
   };
 }
 

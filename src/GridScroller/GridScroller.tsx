@@ -1,4 +1,5 @@
 import React from 'react';
+import useResizer from 'hooks/useResizer';
 import {
   GridScrollerProps,
   GridScrollerAsyncProps,
@@ -52,9 +53,9 @@ const GridScroller: GridScrollerType = <T extends unknown>({
   cellComponentProps,
   render,
   rowsScrollData,
-  onRowsScrollDataChange,
+  onRowsScrollDataChange: onRowsScrollDataChangeProp,
   columnsScrollData,
-  onColumnsScrollDataChange,
+  onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
   scrollerContainerRef: scrollerContainerRefProp,
   scrollerContainerProps,
 }: GridScrollerBase<T> &
@@ -68,6 +69,10 @@ GridScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
     scrollAreaStyle,
     visibleAreaStyle,
     scrollerContainerRef,
+    onRowsScrollDataChange,
+    onColumnsScrollDataChange,
+    rowsScroller,
+    columnsScroller,
   } = useGridScroller({
     scrollerContainerRef: scrollerContainerRefProp,
     height,
@@ -81,8 +86,18 @@ GridScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
     overscroll,
     focusedCell,
     rowsScrollData,
-    onRowsScrollDataChange,
+    onRowsScrollDataChange: onRowsScrollDataChangeProp,
     columnsScrollData,
+    onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
+  });
+
+  useResizer({
+    scrollerContainerRef,
+    rowsScroller,
+    columnsScroller,
+    width,
+    height,
+    onRowsScrollDataChange,
     onColumnsScrollDataChange,
   });
 

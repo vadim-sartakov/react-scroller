@@ -1,5 +1,6 @@
 import React from 'react';
 import useAsyncLoad from 'hooks/useAsyncLoad';
+import useResizer from 'hooks/useResizer';
 import {
   ListScrollerProps,
   ListScrollerAsyncProps,
@@ -35,7 +36,7 @@ const ListScroller: ListScrollerType = <T extends unknown>({
   rowComponentProps,
   render,
   rowsScrollData,
-  onRowsScrollDataChange,
+  onRowsScrollDataChange: onRowsScrollDataChangeProp,
 }: ListScrollerProps<T> &
 ListScrollerAsyncProps<T> &
 ListScrollerComponentRenderProps<T> &
@@ -46,6 +47,8 @@ ListScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
     scrollAreaStyle,
     visibleAreaStyle,
     scrollerContainerRef,
+    rowsScroller,
+    onRowsScrollDataChange,
   } = useListScroller({
     scrollerContainerRef: scrollerContainerRefProp,
     height,
@@ -55,6 +58,13 @@ ListScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
     overscroll,
     focusedCell,
     rowsScrollData,
+    onRowsScrollDataChange: onRowsScrollDataChangeProp,
+  });
+
+  useResizer({
+    scrollerContainerRef,
+    rowsScroller,
+    height,
     onRowsScrollDataChange,
   });
 

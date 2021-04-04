@@ -5,8 +5,8 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
+import { ScrollData } from 'types';
 import Scroller from 'utils/Scroller';
-import ResizeObserver from 'utils/ResizeObserver';
 import { GridScrollerProps } from './types';
 
 type UseGridScrollerProps<T> = Omit<GridScrollerProps<T>, 'value'>;
@@ -18,6 +18,10 @@ interface UseGridScrollerResult {
   onScroll: React.UIEventHandler<HTMLDivElement>;
   scrollAreaStyle: React.CSSProperties;
   visibleAreaStyle: React.CSSProperties;
+  rowsScroller: Scroller;
+  columnsScroller: Scroller;
+  onRowsScrollDataChange: (scrollData: ScrollData) => void;
+  onColumnsScrollDataChange: (scrollData: ScrollData) => void;
 }
 
 const defaultArray: number[] = [];
@@ -114,42 +118,6 @@ function useGridScroller<T>({
     scrollerContainerRef,
   ]);
 
-  useEffect(() => {
-    // Do not recalculate if sizes specified explicitly as numbers by props
-    if (typeof width === 'number' && typeof height === 'number') return undefined;
-
-    const resizeObserver = new ResizeObserver(scrollerContainerRef.current);
-
-    const updateContainerSize = () => {
-      const scrollerContainerRect = scrollerContainerRef.current.getBoundingClientRect();
-      if (rowsScrollerRef.current.containerSize !== scrollerContainerRect.height) {
-        const nextRowsScrollData = rowsScrollerRef.current.updateContainerSize(
-          scrollerContainerRect.height,
-        ).scrollData;
-        onRowsScrollDataChange(nextRowsScrollData);
-      }
-
-      if (columnsScrollerRef.current.containerSize !== scrollerContainerRect.width) {
-        const nextColumnsScrollData = columnsScrollerRef.current.updateContainerSize(
-          scrollerContainerRect.width,
-        ).scrollData;
-        onColumnsScrollDataChange(nextColumnsScrollData);
-      }
-    };
-
-    resizeObserver.listen(updateContainerSize);
-
-    // Initial update
-    updateContainerSize();
-    return () => resizeObserver.cleanup();
-  }, [
-    width,
-    height,
-    scrollerContainerRef,
-    onRowsScrollDataChange,
-    onColumnsScrollDataChange,
-  ]);
-
   const handleScroll: React.UIEventHandler<HTMLDivElement> = useCallback((e) => {
     const nextRowsScrollData = rowsScrollerRef.current
       .scrollTo(e.currentTarget.scrollTop)
@@ -181,6 +149,10 @@ function useGridScroller<T>({
     onScroll: handleScroll,
     scrollAreaStyle,
     visibleAreaStyle,
+    onRowsScrollDataChange,
+    onColumnsScrollDataChange,
+    rowsScroller: rowsScrollerRef.current,
+    columnsScroller: columnsScrollerRef.current,
   };
 }
 
