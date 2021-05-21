@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { LoadPage } from 'types';
-import AsyncLoader from 'utils/AsyncLoader';
+import { LoadPage } from '../types';
+import AsyncLoader from '../utils/AsyncLoader';
 
 export interface UseAsyncLoadProps<T> {
   visibleIndexes: number[];

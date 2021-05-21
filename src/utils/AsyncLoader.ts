@@ -1,8 +1,8 @@
-import { LoadPage, Page } from 'types';
+import { LoadPage, Page } from '../types';
 import {
   getTotalPages,
   getPagesToLoad,
-} from 'utils/pagination';
+} from './pagination';
 
 interface AsyncLoaderProps<T> {
   itemsPerPage: number;

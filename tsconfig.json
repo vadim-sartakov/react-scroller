@@ -9,11 +9,7 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "jsx": "react",
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "paths": {
-      "*": ["src/*"]
-    }
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*"]
 }

@@ -1,4 +1,4 @@
-import { ScrollData } from 'types';
+import { ScrollData } from '../types';
 import {
   getScrollDataWithDefaultSize,
   getScrollDataWithCustomSizes,

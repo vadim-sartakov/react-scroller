@@ -5,7 +5,7 @@ import {
   generateRandomSizes,
   sleep,
   loadPage,
-} from 'test/utils';
+} from '../../test/utils';
 import ListScroller from './ListScroller';
 import { ListScrollerAsyncProps } from './types';
 

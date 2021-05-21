@@ -1,7 +1,7 @@
 import React from 'react';
-import useResizer from 'hooks/useResizer';
-import useAsyncLoad from 'hooks/useAsyncLoad';
-import useScroller from 'hooks/useScroller';
+import useResizer from '../../hooks/useResizer';
+import useAsyncLoad from '../../hooks/useAsyncLoad';
+import useScroller from '../../hooks/useScroller';
 import {
   GridScrollerProps,
   GridScrollerAsyncProps,

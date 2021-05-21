@@ -1,7 +1,7 @@
 import { useEffect, MutableRefObject } from 'react';
-import { ScrollData } from 'types';
-import ResizeObserver from 'utils/ResizeObserver';
-import Scroller from 'utils/Scroller';
+import { ScrollData } from '../types';
+import ResizeObserver from '../utils/ResizeObserver';
+import Scroller from '../utils/Scroller';
 
 interface UseResizerProps {
   scrollerContainerRef: MutableRefObject<HTMLDivElement>;

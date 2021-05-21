@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import {
   generateListValues,
   generateRandomSizes,
-} from 'test/utils';
+} from '../../test/utils';
 import ListScroller from './ListScroller';
 import { ListScrollerProps } from './types';
 

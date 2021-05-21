@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import {
   generateGridValues,
   generateRandomSizes,
-} from 'test/utils';
+} from '../../test/utils';
 import GridScroller from './GridScroller';
 import { GridScrollerProps } from './types';
 

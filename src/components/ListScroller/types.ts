@@ -1,4 +1,4 @@
-import { ScrollData, ScrollerPropsBase, LoadPage } from 'types';
+import { ScrollData, ScrollerPropsBase, LoadPage } from '../../types';
 
 export interface ListScrollerProps<T> extends ScrollerPropsBase {
   value: T[];

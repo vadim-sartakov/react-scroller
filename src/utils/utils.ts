@@ -1,4 +1,4 @@
-import { ScrollData } from 'types';
+import { ScrollData } from '../types';
 
 function applyStartOverscroll(startIndex: number, overscroll = 0) {
   return Math.max(startIndex - overscroll, 0);
