@@ -4,8 +4,7 @@ import {
   generateListValues,
   generateRandomSizes,
 } from '../../test/utils';
-import ListScroller from './ListScroller';
-import { ListScrollerProps } from './types';
+import ListScroller, { ListScrollerProps } from './ListScroller';
 
 export default {
   component: ListScroller,
@@ -43,9 +42,9 @@ export default {
   },
 } as Meta;
 
-interface ListScrollerStoryProps<T> extends ListScrollerProps<T> {
+type ListScrollerStoryProps<T> = ListScrollerProps<T> & {
   randomSizes?: boolean;
-}
+};
 
 const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
   randomSizes,

@@ -17,4 +17,5 @@ export interface ScrollerPropsBase {
   scrollerContainerProps?: React.HTMLAttributes<HTMLDivElement>;
   /* Number of elements which should be rendered out of visible scroller container */
   overscroll?: number;
+  onScroll?: React.UIEventHandler<HTMLElement>;
 }

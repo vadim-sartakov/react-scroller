@@ -1,30 +1,22 @@
 import React from 'react';
 import {
   GridScrollerRowRenderProps,
-  GridScrollerComponentRenderProps,
-  GridScrollerRenderFuncProps,
+  GridScrollerRenderProps,
 } from './types';
 import GridScrollerCell from './GridScrollerCell';
 
-interface RenderCellsArgs extends GridScrollerRowRenderProps {
+type RenderCellsArgs<T> = GridScrollerRowRenderProps & GridScrollerRenderProps<T> & {
   visibleRowsIndexes: number[];
   visibleColumnsIndexes: number[];
-}
+};
 
-interface RenderCellsType {
-  <T>(args: RenderCellsArgs & GridScrollerComponentRenderProps<T>): ReturnType<React.FC>[];
-  <T>(args: RenderCellsArgs & GridScrollerRenderFuncProps<T>): ReturnType<React.FC>[];
-}
-
-const renderCells: RenderCellsType = <T extends unknown>({
+const renderCells = <T extends unknown>({
   visibleRowsIndexes,
   visibleColumnsIndexes,
   RowComponent = 'div',
   rowComponentProps,
-  CellComponent,
-  cellComponentProps,
-  render,
-}: RenderCellsArgs & GridScrollerComponentRenderProps<T> & GridScrollerRenderFuncProps<T>) => {
+  ...props
+}: RenderCellsArgs<T>) => {
   const elements = visibleRowsIndexes.map((rowIndex, curRowIndex) => (
     <RowComponent key={curRowIndex} {...rowComponentProps}>
       {visibleColumnsIndexes.map(
@@ -33,13 +25,7 @@ const renderCells: RenderCellsType = <T extends unknown>({
             key={curColumnIndex}
             rowIndex={rowIndex}
             columnIndex={columnIndex}
-            {...render && {
-              render,
-            }}
-            {...!render && {
-              CellComponent,
-              cellComponentProps,
-            }}
+            {...props}
           />
         ),
       )}

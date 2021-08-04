@@ -1,36 +1,22 @@
 import React from 'react';
-import {
-  ListScrollerComponentRenderProps,
-  ListScrollerRenderFuncProps,
-} from './types';
+import { ListScrollerRenderProps } from './types';
 import ListScrollerRow from './ListScrollerRow';
 
-interface RenderRowsArgs {
+interface RenderRowsArgsBase {
   visibleRowsIndexes: number[];
 }
 
-interface RenderRowsType {
-  <T>(args: RenderRowsArgs & ListScrollerComponentRenderProps<T>): ReturnType<React.FC>[];
-  <T>(args: RenderRowsArgs & ListScrollerRenderFuncProps<T>): ReturnType<React.FC>[];
-}
+type RenderRowsType<T> = RenderRowsArgsBase & ListScrollerRenderProps<T>;
 
-const renderRows: RenderRowsType = <T extends unknown>({
+const renderRows = <T extends unknown>({
   visibleRowsIndexes,
-  RowComponent,
-  rowComponentProps,
-  render,
-}: RenderRowsArgs & ListScrollerComponentRenderProps<T> & ListScrollerRenderFuncProps<T>) => {
+  ...args
+}: RenderRowsType<T>) => {
   const elements = visibleRowsIndexes.map((rowIndex, curRowIndex) => (
     <ListScrollerRow
       key={curRowIndex}
       rowIndex={rowIndex}
-      {...render && {
-        render,
-      }}
-      {...!render && {
-        RowComponent,
-        rowComponentProps,
-      }}
+      {...args}
     />
   ));
   return elements;

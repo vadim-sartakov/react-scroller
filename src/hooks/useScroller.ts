@@ -7,52 +7,56 @@ import React, {
 } from 'react';
 import { ScrollData } from '../types';
 import Scroller from '../utils/Scroller';
-import { ListScrollerProps } from '../components/ListScroller/types';
-import { GridScrollerProps } from '../components/GridScroller/types';
-
-type UseListScrollerProps = Omit<ListScrollerProps<any>, 'value'>;
-type UseGridScrollerProps = Omit<GridScrollerProps<any>, 'value'>;
+import { ListScrollerPropsBase } from '../components/ListScroller/types';
+import { GridScrollerPropsBase } from '../components/GridScroller/types';
+import { isGridScrollerProps } from '../components/GridScroller/utils';
 
 interface UseListScrollerResult {
   scrollerContainerRef: React.MutableRefObject<HTMLDivElement>;
   visibleRowsIndexes: number[];
+  visibleColumnsIndexes: number[];
   onScroll: React.UIEventHandler<HTMLDivElement>;
   scrollAreaStyle: React.CSSProperties;
   visibleAreaStyle: React.CSSProperties;
   rowsScroller: Scroller;
   onRowsScrollDataChange: (scrollData: ScrollData) => void;
-}
-
-interface UseGridScrollerResult extends UseListScrollerResult {
-  visibleColumnsIndexes: number[];
   columnsScroller: Scroller;
   onColumnsScrollDataChange: (scrollData: ScrollData) => void;
 }
 
-type UseGridScrollerType = {
-  (props: UseListScrollerProps): UseListScrollerResult;
-  (props: UseGridScrollerProps): UseGridScrollerResult;
-};
-
 const defaultArray: number[] = [];
 
-const useScroller: UseGridScrollerType = ({
+const useScroller = ({
   defaultRowHeight,
-  defaultColumnWidth,
   totalRows,
-  totalColumns,
   rowsSizes = defaultArray,
-  columnsSizes = defaultArray,
-  width,
   height,
   overscroll = 0,
   focusedCell,
   scrollerContainerRef: scrollerContainerRefProp,
   rowsScrollData: rowsScrollDataProp,
   onRowsScrollDataChange: onRowsScrollDataChangeProp,
-  columnsScrollData: columnsScrollDataProp,
-  onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
-}: UseListScrollerProps & UseGridScrollerProps) => {
+  onScroll,
+  ...props
+}: ListScrollerPropsBase | GridScrollerPropsBase): UseListScrollerResult => {
+  let defaultColumnWidth: GridScrollerPropsBase['defaultColumnWidth'];
+  let totalColumns: GridScrollerPropsBase['totalColumns'];
+  let columnsSizes = defaultArray;
+  let width: GridScrollerPropsBase['width'];
+  let columnsScrollDataProp: GridScrollerPropsBase['columnsScrollData'];
+  let onColumnsScrollDataChangeProp: GridScrollerPropsBase['onColumnsScrollDataChange'];
+
+  if (isGridScrollerProps(props)) {
+    ({
+      defaultColumnWidth,
+      totalColumns,
+      columnsSizes,
+      width,
+      columnsScrollData: columnsScrollDataProp,
+      onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
+    } = props);
+  }
+
   const scrollerContainerRefLocal = useRef<HTMLDivElement>();
   const scrollerContainerRef = scrollerContainerRefProp || scrollerContainerRefLocal;
 
@@ -149,6 +153,8 @@ const useScroller: UseGridScrollerType = ({
   }, [scrollerContainerRef, focusedCell]);
 
   const handleScroll: React.UIEventHandler<HTMLDivElement> = useCallback((e) => {
+    onScroll?.(e);
+
     const nextRowsScrollData = rowsScrollerRef.current
       .scrollTo(e.currentTarget.scrollTop)
       .scrollData;
@@ -160,7 +166,7 @@ const useScroller: UseGridScrollerType = ({
       .scrollTo(e.currentTarget.scrollLeft)
       .scrollData;
     onColumnsScrollDataChange(nextColumnsScrollData);
-  }, [totalColumns, onColumnsScrollDataChange, onRowsScrollDataChange]);
+  }, [totalColumns, onColumnsScrollDataChange, onRowsScrollDataChange, onScroll]);
 
   const scrollAreaStyle: React.CSSProperties = useMemo(() => ({
     height: coverHeight,

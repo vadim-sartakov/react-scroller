@@ -3,28 +3,30 @@ import useResizer from '../../hooks/useResizer';
 import useAsyncLoad from '../../hooks/useAsyncLoad';
 import useScroller from '../../hooks/useScroller';
 import {
-  GridScrollerProps,
-  GridScrollerAsyncProps,
-  GridScrollerComponentRenderProps,
+  GridScrollerPropsBase,
   GridScrollerRowRenderProps,
-  GridScrollerRenderFuncProps,
+  GridScrollerSyncPropsBase,
+  GridScrollerAsyncPropsBase,
+  GridScrollerRenderProps,
 } from './types';
 import GridScrollerContainer from './GridScrollerContainer';
 import renderCells from './renderCells';
 
-interface GridScrollerBase<T> extends GridScrollerProps<T>, GridScrollerRowRenderProps {}
-interface GridScrollerAsyncBase<T> extends GridScrollerAsyncProps<T>, GridScrollerRowRenderProps {}
+export type GridScrollerProps<T> =
+  GridScrollerPropsBase &
+  GridScrollerSyncPropsBase<T> &
+  GridScrollerRowRenderProps &
+  GridScrollerRenderProps<T>;
 
-interface GridScrollerType {
-  <T>(props: GridScrollerBase<T> & GridScrollerComponentRenderProps<T>): ReturnType<React.FC>;
-  <T>(props: GridScrollerBase<T> & GridScrollerRenderFuncProps<T>): ReturnType<React.FC>;
-  <T>(props: GridScrollerAsyncBase<T> & GridScrollerComponentRenderProps<T>): ReturnType<React.FC>;
-  <T>(props: GridScrollerAsyncBase<T> & GridScrollerRenderFuncProps<T>): ReturnType<React.FC>;
-}
+export type GridScrollerAsyncProps<T> =
+  GridScrollerPropsBase &
+  GridScrollerAsyncPropsBase<T> &
+  GridScrollerRowRenderProps &
+  GridScrollerRenderProps<T>;
 
 const defaultArray: number[] = [];
 
-const GridScroller: GridScrollerType = <T extends unknown>({
+const GridScroller = <T extends unknown>({
   width,
   height,
   value,
@@ -49,10 +51,9 @@ const GridScroller: GridScrollerType = <T extends unknown>({
   onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
   scrollerContainerRef: scrollerContainerRefProp,
   scrollerContainerProps,
-}: GridScrollerBase<T> &
-GridScrollerAsyncBase<T> &
-GridScrollerComponentRenderProps<T> &
-GridScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
+  scrollAreaProps,
+  visibleAreaProps,
+}: GridScrollerProps<T> | GridScrollerAsyncProps<T>): ReturnType<React.FC> => {
   const {
     visibleRowsIndexes,
     visibleColumnsIndexes,
@@ -127,8 +128,20 @@ GridScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
       height={height}
       {...scrollerContainerProps}
     >
-      <div style={scrollAreaStyle}>
-        <div style={visibleAreaStyle}>
+      <div
+        {...scrollAreaProps}
+        style={{
+          ...scrollAreaProps?.style,
+          ...scrollAreaStyle,
+        }}
+      >
+        <div
+          {...visibleAreaProps}
+          style={{
+            ...visibleAreaProps?.style,
+            ...visibleAreaStyle,
+          }}
+        >
           {elements}
         </div>
       </div>

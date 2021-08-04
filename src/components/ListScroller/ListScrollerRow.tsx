@@ -1,25 +1,22 @@
 import React, { useContext, useMemo } from 'react';
-import { ListScrollerComponentRenderProps, ListScrollerRenderFuncProps } from './types';
+import { ListScrollerRenderProps } from './types';
+import {
+  isComponentRenderProps,
+  isRenderFuncProps,
+} from './utils';
 import ListScrollerContext from './ListScrollerContext';
 
-interface ListScrollerRowProps extends React.HTMLAttributes<HTMLElement> {
+interface ListScrollerRowPropsBase extends React.HTMLAttributes<HTMLElement> {
   rowIndex: number;
 }
 
-interface ListScrollerRowType {
-  <T>(props: ListScrollerRowProps & ListScrollerComponentRenderProps<T>): ReturnType<React.FC>;
-  <T>(props: ListScrollerRowProps & ListScrollerRenderFuncProps<T>): ReturnType<React.FC>;
-}
+type ListScrollerRowProps<T> = ListScrollerRowPropsBase & ListScrollerRenderProps<T>;
 
-const ListScrollerRow: ListScrollerRowType = <T extends unknown>({
+const ListScrollerRow = <T extends unknown>({
   style,
   rowIndex,
-  RowComponent,
-  rowComponentProps,
-  render,
-}: ListScrollerRowProps &
-ListScrollerComponentRenderProps<T> &
-ListScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
+  ...props
+}: ListScrollerRowProps<T>): ReturnType<React.FC> => {
   const {
     value,
     defaultRowHeight,
@@ -30,7 +27,8 @@ ListScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
   const nextStyle = useMemo(() => ({ height, ...style }), [height, style]);
   const rowValue = value[rowIndex];
 
-  if (RowComponent) {
+  if (isComponentRenderProps(props)) {
+    const { RowComponent, rowComponentProps } = props;
     return (
       <RowComponent
         style={nextStyle}
@@ -39,17 +37,18 @@ ListScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
         {...rowComponentProps}
       />
     );
-  } else if (render) {
+  }
+
+  if (isRenderFuncProps(props)) {
+    const { render } = props;
     return render({
       rowIndex,
       style: nextStyle,
       value: rowValue,
     });
-  } else {
-    throw Error('Either Component prop or render should be provided');
   }
+
+  throw Error('Either Component prop or render should be provided');
 };
 
-const Wrapper = React.memo(ListScrollerRow) as unknown as ListScrollerRowType;
-
-export default Wrapper;
+export default React.memo(ListScrollerRow);

@@ -1,21 +1,24 @@
 import React, { useMemo } from 'react';
 import ListScrollerContext from './ListScrollerContext';
-import { ListScrollerProps } from './types';
+import { ListScrollerPropsBase, ListScrollerSyncPropsBase } from './types';
 
 const defaultArray: number[] = [];
 
 export interface ListScrollerContainerProps<T> extends
-  React.HTMLAttributes<HTMLDivElement>, Pick<ListScrollerProps<T>,
-  'value'
+  React.HTMLAttributes<HTMLDivElement>,
+  Pick<ListScrollerSyncPropsBase<T>, 'value'>,
+  Pick<ListScrollerPropsBase,
   | 'height'
+  | 'width'
   | 'defaultRowHeight'
   | 'rowsSizes'> {
-  containerRef?: React.Ref<HTMLDivElement>,
+  containerRef?: React.MutableRefObject<HTMLDivElement>,
 }
 
 const ListScrollerContainer = <T extends unknown>({
   value,
   height,
+  width,
   defaultRowHeight,
   rowsSizes = defaultArray,
   onScroll,
@@ -34,6 +37,7 @@ const ListScrollerContainer = <T extends unknown>({
       <div
         ref={containerRef}
         style={{
+          width,
           height,
           overflow: height && 'auto',
           ...style,

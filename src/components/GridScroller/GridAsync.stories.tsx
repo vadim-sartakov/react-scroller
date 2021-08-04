@@ -6,8 +6,7 @@ import {
   sleep,
   loadPage,
 } from '../../test/utils';
-import GridScroller from './GridScroller';
-import { GridScrollerAsyncProps } from './types';
+import GridScroller, { GridScrollerAsyncProps } from './GridScroller';
 
 export default {
   component: GridScroller,
@@ -64,10 +63,10 @@ export default {
   },
 } as Meta;
 
-interface GridScrollerStoryProps<T> extends GridScrollerAsyncProps<T> {
+type GridScrollerStoryProps<T> = GridScrollerAsyncProps<T> & {
   randomSizes?: boolean;
   loadDelay?: number;
-}
+};
 
 const GridTemplate: Story<GridScrollerStoryProps<any>> = ({
   randomSizes,

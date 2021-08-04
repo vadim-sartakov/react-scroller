@@ -6,8 +6,7 @@ import {
   sleep,
   loadPage,
 } from '../../test/utils';
-import ListScroller from './ListScroller';
-import { ListScrollerAsyncProps } from './types';
+import ListScroller, { ListScrollerAsyncProps } from './ListScroller';
 
 export default {
   component: ListScroller,
@@ -57,10 +56,10 @@ export default {
   },
 } as Meta;
 
-interface ListScrollerStoryProps<T> extends ListScrollerAsyncProps<T> {
+type ListScrollerStoryProps<T> = ListScrollerAsyncProps<T> & {
   randomSizes?: boolean;
   loadDelay?: number;
-}
+};
 
 const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
   randomSizes,

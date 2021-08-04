@@ -4,8 +4,7 @@ import {
   generateGridValues,
   generateRandomSizes,
 } from '../../test/utils';
-import GridScroller from './GridScroller';
-import { GridScrollerProps } from './types';
+import GridScroller, { GridScrollerProps } from './GridScroller';
 
 export default {
   component: GridScroller,
@@ -57,9 +56,9 @@ export default {
   },
 } as Meta;
 
-interface GridScrollerStoryProps<T> extends GridScrollerProps<T> {
+type GridScrollerStoryProps<T> = GridScrollerProps<T> & {
   randomSizes?: boolean;
-}
+};
 
 const GridTemplate: Story<GridScrollerStoryProps<any>> = ({
   randomSizes,

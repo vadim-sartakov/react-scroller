@@ -1,19 +1,20 @@
 import React, { useMemo } from 'react';
 import GridScrollerContext from './GridScrollerContext';
-import { GridScrollerProps } from './types';
+import { GridScrollerPropsBase, GridScrollerSyncPropsBase } from './types';
 
 const defaultArray: number[] = [];
 
 export interface GridScrollerContainerProps<T> extends
-  React.HTMLAttributes<HTMLDivElement>, Pick<GridScrollerProps<T>,
-  'value'
+  React.HTMLAttributes<HTMLDivElement>,
+  Pick<GridScrollerSyncPropsBase<T>, 'value'>,
+  Pick<GridScrollerPropsBase,
   | 'width'
   | 'height'
   | 'defaultRowHeight'
   | 'defaultColumnWidth'
   | 'rowsSizes'
   | 'columnsSizes'> {
-  containerRef?: React.Ref<HTMLDivElement>,
+  containerRef?: React.MutableRefObject<HTMLDivElement>,
 }
 
 const GridScrollerContainer = <T extends unknown>({

@@ -1,3 +1,4 @@
+export * from './types';
 export * from './components/ListScroller';
 export * from './components/GridScroller';
 export { default as ListScroller } from './components/ListScroller';

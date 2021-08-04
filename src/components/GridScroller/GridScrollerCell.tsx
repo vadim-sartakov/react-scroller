@@ -1,27 +1,20 @@
 import React, { useContext } from 'react';
-import { GridScrollerComponentRenderProps, GridScrollerRenderFuncProps } from './types';
+import { GridScrollerRenderProps } from './types';
 import ScrollerContext from './GridScrollerContext';
 
-interface GridScrollerCellProps extends React.HTMLAttributes<HTMLElement> {
+type GridScrollerCellProps<T> = React.HTMLAttributes<HTMLElement> & GridScrollerRenderProps<T> & {
   rowIndex: number;
   columnIndex: number;
-}
+};
 
-interface GridScrollerCellType {
-  <T>(props: GridScrollerCellProps & GridScrollerComponentRenderProps<T>): ReturnType<React.FC>;
-  <T>(props: GridScrollerCellProps & GridScrollerRenderFuncProps<T>): ReturnType<React.FC>;
-}
-
-const GridScrollerCell: GridScrollerCellType = <T extends unknown>({
+const GridScrollerCell = <T extends unknown>({
   style,
   rowIndex,
   columnIndex,
   CellComponent,
   cellComponentProps,
   render,
-}: GridScrollerCellProps &
-GridScrollerComponentRenderProps<T> &
-GridScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
+}: GridScrollerCellProps<T>): ReturnType<React.FC> => {
   const {
     value,
     defaultColumnWidth,
@@ -58,6 +51,4 @@ GridScrollerRenderFuncProps<T>): ReturnType<React.FC> => {
   }
 };
 
-const Wrapper = React.memo(GridScrollerCell) as unknown as GridScrollerCellType;
-
-export default Wrapper;
+export default React.memo(GridScrollerCell);
