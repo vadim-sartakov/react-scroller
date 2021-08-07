@@ -11,11 +11,13 @@ import {
 import ListScrollerContainer from './ListScrollerContainer';
 import renderRows from './renderRows';
 
-export type ListScrollerProps<T> = ListScrollerPropsBase &
+export type ListScrollerProps<T> =
+ListScrollerPropsBase &
 ListScrollerRenderProps<T> &
 ListScrollerSyncPropsBase<T>;
 
-export type ListScrollerAsyncProps<T> = ListScrollerPropsBase &
+export type ListScrollerAsyncProps<T> =
+ListScrollerPropsBase &
 ListScrollerRenderProps<T> &
 ListScrollerAsyncPropsBase<T>;
 

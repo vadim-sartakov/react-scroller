@@ -8,7 +8,7 @@ import { ListScrollerPropsBase } from '../components/ListScroller/types';
 import { GridScrollerPropsBase } from '../components/GridScroller/types';
 import { isGridScrollerProps } from '../components/GridScroller/utils';
 
-interface UseListScrollerResult {
+interface UseScrollerResult {
   scrollerContainerRef: React.MutableRefObject<HTMLDivElement>;
   visibleRowsIndexes: number[];
   visibleColumnsIndexes: number[];
@@ -35,7 +35,7 @@ const useScroller = ({
   onRowsScrollDataChange: onRowsScrollDataChangeProp,
   onScroll,
   ...props
-}: ListScrollerPropsBase | GridScrollerPropsBase): UseListScrollerResult => {
+}: ListScrollerPropsBase | GridScrollerPropsBase): UseScrollerResult => {
   let defaultColumnWidth: GridScrollerPropsBase['defaultColumnWidth'];
   let totalColumns: GridScrollerPropsBase['totalColumns'];
   let columnsSizes = defaultArray;

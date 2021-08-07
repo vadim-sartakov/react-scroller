@@ -1,15 +1,10 @@
 import { ScrollData, LoadPage } from '../../types';
-import { ListScrollerPropsBase } from '../ListScroller/types';
+import { ListScrollerSizesProps, ListScrollerPropsBase } from '../ListScroller/types';
 
-export interface GridScrollerPropsBase extends Omit<ListScrollerPropsBase, 'focusedCell'> {
+export interface GridScrollerSizesProps extends ListScrollerSizesProps {
   defaultColumnWidth: number;
   totalColumns: number;
   columnsSizes?: number[];
-  /* Controllable scroll data */
-  columnsScrollData?: ScrollData;
-  onColumnsScrollDataChange?: (scrollData: ScrollData) => void;
-  /* Number of elements which should be rendered out of visible scroller container */
-  focusedCell?: { row: number, cell: number };
 }
 
 export interface GridScrollerSyncPropsBase<T> {
@@ -51,3 +46,10 @@ export interface GridScrollerRenderFuncProps<T> {
 export type GridScrollerRenderProps<T> =
   GridScrollerComponentRenderProps<T> |
   GridScrollerRenderFuncProps<T>;
+
+export interface GridScrollerPropsBase extends Omit<ListScrollerPropsBase, 'focusedCell'>, GridScrollerSizesProps {
+  /* Controllable scroll data */
+  columnsScrollData?: ScrollData;
+  onColumnsScrollDataChange?: (scrollData: ScrollData) => void;
+  focusedCell?: { row: number, cell: number };
+}

@@ -1,7 +1,6 @@
-import { HTMLAttributes } from 'react';
 import { ScrollData, ScrollerPropsBase, LoadPage } from '../../types';
 
-export interface ListScrollerPropsBase extends ScrollerPropsBase {
+export interface ListScrollerSizesProps {
   defaultRowHeight: number;
   totalRows: number;
   rowsSizes?: number[];
@@ -9,13 +8,6 @@ export interface ListScrollerPropsBase extends ScrollerPropsBase {
   height?: number | string;
   /* Scroller container width. Could be any valid css string */
   width?: number | string;
-  /* Controllable scroll data */
-  rowsScrollData?: ScrollData;
-  onRowsScrollDataChange?: (scrollData: ScrollData) => void;
-  scrollerContainerRef?: React.MutableRefObject<HTMLDivElement>;
-  focusedCell?: number;
-  scrollAreaProps?: HTMLAttributes<HTMLDivElement>;
-  visibleAreaProps?: HTMLAttributes<HTMLDivElement>;
 }
 
 export interface ListScrollerSyncPropsBase<T> {
@@ -51,3 +43,11 @@ export interface ListScrollerRenderFuncProps<T> {
 export type ListScrollerRenderProps<T> =
   ListScrollerComponentRenderProps<T> |
   ListScrollerRenderFuncProps<T>;
+
+export interface ListScrollerPropsBase extends ScrollerPropsBase, ListScrollerSizesProps {
+  rowsScrollData?: ScrollData;
+  onRowsScrollDataChange?: (scrollData: ScrollData) => void;
+  scrollAreaProps?: React.HTMLAttributes<HTMLDivElement>;
+  visibleAreaProps?: React.HTMLAttributes<HTMLDivElement>;
+  focusedCell?: number;
+}

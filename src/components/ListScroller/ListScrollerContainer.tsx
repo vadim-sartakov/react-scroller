@@ -1,18 +1,14 @@
 import { useMemo } from 'react';
 import * as React from 'react';
 import ListScrollerContext from './ListScrollerContext';
-import { ListScrollerPropsBase, ListScrollerSyncPropsBase } from './types';
+import { ListScrollerSyncPropsBase, ListScrollerSizesProps } from './types';
 
 const defaultArray: number[] = [];
 
 export interface ListScrollerContainerProps<T> extends
   React.HTMLAttributes<HTMLDivElement>,
-  Pick<ListScrollerSyncPropsBase<T>, 'value'>,
-  Pick<ListScrollerPropsBase,
-  | 'height'
-  | 'width'
-  | 'defaultRowHeight'
-  | 'rowsSizes'> {
+  ListScrollerSyncPropsBase<T>,
+  Omit<ListScrollerSizesProps, 'totalRows'> {
   containerRef?: React.MutableRefObject<HTMLDivElement>,
 }
 
