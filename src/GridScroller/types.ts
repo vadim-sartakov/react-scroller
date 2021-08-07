@@ -11,11 +11,13 @@ export interface GridScrollerSyncPropsBase<T> {
   value: T[][];
   itemsPerPage?: never;
   loadPage?: never;
+  loadTimeout?: never;
 }
 
 export interface GridScrollerAsyncPropsBase<T> extends GridScrollerPropsBase {
   itemsPerPage: number;
   loadPage: LoadPage<T[]>;
+  loadTimeout?: number;
   value?: never;
 }
 

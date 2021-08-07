@@ -1,12 +1,19 @@
-import { useState, useEffect, useRef } from 'react';
+import {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+} from 'react';
 import { LoadPage } from '../types';
 import AsyncLoader from '../utils/AsyncLoader';
+import debounce from '../utils/debounce';
 
 export interface UseAsyncLoadProps<T> {
   visibleIndexes: number[];
   itemsPerPage: number;
   totalCount: number;
   loadPage: LoadPage<T>;
+  loadTimeout?: number;
 }
 
 interface UseAsyncLoadResult<T> {
@@ -18,6 +25,7 @@ function useAsyncLoad<T>({
   itemsPerPage,
   totalCount,
   loadPage,
+  loadTimeout = 200,
 }: UseAsyncLoadProps<T>): UseAsyncLoadResult<T> {
   const [value, setValue] = useState<T[]>([]);
 
@@ -26,6 +34,14 @@ function useAsyncLoad<T>({
     totalCount,
     loadPage,
   }));
+
+  const handleLoadPages = useMemo(
+    () => debounce(
+      asyncLoaderRef.current?.loadPages.bind(asyncLoaderRef.current),
+      loadTimeout,
+    ),
+    [loadTimeout],
+  );
 
   useEffect(() => {
     if (!asyncLoaderRef.current) return;
@@ -40,8 +56,8 @@ function useAsyncLoad<T>({
 
   useEffect(() => {
     if (!asyncLoaderRef.current) return;
-    asyncLoaderRef.current.loadPages(visibleIndexes, setValue);
-  }, [visibleIndexes]);
+    handleLoadPages(visibleIndexes, setValue);
+  }, [visibleIndexes, handleLoadPages]);
 
   return { value };
 }

@@ -32,6 +32,7 @@ const GridScroller = <T extends unknown>({
   value,
   itemsPerPage,
   loadPage,
+  loadTimeout,
   rowsSizes = defaultArray,
   columnsSizes = defaultArray,
   defaultRowHeight,
@@ -98,6 +99,7 @@ const GridScroller = <T extends unknown>({
     itemsPerPage,
     totalCount: totalRows,
     loadPage,
+    loadTimeout,
   });
 
   const elements = render ? renderCells({

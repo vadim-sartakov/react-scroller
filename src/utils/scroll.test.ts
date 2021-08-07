@@ -4,7 +4,7 @@ import {
   shiftScroll,
   getCellPosition,
   getCellsSize,
-} from './utils';
+} from './scroll';
 
 //             0   20  50  100 180 200 210 260 350 390 offsets
 //             20  50  100 180 200 210 260 350 390 420 scroll

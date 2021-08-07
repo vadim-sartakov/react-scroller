@@ -27,6 +27,7 @@ const ListScroller = <T extends unknown>({
   value,
   loadPage,
   itemsPerPage,
+  loadTimeout,
   height,
   width,
   rowsSizes = defaultArray,
@@ -76,6 +77,7 @@ const ListScroller = <T extends unknown>({
     itemsPerPage,
     totalCount: totalRows,
     loadPage,
+    loadTimeout,
   });
 
   let elements: React.ReactElement[];

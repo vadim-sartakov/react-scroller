@@ -1,4 +1,4 @@
-export * from './utils';
+export * from './scroll';
 export * from './pagination';
 export { default as Scroller } from './Scroller';
 export { default as ResizeObserver } from './ResizeObserver';

@@ -11,9 +11,9 @@ class ResizeObserver {
 
   listen(listener: Listener) {
     this.listener = listener;
-    const mutationCallback: MutationCallback = (mutations) => {
+    const mutationCallback: MutationCallback = mutations => {
       const changedScrollerItems = mutations.some(
-        (mutation) => this.scrollerContainerElement.contains(mutation.target),
+        mutation => this.scrollerContainerElement.contains(mutation.target),
       );
       if (!changedScrollerItems) this.listener();
     };

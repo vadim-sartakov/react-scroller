@@ -149,7 +149,7 @@ const useScroller = ({
     }
   }, [scrollerContainerRef, focusedCell]);
 
-  const handleScroll: React.UIEventHandler<HTMLDivElement> = useCallback((e) => {
+  const handleScroll: React.UIEventHandler<HTMLDivElement> = useCallback(e => {
     onScroll?.(e);
 
     const nextRowsScrollData = rowsScrollerRef.current

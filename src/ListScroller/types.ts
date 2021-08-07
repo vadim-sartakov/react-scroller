@@ -14,11 +14,13 @@ export interface ListScrollerSyncPropsBase<T> {
   value: T[];
   itemsPerPage?: never;
   loadPage?: never;
+  loadTimeout?: never;
 }
 
 export interface ListScrollerAsyncPropsBase<T> {
   itemsPerPage: number;
   loadPage: LoadPage<T>;
+  loadTimeout?: number;
   value?: never;
 }
 

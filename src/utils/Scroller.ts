@@ -5,7 +5,7 @@ import {
   shiftScroll,
   getCustomSizesTotal,
   getCellPosition,
-} from './utils';
+} from './scroll';
 
 interface ScrollerArgs {
   scroll?: number;

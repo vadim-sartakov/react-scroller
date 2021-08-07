@@ -41,13 +41,13 @@ class AsyncLoader<T> {
     this.visibleIndexes = visibleIndexes;
     const pagesToLoad = getPagesToLoad(this);
 
-    pagesToLoad.forEach((pageIndex) => {
+    pagesToLoad.forEach(pageIndex => {
       if (this.pages[pageIndex]) return;
 
       this.pages = [...this.pages];
       this.pages[pageIndex] = { index: pageIndex, data: [] };
 
-      this.loadPage(pageIndex, this.itemsPerPage).then((data) => {
+      this.loadPage(pageIndex, this.itemsPerPage).then(data => {
         if (this.canceled) return;
         this.pages = [...this.pages];
         this.pages[pageIndex] = { index: pageIndex, data };

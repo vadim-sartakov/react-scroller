@@ -17,13 +17,13 @@ export function generateMeta(count: number) {
 }
 
 export function generateListValues(count: number) {
-  return generateMeta(count).map((row) => `Value ${row}`);
+  return generateMeta(count).map(row => `Value ${row}`);
 }
 
 export function generateGridValues(rowsCount: number, columnsCount: number) {
-  return generateMeta(rowsCount).map((row) => generateMeta(columnsCount).map((column) => `Value ${row} - ${column}`));
+  return generateMeta(rowsCount).map(row => generateMeta(columnsCount).map(column => `Value ${row} - ${column}`));
 }
 
 export function sleep(timeout: number) {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
+  return new Promise(resolve => setTimeout(resolve, timeout));
 }

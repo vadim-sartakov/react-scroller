@@ -22,6 +22,7 @@
     "react/require-default-props": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "arrow-parens": ["error", "as-needed"],
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off"
   }
