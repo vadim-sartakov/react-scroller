@@ -26,7 +26,9 @@ function useResizer({
     const resizeObserver = new ResizeObserver(scrollerContainerRef.current);
 
     const updateContainerSize = () => {
-      const scrollerContainerRect = scrollerContainerRef.current.getBoundingClientRect();
+      const scrollerContainerRect = scrollerContainerRef.current?.getBoundingClientRect();
+      if (!scrollerContainerRect) return;
+
       if (typeof height !== 'number' && rowsScroller.containerSize !== scrollerContainerRect.height) {
         const nextRowsScrollData = rowsScroller.updateContainerSize(
           scrollerContainerRect.height,

@@ -1,10 +1,7 @@
-import React, {
-  useRef,
-  useEffect,
-  useState,
-  useMemo,
-  useCallback,
+import {
+  useRef, useEffect, useState, useMemo, useCallback,
 } from 'react';
+import * as React from 'react';
 import { ScrollData } from '../types';
 import Scroller from '../utils/Scroller';
 import { ListScrollerPropsBase } from '../components/ListScroller/types';
@@ -188,11 +185,11 @@ const useScroller = ({
     visibleAreaStyle,
     onRowsScrollDataChange,
     rowsScroller: rowsScrollerRef.current,
-    ...totalColumns && {
+    ...(totalColumns && {
       visibleColumnsIndexes: columnsScrollData.visibleIndexes,
       columnsScroller: columnsScrollerRef.current,
       onColumnsScrollDataChange,
-    },
+    }),
   };
 };
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { ListScrollerRenderProps } from './types';
 import ListScrollerRow from './ListScrollerRow';
 
