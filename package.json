@@ -1,9 +1,9 @@
 {
   "name": "@vadim-sartakov/react-scroller",
   "version": "0.1.0",
-  "main": "lib/index.js",
-  "module": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
   "repository": "https://github.com/vadim-sartakov/react-scroller",
   "homepage": "https://github.com/vadim-sartakov/react-scroller#readme",
   "author": "Vadim Sartakov",
@@ -15,14 +15,10 @@
     "virtualized",
     "window"
   ],
-  "files": [
-    "/lib/**/*",
-    "/src/**/*"
-  ],
   "license": "MIT",
   "scripts": {
     "lint": "eslint src/",
-    "build": "rm -rf lib && mkdir lib && cross-env NODE_ENV=production tsc --build tsconfig.build.json",
+    "build": "rm -rf lib && mkdir lib && cross-env NODE_ENV=production tsc --build tsconfig.build.json && cp package.json ./lib/",
     "test": "jest",
     "storybook": "start-storybook -p 9009",
     "build-storybook": "rm -rf docs/storybook && build-storybook -o docs/storybook"
@@ -42,6 +38,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
   },
   "peerDependencies": {
     "react": "^17.0.2",

@@ -2,12 +2,14 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import {
   generateListValues,
   generateRandomSizes,
-} from '../../test/utils';
-import ListScroller, { ListScrollerProps } from './ListScroller';
+  sleep,
+  loadPage,
+} from '../test/utils';
+import ListScroller, { ListScrollerAsyncProps } from './ListScroller';
 
 export default {
   component: ListScroller,
-  title: 'Scroller/List/Sync',
+  title: 'Scroller/List/Async',
   argTypes: {
     totalRows: {
       control: {
@@ -38,39 +40,60 @@ export default {
         type: 'number',
       },
     },
+    itemsPerPage: {
+      control: {
+        type: 'number',
+      },
+      defaultValue: 20,
+    },
+    loadDelay: {
+      control: {
+        type: 'number',
+      },
+      defaultValue: 1000,
+    },
   },
 } as Meta;
 
-type ListScrollerStoryProps<T> = ListScrollerProps<T> & {
+type ListScrollerStoryProps<T> = ListScrollerAsyncProps<T> & {
   randomSizes?: boolean;
+  loadDelay?: number;
 };
 
 const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
   randomSizes,
-  focusedCell,
   totalRows = 1000,
   overscroll = 0,
+  focusedCell,
+  itemsPerPage = 20,
   height = '100vh',
   defaultRowHeight = 40,
+  loadDelay = 1000,
 }) => {
   const listValue = generateListValues(totalRows);
   const rowsSizes = randomSizes ? generateRandomSizes(listValue.length, 40, 120) : [];
+  const loadPageAsync = async (page: number, itemsPerPage: number) => {
+    console.log('Loading page %s', page);
+    await sleep(loadDelay);
+    return loadPage(listValue, page, itemsPerPage);
+  };
   return (
-    <ListScroller
-      value={listValue}
+    <ListScroller<string>
+      loadPage={loadPageAsync}
+      itemsPerPage={itemsPerPage}
       rowsSizes={rowsSizes}
       overscroll={overscroll}
       height={height}
+      focusedCell={focusedCell}
       defaultRowHeight={defaultRowHeight}
       totalRows={listValue.length}
-      focusedCell={focusedCell}
       render={({ value, style }) => (
         <div style={style}>
-          {value}
+          {value || 'Loading...'}
         </div>
       )}
     />
   );
 };
 
-export const sync = ListTemplate.bind({});
+export const async = ListTemplate.bind({});

@@ -4,9 +4,9 @@ import {
 import * as React from 'react';
 import { ScrollData } from '../types';
 import Scroller from '../utils/Scroller';
-import { ListScrollerPropsBase } from '../components/ListScroller/types';
-import { GridScrollerPropsBase } from '../components/GridScroller/types';
-import { isGridScrollerProps } from '../components/GridScroller/utils';
+import { ListScrollerPropsBase } from '../ListScroller/types';
+import { GridScrollerPropsBase } from '../GridScroller/types';
+import { isGridScrollerProps } from '../GridScroller/utils';
 
 interface UseScrollerResult {
   scrollerContainerRef: React.MutableRefObject<HTMLDivElement>;

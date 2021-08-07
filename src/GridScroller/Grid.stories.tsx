@@ -2,7 +2,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import {
   generateGridValues,
   generateRandomSizes,
-} from '../../test/utils';
+} from '../test/utils';
 import GridScroller, { GridScrollerProps } from './GridScroller';
 
 export default {

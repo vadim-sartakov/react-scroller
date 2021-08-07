@@ -1,4 +1,4 @@
-import { ScrollData, LoadPage } from '../../types';
+import { ScrollData, LoadPage } from '../types';
 import { ListScrollerSizesProps, ListScrollerPropsBase } from '../ListScroller/types';
 
 export interface GridScrollerSizesProps extends ListScrollerSizesProps {

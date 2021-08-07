@@ -1,7 +1,7 @@
 import * as React from 'react';
-import useScroller from '../../hooks/useScroller';
-import useAsyncLoad from '../../hooks/useAsyncLoad';
-import useResizer from '../../hooks/useResizer';
+import useScroller from '../hooks/useScroller';
+import useAsyncLoad from '../hooks/useAsyncLoad';
+import useResizer from '../hooks/useResizer';
 import {
   ListScrollerPropsBase,
   ListScrollerSyncPropsBase,
