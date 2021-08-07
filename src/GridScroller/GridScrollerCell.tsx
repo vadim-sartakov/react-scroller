@@ -1,15 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import * as React from 'react';
 import { GridScrollerRenderProps } from './types';
 import ScrollerContext from './GridScrollerContext';
 
-type GridScrollerCellProps<T> = React.HTMLAttributes<HTMLElement> & GridScrollerRenderProps<T> & {
+type GridScrollerCellProps<T> = GridScrollerRenderProps<T> & {
   rowIndex: number;
   columnIndex: number;
 };
 
 const GridScrollerCell = <T extends unknown>({
-  style,
   rowIndex,
   columnIndex,
   CellComponent,
@@ -26,9 +25,8 @@ const GridScrollerCell = <T extends unknown>({
 
   const width = columnsSizes[columnIndex] || defaultColumnWidth;
   const height = rowsSizes[rowIndex] || defaultRowHeight;
-  const nextStyle = { height, width, ...style };
-  const rowValue = value[rowIndex];
-  const cellValue = rowValue && rowValue[columnIndex];
+  const nextStyle = useMemo(() => ({ height, width }), [height, width]);
+  const cellValue = value[rowIndex]?.[columnIndex];
 
   if (CellComponent) {
     return (
@@ -40,16 +38,18 @@ const GridScrollerCell = <T extends unknown>({
         {...cellComponentProps}
       />
     );
-  } else if (render) {
+  }
+
+  if (render) {
     return render({
       style: nextStyle,
       value: cellValue,
       rowIndex,
       columnIndex,
     });
-  } else {
-    throw Error('Either cell Component or render prop should be provided');
   }
+
+  throw Error('Either cell Component or render function prop should be provided');
 };
 
 export default React.memo(GridScrollerCell);

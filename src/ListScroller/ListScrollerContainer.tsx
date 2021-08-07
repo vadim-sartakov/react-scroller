@@ -32,6 +32,7 @@ const ListScrollerContainer = <T extends unknown>({
   return (
     <ListScrollerContext.Provider value={contextValue}>
       <div
+        {...props}
         ref={containerRef}
         style={{
           width,
@@ -40,7 +41,6 @@ const ListScrollerContainer = <T extends unknown>({
           ...style,
         }}
         onScroll={onScroll}
-        {...props}
       />
     </ListScrollerContext.Provider>
   );

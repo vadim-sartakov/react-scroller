@@ -36,6 +36,7 @@ const GridScrollerContainer = <T extends unknown>({
   return (
     <GridScrollerContext.Provider value={contextValue}>
       <div
+        {...props}
         ref={containerRef}
         style={{
           width,
@@ -44,7 +45,6 @@ const GridScrollerContainer = <T extends unknown>({
           ...style,
         }}
         onScroll={onScroll}
-        {...props}
       />
     </GridScrollerContext.Provider>
   );

@@ -100,6 +100,7 @@ const GridTemplate: Story<GridScrollerStoryProps<any>> = ({
       totalRows={gridValue.length}
       totalColumns={gridValue[0].length}
       width={width}
+      RowComponent="div"
       rowComponentProps={{ className: 'row' }}
       render={({ value, style }) => (
         <div className="cell" style={style}>

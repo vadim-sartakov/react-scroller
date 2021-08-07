@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   GridScrollerRowRenderProps,
   GridScrollerRenderProps,
@@ -12,7 +13,7 @@ type RenderCellsArgs<T> = GridScrollerRowRenderProps & GridScrollerRenderProps<T
 const renderCells = <T extends unknown>({
   visibleRowsIndexes,
   visibleColumnsIndexes,
-  RowComponent = 'div',
+  RowComponent = React.Fragment,
   rowComponentProps,
   ...props
 }: RenderCellsArgs<T>) => {

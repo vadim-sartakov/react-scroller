@@ -1,22 +1,17 @@
 import { useContext, useMemo } from 'react';
 import * as React from 'react';
 import { ListScrollerRenderProps } from './types';
-import {
-  isComponentRenderProps,
-  isRenderFuncProps,
-} from './utils';
 import ListScrollerContext from './ListScrollerContext';
 
-interface ListScrollerRowPropsBase extends React.HTMLAttributes<HTMLElement> {
+type ListScrollerRowProps<T> = ListScrollerRenderProps<T> & {
   rowIndex: number;
-}
-
-type ListScrollerRowProps<T> = ListScrollerRowPropsBase & ListScrollerRenderProps<T>;
+};
 
 const ListScrollerRow = <T extends unknown>({
-  style,
   rowIndex,
-  ...props
+  RowComponent,
+  rowComponentProps,
+  render,
 }: ListScrollerRowProps<T>): ReturnType<React.FC> => {
   const {
     value,
@@ -25,11 +20,10 @@ const ListScrollerRow = <T extends unknown>({
   } = useContext(ListScrollerContext);
 
   const height = rowsSizes[rowIndex] || defaultRowHeight;
-  const nextStyle = useMemo(() => ({ height, ...style }), [height, style]);
+  const nextStyle = useMemo(() => ({ height }), [height]);
   const rowValue = value[rowIndex];
 
-  if (isComponentRenderProps(props)) {
-    const { RowComponent, rowComponentProps } = props;
+  if (RowComponent) {
     return (
       <RowComponent
         style={nextStyle}
@@ -40,8 +34,7 @@ const ListScrollerRow = <T extends unknown>({
     );
   }
 
-  if (isRenderFuncProps(props)) {
-    const { render } = props;
+  if (render) {
     return render({
       rowIndex,
       style: nextStyle,
@@ -49,7 +42,7 @@ const ListScrollerRow = <T extends unknown>({
     });
   }
 
-  throw Error('Either Component prop or render should be provided');
+  throw Error('Either Component prop or render function should be provided');
 };
 
 export default React.memo(ListScrollerRow);
