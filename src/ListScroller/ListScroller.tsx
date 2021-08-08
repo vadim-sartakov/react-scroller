@@ -47,6 +47,7 @@ const ListScroller = <T extends unknown>({
   rowComponentProps,
   scrollAreaProps,
   visibleAreaProps,
+  resizerContainerRef,
 }: ListScrollerProps<T> | ListScrollerAsyncProps<T>): ReturnType<React.FC> => {
   const {
     visibleRowsIndexes,
@@ -69,7 +70,7 @@ const ListScroller = <T extends unknown>({
   });
 
   useResizer({
-    scrollerContainerRef,
+    scrollerContainerRef: resizerContainerRef || scrollerContainerRef,
     rowsScroller,
     height,
     onRowsScrollDataChange,
