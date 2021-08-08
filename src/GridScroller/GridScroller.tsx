@@ -111,7 +111,7 @@ const GridScroller = <T extends unknown>({
 
   const value = valueProp || asyncValue;
 
-  const elements = render ? renderCells({
+  const elements = renderCells({
     visibleRowsIndexes,
     visibleColumnsIndexes,
     defaultRowHeight,
@@ -119,21 +119,9 @@ const GridScroller = <T extends unknown>({
     rowsSizes,
     columnsSizes,
     value,
-    RowComponent,
+    RowComponent: gridLayout ? React.Fragment : RowComponent,
     rowComponentProps,
-    render,
-  }) : renderCells({
-    visibleRowsIndexes,
-    visibleColumnsIndexes,
-    defaultRowHeight,
-    defaultColumnWidth,
-    rowsSizes,
-    columnsSizes,
-    value,
-    RowComponent,
-    rowComponentProps,
-    CellComponent,
-    cellComponentProps,
+    ...render ? { render } : { CellComponent, cellComponentProps },
   });
 
   return (

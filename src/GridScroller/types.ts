@@ -50,6 +50,7 @@ export type GridScrollerRenderProps<T> =
   GridScrollerRenderFuncProps<T>;
 
 export interface UseGridScrollerProps extends Omit<UseListScrollerProps, 'focusedCell'>, GridScrollerSizesProps {
+  /** If set to true, then css grid compatible layout will be rendered */
   gridLayout?: boolean;
   columnsScrollData?: ScrollData;
   onColumnsScrollDataChange?: (scrollData: ScrollData) => void;
