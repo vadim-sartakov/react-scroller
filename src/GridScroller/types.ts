@@ -1,5 +1,5 @@
 import { ScrollData, LoadPage } from '../types';
-import { ListScrollerSizesProps, ListScrollerPropsBase } from '../ListScroller/types';
+import { ListScrollerSizesProps, UseListScrollerProps } from '../ListScroller/types';
 
 export interface GridScrollerSizesProps extends ListScrollerSizesProps {
   defaultColumnWidth: number;
@@ -14,7 +14,7 @@ export interface GridScrollerSyncPropsBase<T> {
   loadTimeout?: never;
 }
 
-export interface GridScrollerAsyncPropsBase<T> extends GridScrollerPropsBase {
+export interface GridScrollerAsyncPropsBase<T> {
   itemsPerPage: number;
   loadPage: LoadPage<T[]>;
   loadTimeout?: number;
@@ -49,8 +49,7 @@ export type GridScrollerRenderProps<T> =
   GridScrollerComponentRenderProps<T> |
   GridScrollerRenderFuncProps<T>;
 
-export interface GridScrollerPropsBase extends Omit<ListScrollerPropsBase, 'focusedCell'>, GridScrollerSizesProps {
-  /* Controllable scroll data */
+export interface UseGridScrollerProps extends Omit<UseListScrollerProps, 'focusedCell'>, GridScrollerSizesProps {
   columnsScrollData?: ScrollData;
   onColumnsScrollDataChange?: (scrollData: ScrollData) => void;
   focusedCell?: { row: number, cell: number };

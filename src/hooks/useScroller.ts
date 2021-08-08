@@ -4,8 +4,8 @@ import {
 import * as React from 'react';
 import { ScrollData } from '../types';
 import Scroller from '../utils/Scroller';
-import { ListScrollerPropsBase } from '../ListScroller/types';
-import { GridScrollerPropsBase } from '../GridScroller/types';
+import { UseListScrollerProps } from '../ListScroller/types';
+import { UseGridScrollerProps } from '../GridScroller/types';
 import { isGridScrollerProps } from '../GridScroller/utils';
 
 interface UseScrollerResult {
@@ -35,13 +35,13 @@ const useScroller = ({
   onRowsScrollDataChange: onRowsScrollDataChangeProp,
   onScroll,
   ...props
-}: ListScrollerPropsBase | GridScrollerPropsBase): UseScrollerResult => {
-  let defaultColumnWidth: GridScrollerPropsBase['defaultColumnWidth'];
-  let totalColumns: GridScrollerPropsBase['totalColumns'];
+}: UseListScrollerProps | UseGridScrollerProps): UseScrollerResult => {
+  let defaultColumnWidth: UseGridScrollerProps['defaultColumnWidth'];
+  let totalColumns: UseGridScrollerProps['totalColumns'];
   let columnsSizes = defaultArray;
-  let width: GridScrollerPropsBase['width'];
-  let columnsScrollDataProp: GridScrollerPropsBase['columnsScrollData'];
-  let onColumnsScrollDataChangeProp: GridScrollerPropsBase['onColumnsScrollDataChange'];
+  let width: UseGridScrollerProps['width'];
+  let columnsScrollDataProp: UseGridScrollerProps['columnsScrollData'];
+  let onColumnsScrollDataChangeProp: UseGridScrollerProps['onColumnsScrollDataChange'];
 
   if (isGridScrollerProps(props)) {
     ({

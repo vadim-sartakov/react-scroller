@@ -1,5 +1,5 @@
 import {
-  GridScrollerPropsBase,
+  UseGridScrollerProps,
   GridScrollerSyncPropsBase,
   GridScrollerAsyncPropsBase,
   GridScrollerRenderProps,
@@ -9,7 +9,7 @@ import {
 
 export const isGridScrollerProps = (
   props: any,
-): props is GridScrollerPropsBase => (
+): props is UseGridScrollerProps => (
   'defaultColumnWidth' in props
 );
 

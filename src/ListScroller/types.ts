@@ -1,4 +1,4 @@
-import { ScrollData, ScrollerPropsBase, LoadPage } from '../types';
+import { ScrollData, LoadPage } from '../types';
 
 export interface ListScrollerSizesProps {
   defaultRowHeight: number;
@@ -46,10 +46,12 @@ export type ListScrollerRenderProps<T> =
   ListScrollerComponentRenderProps<T> |
   ListScrollerRenderFuncProps<T>;
 
-export interface ListScrollerPropsBase extends ScrollerPropsBase, ListScrollerSizesProps {
+export interface UseListScrollerProps extends ListScrollerSizesProps {
+  scrollerContainerRef?: React.MutableRefObject<HTMLDivElement>;
+  /* Number of elements which should be rendered out of visible scroller container */
+  overscroll?: number;
   rowsScrollData?: ScrollData;
   onRowsScrollDataChange?: (scrollData: ScrollData) => void;
-  scrollAreaProps?: React.HTMLAttributes<HTMLDivElement>;
-  visibleAreaProps?: React.HTMLAttributes<HTMLDivElement>;
   focusedCell?: number;
+  onScroll?: React.UIEventHandler<HTMLDivElement>;
 }

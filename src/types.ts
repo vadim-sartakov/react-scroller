@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 export interface ScrollData {
   offset: number;
   visibleIndexes: number[];
@@ -12,10 +10,8 @@ export interface Page<T> {
 
 export type LoadPage<T> = (page: number, itemsPerPage: number) => Promise<T[]>;
 
-export interface ScrollerPropsBase {
-  scrollerContainerRef?: React.MutableRefObject<HTMLDivElement>;
+export interface ScrollerCustomProps {
+  scrollAreaProps?: React.HTMLAttributes<HTMLDivElement>;
+  visibleAreaProps?: React.HTMLAttributes<HTMLDivElement>;
   scrollerContainerProps?: React.HTMLAttributes<HTMLDivElement>;
-  /* Number of elements which should be rendered out of visible scroller container */
-  overscroll?: number;
-  onScroll?: React.UIEventHandler<HTMLDivElement>;
 }

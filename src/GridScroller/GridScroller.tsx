@@ -2,8 +2,9 @@ import * as React from 'react';
 import useResizer from '../hooks/useResizer';
 import useAsyncLoad from '../hooks/useAsyncLoad';
 import useScroller from '../hooks/useScroller';
+import { ScrollerCustomProps } from '../types';
 import {
-  GridScrollerPropsBase,
+  UseGridScrollerProps,
   GridScrollerRowRenderProps,
   GridScrollerSyncPropsBase,
   GridScrollerAsyncPropsBase,
@@ -13,13 +14,15 @@ import GridScrollerContainer from './GridScrollerContainer';
 import renderCells from './renderCells';
 
 export type GridScrollerProps<T> =
-  GridScrollerPropsBase &
+  ScrollerCustomProps &
+  UseGridScrollerProps &
   GridScrollerSyncPropsBase<T> &
   GridScrollerRowRenderProps &
   GridScrollerRenderProps<T>;
 
 export type GridScrollerAsyncProps<T> =
-  GridScrollerPropsBase &
+  ScrollerCustomProps &
+  UseGridScrollerProps &
   GridScrollerAsyncPropsBase<T> &
   GridScrollerRowRenderProps &
   GridScrollerRenderProps<T>;
@@ -54,6 +57,7 @@ const GridScroller = <T extends unknown>({
   scrollerContainerProps,
   scrollAreaProps,
   visibleAreaProps,
+  onScroll: onScrollProp,
 }: GridScrollerProps<T> | GridScrollerAsyncProps<T>): ReturnType<React.FC> => {
   const {
     visibleRowsIndexes,
@@ -82,6 +86,7 @@ const GridScroller = <T extends unknown>({
     onRowsScrollDataChange: onRowsScrollDataChangeProp,
     columnsScrollData,
     onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
+    onScroll: onScrollProp,
   });
 
   useResizer({

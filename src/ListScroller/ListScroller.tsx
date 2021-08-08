@@ -2,8 +2,9 @@ import * as React from 'react';
 import useScroller from '../hooks/useScroller';
 import useAsyncLoad from '../hooks/useAsyncLoad';
 import useResizer from '../hooks/useResizer';
+import { ScrollerCustomProps } from '../types';
 import {
-  ListScrollerPropsBase,
+  UseListScrollerProps,
   ListScrollerSyncPropsBase,
   ListScrollerAsyncPropsBase,
   ListScrollerRenderProps,
@@ -12,12 +13,14 @@ import ListScrollerContainer from './ListScrollerContainer';
 import renderRows from './renderRows';
 
 export type ListScrollerProps<T> =
-ListScrollerPropsBase &
+ScrollerCustomProps &
+UseListScrollerProps &
 ListScrollerRenderProps<T> &
 ListScrollerSyncPropsBase<T>;
 
 export type ListScrollerAsyncProps<T> =
-ListScrollerPropsBase &
+ScrollerCustomProps &
+UseListScrollerProps &
 ListScrollerRenderProps<T> &
 ListScrollerAsyncPropsBase<T>;
 
