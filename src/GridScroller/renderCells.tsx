@@ -28,11 +28,11 @@ const renderCells = <T extends unknown>({
   ...props
 }: RenderCellsArgs<T>) => {
   const elements = visibleRowsIndexes.map(rowIndex => {
-    const height = rowsSizes[rowIndex] || defaultRowHeight;
+    const height = rowsSizes?.[rowIndex] || defaultRowHeight;
     return (
       <RowComponent key={rowIndex} {...rowComponentProps}>
         {visibleColumnsIndexes.map(columnIndex => {
-          const width = columnsSizes[columnIndex] || defaultColumnWidth;
+          const width = columnsSizes?.[columnIndex] || defaultColumnWidth;
           const cellValue = value[rowIndex]?.[columnIndex];
           return (
             <GridScrollerCell

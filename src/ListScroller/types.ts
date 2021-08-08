@@ -48,7 +48,7 @@ export type ListScrollerRenderProps<T> =
 
 export interface UseListScrollerProps extends ListScrollerSizesProps {
   scrollerContainerRef?: React.MutableRefObject<HTMLDivElement>;
-  /* Number of elements which should be rendered out of visible scroller container */
+  /* Number of elements which should be rendered outside of visible area */
   overscroll?: number;
   rowsScrollData?: ScrollData;
   onRowsScrollDataChange?: (scrollData: ScrollData) => void;

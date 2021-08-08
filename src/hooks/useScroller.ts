@@ -48,7 +48,7 @@ const useScroller = ({
     ({
       defaultColumnWidth,
       totalColumns,
-      columnsSizes,
+      columnsSizes = defaultArray,
       width,
       columnsScrollData: columnsScrollDataProp,
       onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
@@ -177,13 +177,13 @@ const useScroller = ({
     top: rowsScrollData.offset,
     left: columnsScrollData && columnsScrollData.offset,
     position: 'absolute',
-    ...gridLayout && columnsScrollData && {
+    ...gridLayout && {
       display: 'grid',
-      gridTemplateColumns: columnsScrollData.visibleIndexes
-        .map(index => `${columnsSizes[index] || defaultColumnWidth}px`)
-        .join(' '),
       gridTemplateRows: rowsScrollData.visibleIndexes
         .map(index => `${rowsSizes[index] || defaultRowHeight}px`)
+        .join(' '),
+      gridTemplateColumns: columnsScrollData?.visibleIndexes
+        .map(index => `${columnsSizes[index] || defaultColumnWidth}px`)
         .join(' '),
     },
   }), [

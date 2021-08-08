@@ -16,7 +16,7 @@ const renderRows = <T extends unknown>({
   ...args
 }: RenderRowsType<T>) => {
   const elements = visibleRowsIndexes.map(rowIndex => {
-    const height = rowsSizes[rowIndex] || defaultRowHeight;
+    const height = rowsSizes?.[rowIndex] || defaultRowHeight;
     const rowValue = value[rowIndex];
     return (
       <ListScrollerRow
