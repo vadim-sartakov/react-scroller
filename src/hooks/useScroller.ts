@@ -182,12 +182,17 @@ const useScroller = ({
       gridTemplateColumns: columnsScrollData.visibleIndexes
         .map(index => `${columnsSizes[index] || defaultColumnWidth}px`)
         .join(' '),
+      gridTemplateRows: rowsScrollData.visibleIndexes
+        .map(index => `${rowsSizes[index] || defaultRowHeight}px`)
+        .join(' '),
     },
   }), [
-    rowsScrollData.offset,
+    rowsScrollData,
     columnsScrollData,
     columnsSizes,
     defaultColumnWidth,
+    rowsSizes,
+    defaultRowHeight,
     gridLayout,
   ]);
 
