@@ -1,10 +1,11 @@
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import * as React from 'react';
 import { ListScrollerRenderProps } from './types';
-import ListScrollerContext from './ListScrollerContext';
 
 type ListScrollerRowProps<T> = ListScrollerRenderProps<T> & {
   rowIndex: number;
+  value: T;
+  height: number;
 };
 
 const ListScrollerRow = <T extends unknown>({
@@ -12,22 +13,15 @@ const ListScrollerRow = <T extends unknown>({
   RowComponent,
   rowComponentProps,
   render,
+  height,
+  value,
 }: ListScrollerRowProps<T>): ReturnType<React.FC> => {
-  const {
-    value,
-    defaultRowHeight,
-    rowsSizes,
-  } = useContext(ListScrollerContext);
-
-  const height = rowsSizes[rowIndex] || defaultRowHeight;
   const nextStyle = useMemo(() => ({ height }), [height]);
-  const rowValue = value[rowIndex];
-
   if (RowComponent) {
     return (
       <RowComponent
         style={nextStyle}
-        value={rowValue}
+        value={value}
         rowIndex={rowIndex}
         {...rowComponentProps}
       />
@@ -38,7 +32,7 @@ const ListScrollerRow = <T extends unknown>({
     return render({
       rowIndex,
       style: nextStyle,
-      value: rowValue,
+      value,
     });
   }
 

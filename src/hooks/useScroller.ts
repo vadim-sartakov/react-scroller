@@ -42,6 +42,7 @@ const useScroller = ({
   let width: UseGridScrollerProps['width'];
   let columnsScrollDataProp: UseGridScrollerProps['columnsScrollData'];
   let onColumnsScrollDataChangeProp: UseGridScrollerProps['onColumnsScrollDataChange'];
+  let gridLayout: UseGridScrollerProps['gridLayout'];
 
   if (isGridScrollerProps(props)) {
     ({
@@ -51,6 +52,7 @@ const useScroller = ({
       width,
       columnsScrollData: columnsScrollDataProp,
       onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
+      gridLayout,
     } = props);
   }
 
@@ -175,7 +177,19 @@ const useScroller = ({
     top: rowsScrollData.offset,
     left: columnsScrollData && columnsScrollData.offset,
     position: 'absolute',
-  }), [rowsScrollData.offset, columnsScrollData]);
+    ...gridLayout && columnsScrollData && {
+      display: 'grid',
+      gridTemplateColumns: columnsScrollData.visibleIndexes
+        .map(index => `${columnsSizes[index] || defaultColumnWidth}px`)
+        .join(' '),
+    },
+  }), [
+    rowsScrollData.offset,
+    columnsScrollData,
+    columnsSizes,
+    defaultColumnWidth,
+    gridLayout,
+  ]);
 
   return {
     scrollerContainerRef,

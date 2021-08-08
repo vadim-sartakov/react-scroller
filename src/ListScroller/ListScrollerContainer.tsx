@@ -1,49 +1,31 @@
-import { useMemo } from 'react';
 import * as React from 'react';
-import ListScrollerContext from './ListScrollerContext';
-import { ListScrollerSyncPropsBase, ListScrollerSizesProps } from './types';
+import { ListScrollerSizesProps } from './types';
 
-const defaultArray: number[] = [];
-
-export interface ListScrollerContainerProps<T> extends
+export interface ListScrollerContainerProps extends
   React.HTMLAttributes<HTMLDivElement>,
-  ListScrollerSyncPropsBase<T>,
-  Omit<ListScrollerSizesProps, 'totalRows'> {
+  Pick<ListScrollerSizesProps, 'width' | 'height'> {
   containerRef?: React.MutableRefObject<HTMLDivElement>,
 }
 
-const ListScrollerContainer = <T extends unknown>({
-  value,
+const ListScrollerContainer: React.FC<ListScrollerContainerProps> = ({
   height,
   width,
-  defaultRowHeight,
-  rowsSizes = defaultArray,
   onScroll,
   style,
   containerRef,
   ...props
-}: ListScrollerContainerProps<T>) => {
-  const contextValue = useMemo(() => ({
-    value,
-    defaultRowHeight,
-    rowsSizes,
-  }), [value, defaultRowHeight, rowsSizes]);
-
-  return (
-    <ListScrollerContext.Provider value={contextValue}>
-      <div
-        {...props}
-        ref={containerRef}
-        style={{
-          width,
-          height,
-          overflow: height && 'auto',
-          ...style,
-        }}
-        onScroll={onScroll}
-      />
-    </ListScrollerContext.Provider>
-  );
-};
+}) => (
+  <div
+    {...props}
+    ref={containerRef}
+    style={{
+      width,
+      height,
+      overflow: height && 'auto',
+      ...style,
+    }}
+    onScroll={onScroll}
+  />
+);
 
 export default ListScrollerContainer;

@@ -32,7 +32,7 @@ const defaultArray: number[] = [];
 const GridScroller = <T extends unknown>({
   width,
   height,
-  value,
+  value: valueProp,
   itemsPerPage,
   loadPage,
   loadTimeout,
@@ -58,6 +58,7 @@ const GridScroller = <T extends unknown>({
   scrollAreaProps,
   visibleAreaProps,
   onScroll: onScrollProp,
+  gridLayout,
 }: GridScrollerProps<T> | GridScrollerAsyncProps<T>): ReturnType<React.FC> => {
   const {
     visibleRowsIndexes,
@@ -87,6 +88,7 @@ const GridScroller = <T extends unknown>({
     columnsScrollData,
     onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
     onScroll: onScrollProp,
+    gridLayout,
   });
 
   useResizer({
@@ -107,15 +109,27 @@ const GridScroller = <T extends unknown>({
     loadTimeout,
   });
 
+  const value = valueProp || asyncValue;
+
   const elements = render ? renderCells({
     visibleRowsIndexes,
     visibleColumnsIndexes,
+    defaultRowHeight,
+    defaultColumnWidth,
+    rowsSizes,
+    columnsSizes,
+    value,
     RowComponent,
     rowComponentProps,
     render,
   }) : renderCells({
     visibleRowsIndexes,
     visibleColumnsIndexes,
+    defaultRowHeight,
+    defaultColumnWidth,
+    rowsSizes,
+    columnsSizes,
+    value,
     RowComponent,
     rowComponentProps,
     CellComponent,
@@ -125,11 +139,6 @@ const GridScroller = <T extends unknown>({
   return (
     <GridScrollerContainer
       containerRef={scrollerContainerRef}
-      value={value || asyncValue}
-      rowsSizes={rowsSizes}
-      columnsSizes={columnsSizes}
-      defaultRowHeight={defaultRowHeight}
-      defaultColumnWidth={defaultColumnWidth}
       onScroll={onScroll}
       width={width}
       height={height}

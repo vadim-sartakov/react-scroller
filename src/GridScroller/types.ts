@@ -50,6 +50,7 @@ export type GridScrollerRenderProps<T> =
   GridScrollerRenderFuncProps<T>;
 
 export interface UseGridScrollerProps extends Omit<UseListScrollerProps, 'focusedCell'>, GridScrollerSizesProps {
+  gridLayout?: boolean;
   columnsScrollData?: ScrollData;
   onColumnsScrollDataChange?: (scrollData: ScrollData) => void;
   focusedCell?: { row: number, cell: number };

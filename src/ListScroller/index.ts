@@ -1,8 +1,5 @@
 export * from './types';
 
-export * from './ListScrollerContext';
-export { default as ListScrollerContext } from './ListScrollerContext';
-
 export * from './ListScrollerContainer';
 export { default as ListScrollerContainer } from './ListScrollerContainer';
 

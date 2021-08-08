@@ -27,7 +27,7 @@ ListScrollerAsyncPropsBase<T>;
 const defaultArray: number[] = [];
 
 const ListScroller = <T extends unknown>({
-  value,
+  value: valueProp,
   loadPage,
   itemsPerPage,
   loadTimeout,
@@ -83,9 +83,14 @@ const ListScroller = <T extends unknown>({
     loadTimeout,
   });
 
+  const value = valueProp || asyncValue;
+
   let elements: React.ReactElement[];
   if (render) {
     elements = renderRows({
+      value,
+      defaultRowHeight,
+      rowsSizes,
       visibleRowsIndexes,
       render,
     });
@@ -93,6 +98,9 @@ const ListScroller = <T extends unknown>({
 
   if (RowComponent) {
     elements = renderRows({
+      value,
+      defaultRowHeight,
+      rowsSizes,
       visibleRowsIndexes,
       RowComponent,
       rowComponentProps,
@@ -101,9 +109,6 @@ const ListScroller = <T extends unknown>({
 
   return (
     <ListScrollerContainer
-      value={value || asyncValue}
-      rowsSizes={rowsSizes}
-      defaultRowHeight={defaultRowHeight}
       onScroll={onScroll}
       height={height}
       width={width}
