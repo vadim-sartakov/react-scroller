@@ -23,6 +23,8 @@ function useResizer({
   onColumnsScrollDataChange,
 }: UseResizerProps): void {
   useEffect(() => {
+    if (typeof width === 'number' && typeof height === 'number') return () => {};
+
     const resizeObserver = new ResizeObserver(scrollerContainerRef.current);
 
     const updateContainerSize = () => {

@@ -59,7 +59,6 @@ const GridScroller = <T extends unknown>({
   visibleAreaProps,
   onScroll: onScrollProp,
   gridLayout,
-  resizerContainerRef,
 }: GridScrollerProps<T> | GridScrollerAsyncProps<T>): ReturnType<React.FC> => {
   const {
     visibleRowsIndexes,
@@ -93,7 +92,7 @@ const GridScroller = <T extends unknown>({
   });
 
   useResizer({
-    scrollerContainerRef: resizerContainerRef || scrollerContainerRef,
+    scrollerContainerRef,
     rowsScroller,
     columnsScroller,
     width,

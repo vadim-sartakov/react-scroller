@@ -14,5 +14,4 @@ export interface ScrollerCustomProps {
   scrollAreaProps?: React.HTMLAttributes<HTMLDivElement>;
   visibleAreaProps?: React.HTMLAttributes<HTMLDivElement>;
   scrollerContainerProps?: React.HTMLAttributes<HTMLDivElement>;
-  resizerContainerRef?: React.MutableRefObject<HTMLDivElement>;
 }
