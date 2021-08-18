@@ -26,6 +26,7 @@ class Scroller {
   scrollData: ScrollData = { offset: 0, visibleIndexes: [] };
   prevScroll = 0;
   prevScrollData: ScrollData = { offset: 0, visibleIndexes: [] };
+  totalSize: number;
 
   constructor(args: ScrollerArgs) {
     this.initialize(args);
@@ -40,9 +41,10 @@ class Scroller {
     this.containerSize = args.containerSize;
     this.scrollData = this.getScrollData();
     this.prevScrollData = { ...this.scrollData };
+    this.totalSize = this.getTotalSize();
   }
 
-  getTotalSize() {
+  private getTotalSize() {
     return this.sizes?.length
       ? getCustomSizesTotal(this)
       : this.totalCount * this.defaultSize;

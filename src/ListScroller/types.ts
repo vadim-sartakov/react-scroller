@@ -54,4 +54,9 @@ export interface UseListScrollerProps extends ListScrollerSizesProps {
   onRowsScrollDataChange?: (scrollData: ScrollData) => void;
   focusedCell?: number;
   onScroll?: React.UIEventHandler<HTMLDivElement>;
+  /**
+   * If set to true then scroll data will be reinitialized when sizes data change.
+   * Default is true
+   */
+  reinitialize?: boolean;
 }

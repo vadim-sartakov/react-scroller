@@ -1,5 +1,9 @@
 import {
-  useRef, useEffect, useState, useMemo, useCallback,
+  useRef,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
 } from 'react';
 import * as React from 'react';
 import { ScrollData } from '../types';
@@ -19,6 +23,7 @@ interface UseScrollerResult {
   onRowsScrollDataChange: (scrollData: ScrollData) => void;
   columnsScroller: Scroller;
   onColumnsScrollDataChange: (scrollData: ScrollData) => void;
+  handleInitialize: VoidFunction;
 }
 
 const defaultArray: number[] = [];
@@ -34,6 +39,7 @@ const useScroller = ({
   rowsScrollData: rowsScrollDataProp,
   onRowsScrollDataChange: onRowsScrollDataChangeProp,
   onScroll,
+  reinitialize = true,
   ...props
 }: UseListScrollerProps | UseGridScrollerProps): UseScrollerResult => {
   let defaultColumnWidth: UseGridScrollerProps['defaultColumnWidth'];
@@ -89,12 +95,7 @@ const useScroller = ({
   const columnsScrollData = columnsScrollDataProp || columnsScrollDataState;
   const onColumnsScrollDataChange = onColumnsScrollDataChangeProp || setColumnsScrollDataState;
 
-  const [coverHeight, setCoverHeight] = useState(rowsScrollerRef.current.getTotalSize());
-  const [coverWidth, setCoverWidth] = useState(
-    totalColumns && columnsScrollerRef.current.getTotalSize(),
-  );
-
-  useEffect(() => {
+  const handleInitializeRows = useCallback(() => {
     rowsScrollerRef.current.initialize({
       scroll: scrollerContainerRef.current.scrollTop,
       defaultSize: defaultRowHeight,
@@ -104,7 +105,6 @@ const useScroller = ({
       sizes: rowsSizes,
     });
     onRowsScrollDataChange(rowsScrollerRef.current.scrollData);
-    setCoverHeight(rowsScrollerRef.current.getTotalSize());
   }, [
     rowsSizes,
     defaultRowHeight,
@@ -114,8 +114,7 @@ const useScroller = ({
     scrollerContainerRef,
   ]);
 
-  useEffect(() => {
-    if (!totalColumns) return;
+  const handleInitializeColumns = useCallback(() => {
     columnsScrollerRef.current.initialize({
       scroll: scrollerContainerRef.current.scrollLeft,
       defaultSize: defaultColumnWidth,
@@ -125,7 +124,6 @@ const useScroller = ({
       sizes: columnsSizes,
     });
     onColumnsScrollDataChange(columnsScrollerRef.current.scrollData);
-    setCoverWidth(columnsScrollerRef.current.getTotalSize());
   }, [
     columnsSizes,
     defaultColumnWidth,
@@ -134,6 +132,21 @@ const useScroller = ({
     onColumnsScrollDataChange,
     scrollerContainerRef,
   ]);
+
+  const handleInitialize = useCallback(() => {
+    handleInitializeRows();
+    if (totalColumns) handleInitializeColumns();
+  }, [totalColumns, handleInitializeRows, handleInitializeColumns]);
+
+  useEffect(() => {
+    if (!reinitialize) return;
+    handleInitializeRows();
+  }, [reinitialize, handleInitializeRows]);
+
+  useEffect(() => {
+    if (!reinitialize || !totalColumns) return;
+    handleInitializeColumns();
+  }, [reinitialize, totalColumns, handleInitializeColumns]);
 
   useEffect(() => {
     if (!focusedCell) return;
@@ -152,26 +165,32 @@ const useScroller = ({
   }, [scrollerContainerRef, focusedCell]);
 
   const handleScroll: React.UIEventHandler<HTMLDivElement> = useCallback(e => {
-    onScroll?.(e);
-
     const nextRowsScrollData = rowsScrollerRef.current
       .scrollTo(e.currentTarget.scrollTop)
       .scrollData;
     onRowsScrollDataChange(nextRowsScrollData);
 
-    if (!totalColumns) return;
+    if (!totalColumns) {
+      onScroll?.(e);
+      return;
+    }
 
     const nextColumnsScrollData = columnsScrollerRef.current
       .scrollTo(e.currentTarget.scrollLeft)
       .scrollData;
     onColumnsScrollDataChange(nextColumnsScrollData);
+
+    onScroll?.(e);
   }, [totalColumns, onColumnsScrollDataChange, onRowsScrollDataChange, onScroll]);
 
+  const scrollAreaHeight = rowsScrollerRef.current.totalSize;
+  const scrollAreaWidth = totalColumns && columnsScrollerRef.current.totalSize;
+
   const scrollAreaStyle: React.CSSProperties = useMemo(() => ({
-    height: coverHeight,
-    width: coverWidth,
+    height: scrollAreaHeight,
+    width: scrollAreaWidth,
     position: 'relative',
-  }), [coverHeight, coverWidth]);
+  }), [scrollAreaHeight, scrollAreaWidth]);
 
   const visibleAreaStyle: React.CSSProperties = useMemo(() => ({
     top: rowsScrollData.offset,
@@ -209,6 +228,7 @@ const useScroller = ({
       columnsScroller: columnsScrollerRef.current,
       onColumnsScrollDataChange,
     }),
+    handleInitialize,
   };
 };
 
