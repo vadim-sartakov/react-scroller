@@ -49,15 +49,10 @@ const GridScroller = <T extends unknown>({
   CellComponent,
   cellComponentProps,
   render,
-  rowsScrollData,
-  onRowsScrollDataChange: onRowsScrollDataChangeProp,
-  columnsScrollData,
-  onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
   scrollerContainerRef: scrollerContainerRefProp,
   scrollerContainerProps,
   scrollAreaProps,
   visibleAreaProps,
-  onScroll: onScrollProp,
   gridLayout,
 }: GridScrollerProps<T> | GridScrollerAsyncProps<T>): ReturnType<React.FC> => {
   const {
@@ -83,11 +78,6 @@ const GridScroller = <T extends unknown>({
     columnsSizes,
     overscroll,
     focusedCell,
-    rowsScrollData,
-    onRowsScrollDataChange: onRowsScrollDataChangeProp,
-    columnsScrollData,
-    onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
-    onScroll: onScrollProp,
     gridLayout,
   });
 

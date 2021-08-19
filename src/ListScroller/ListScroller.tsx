@@ -40,8 +40,6 @@ const ListScroller = <T extends unknown>({
   totalRows,
   overscroll,
   focusedCell,
-  rowsScrollData,
-  onRowsScrollDataChange: onRowsScrollDataChangeProp,
   render,
   RowComponent,
   rowComponentProps,
@@ -64,8 +62,6 @@ const ListScroller = <T extends unknown>({
     rowsSizes,
     overscroll,
     focusedCell,
-    rowsScrollData,
-    onRowsScrollDataChange: onRowsScrollDataChangeProp,
   });
 
   useResizer({

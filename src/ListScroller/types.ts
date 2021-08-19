@@ -1,4 +1,4 @@
-import { ScrollData, LoadPage } from '../types';
+import { LoadPage } from '../types';
 
 export interface ListScrollerSizesProps {
   defaultRowHeight: number;
@@ -50,10 +50,7 @@ export interface UseListScrollerProps extends ListScrollerSizesProps {
   scrollerContainerRef?: React.MutableRefObject<HTMLDivElement>;
   /* Number of elements which should be rendered outside of visible area */
   overscroll?: number;
-  rowsScrollData?: ScrollData;
-  onRowsScrollDataChange?: (scrollData: ScrollData) => void;
   focusedCell?: number;
-  onScroll?: React.UIEventHandler<HTMLDivElement>;
   /**
    * If set to true then scroll data will be reinitialized when sizes data change.
    * Default is true

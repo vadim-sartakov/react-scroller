@@ -36,9 +36,6 @@ const useScroller = ({
   overscroll = 0,
   focusedCell,
   scrollerContainerRef: scrollerContainerRefProp,
-  rowsScrollData: rowsScrollDataProp,
-  onRowsScrollDataChange: onRowsScrollDataChangeProp,
-  onScroll,
   reinitialize = true,
   ...props
 }: UseListScrollerProps | UseGridScrollerProps): UseScrollerResult => {
@@ -46,8 +43,6 @@ const useScroller = ({
   let totalColumns: UseGridScrollerProps['totalColumns'];
   let columnsSizes = defaultArray;
   let width: UseGridScrollerProps['width'];
-  let columnsScrollDataProp: UseGridScrollerProps['columnsScrollData'];
-  let onColumnsScrollDataChangeProp: UseGridScrollerProps['onColumnsScrollDataChange'];
   let gridLayout: UseGridScrollerProps['gridLayout'];
 
   if (isGridScrollerProps(props)) {
@@ -56,8 +51,6 @@ const useScroller = ({
       totalColumns,
       columnsSizes = defaultArray,
       width,
-      columnsScrollData: columnsScrollDataProp,
-      onColumnsScrollDataChange: onColumnsScrollDataChangeProp,
       gridLayout,
     } = props);
   }
@@ -83,17 +76,12 @@ const useScroller = ({
     sizes: columnsSizes,
   }));
 
-  const [rowsScrollDataState, setRowsScrollDataState] = useState(
+  const [rowsScrollData, setRowsScrollData] = useState(
     rowsScrollerRef.current.scrollData,
   );
-  const rowsScrollData = rowsScrollDataProp || rowsScrollDataState;
-  const onRowsScrollDataChange = onRowsScrollDataChangeProp || setRowsScrollDataState;
-
-  const [columnsScrollDataState, setColumnsScrollDataState] = useState(
+  const [columnsScrollData, setColumnsScrollData] = useState(
     totalColumns && columnsScrollerRef.current.scrollData,
   );
-  const columnsScrollData = columnsScrollDataProp || columnsScrollDataState;
-  const onColumnsScrollDataChange = onColumnsScrollDataChangeProp || setColumnsScrollDataState;
 
   const handleInitializeRows = useCallback(() => {
     rowsScrollerRef.current.initialize({
@@ -104,13 +92,12 @@ const useScroller = ({
       containerSize: rowsScrollerRef.current.containerSize,
       sizes: rowsSizes,
     });
-    onRowsScrollDataChange(rowsScrollerRef.current.scrollData);
+    setRowsScrollData(rowsScrollerRef.current.scrollData);
   }, [
     rowsSizes,
     defaultRowHeight,
     totalRows,
     overscroll,
-    onRowsScrollDataChange,
     scrollerContainerRef,
   ]);
 
@@ -123,13 +110,12 @@ const useScroller = ({
       containerSize: columnsScrollerRef.current.containerSize,
       sizes: columnsSizes,
     });
-    onColumnsScrollDataChange(columnsScrollerRef.current.scrollData);
+    setColumnsScrollData(columnsScrollerRef.current.scrollData);
   }, [
     columnsSizes,
     defaultColumnWidth,
     totalColumns,
     overscroll,
-    onColumnsScrollDataChange,
     scrollerContainerRef,
   ]);
 
@@ -168,20 +154,15 @@ const useScroller = ({
     const nextRowsScrollData = rowsScrollerRef.current
       .scrollTo(e.currentTarget.scrollTop)
       .scrollData;
-    onRowsScrollDataChange(nextRowsScrollData);
+    setRowsScrollData(nextRowsScrollData);
 
-    if (!totalColumns) {
-      onScroll?.(e);
-      return;
-    }
+    if (!totalColumns) return;
 
     const nextColumnsScrollData = columnsScrollerRef.current
       .scrollTo(e.currentTarget.scrollLeft)
       .scrollData;
-    onColumnsScrollDataChange(nextColumnsScrollData);
-
-    onScroll?.(e);
-  }, [totalColumns, onColumnsScrollDataChange, onRowsScrollDataChange, onScroll]);
+    setColumnsScrollData(nextColumnsScrollData);
+  }, [totalColumns]);
 
   const scrollAreaHeight = rowsScrollerRef.current.totalSize;
   const scrollAreaWidth = totalColumns && columnsScrollerRef.current.totalSize;
@@ -221,12 +202,12 @@ const useScroller = ({
     onScroll: handleScroll,
     scrollAreaStyle,
     visibleAreaStyle,
-    onRowsScrollDataChange,
+    onRowsScrollDataChange: setRowsScrollData,
     rowsScroller: rowsScrollerRef.current,
     ...(totalColumns && {
       visibleColumnsIndexes: columnsScrollData.visibleIndexes,
       columnsScroller: columnsScrollerRef.current,
-      onColumnsScrollDataChange,
+      onColumnsScrollDataChange: setColumnsScrollData,
     }),
     handleInitialize,
   };

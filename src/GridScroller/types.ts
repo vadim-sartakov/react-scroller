@@ -1,4 +1,4 @@
-import { ScrollData, LoadPage } from '../types';
+import { LoadPage } from '../types';
 import { ListScrollerSizesProps, UseListScrollerProps } from '../ListScroller/types';
 
 export interface GridScrollerSizesProps extends ListScrollerSizesProps {
@@ -52,7 +52,5 @@ export type GridScrollerRenderProps<T> =
 export interface UseGridScrollerProps extends Omit<UseListScrollerProps, 'focusedCell'>, GridScrollerSizesProps {
   /** If set to true, then css grid compatible layout will be rendered */
   gridLayout?: boolean;
-  columnsScrollData?: ScrollData;
-  onColumnsScrollDataChange?: (scrollData: ScrollData) => void;
   focusedCell?: { row: number, cell: number };
 }
