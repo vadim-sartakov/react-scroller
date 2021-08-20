@@ -50,7 +50,6 @@ const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
   focusedCell,
   totalRows = 1000,
   overscroll = 0,
-  height = '100vh',
   defaultRowHeight = 40,
 }) => {
   const listValue = generateListValues(totalRows);
@@ -60,7 +59,9 @@ const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
       value={listValue}
       rowsSizes={rowsSizes}
       overscroll={overscroll}
-      height={height}
+      scrollerContainerProps={{
+        style: { height: '100vh' },
+      }}
       defaultRowHeight={defaultRowHeight}
       totalRows={listValue.length}
       focusedCell={focusedCell}

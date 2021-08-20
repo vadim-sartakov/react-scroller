@@ -66,7 +66,6 @@ const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
   overscroll = 0,
   focusedCell,
   itemsPerPage = 20,
-  height = '100vh',
   defaultRowHeight = 40,
   loadDelay = 1000,
 }) => {
@@ -83,7 +82,9 @@ const ListTemplate: Story<ListScrollerStoryProps<any>> = ({
       itemsPerPage={itemsPerPage}
       rowsSizes={rowsSizes}
       overscroll={overscroll}
-      height={height}
+      scrollerContainerProps={{
+        style: { height: '100vh' },
+      }}
       focusedCell={focusedCell}
       defaultRowHeight={defaultRowHeight}
       totalRows={listValue.length}

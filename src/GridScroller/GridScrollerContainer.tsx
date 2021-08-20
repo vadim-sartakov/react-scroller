@@ -1,15 +1,11 @@
 import * as React from 'react';
-import { GridScrollerSizesProps } from './types';
 
 export interface GridScrollerContainerProps extends
-  React.HTMLAttributes<HTMLDivElement>,
-  Pick<GridScrollerSizesProps, 'width' | 'height'> {
+  React.HTMLAttributes<HTMLDivElement> {
   containerRef?: React.MutableRefObject<HTMLDivElement>,
 }
 
 const GridScrollerContainer = ({
-  width,
-  height,
   onScroll,
   style,
   containerRef,
@@ -19,9 +15,7 @@ const GridScrollerContainer = ({
     {...props}
     ref={containerRef}
     style={{
-      width,
-      height,
-      overflow: height && 'auto',
+      overflow: 'auto',
       ...style,
     }}
     onScroll={onScroll}

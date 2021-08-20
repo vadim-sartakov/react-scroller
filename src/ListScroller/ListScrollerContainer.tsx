@@ -1,15 +1,11 @@
 import * as React from 'react';
-import { ListScrollerSizesProps } from './types';
 
 export interface ListScrollerContainerProps extends
-  React.HTMLAttributes<HTMLDivElement>,
-  Pick<ListScrollerSizesProps, 'width' | 'height'> {
+  React.HTMLAttributes<HTMLDivElement> {
   containerRef?: React.MutableRefObject<HTMLDivElement>,
 }
 
 const ListScrollerContainer: React.FC<ListScrollerContainerProps> = ({
-  height,
-  width,
   onScroll,
   style,
   containerRef,
@@ -19,9 +15,7 @@ const ListScrollerContainer: React.FC<ListScrollerContainerProps> = ({
     {...props}
     ref={containerRef}
     style={{
-      width,
-      height,
-      overflow: height && 'auto',
+      overflow: 'auto',
       ...style,
     }}
     onScroll={onScroll}

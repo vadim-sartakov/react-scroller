@@ -73,8 +73,6 @@ const GridTemplate: Story<GridScrollerStoryProps<any>> = ({
   totalColumns = 50,
   overscroll = 0,
   itemsPerPage = 20,
-  height = '100vh',
-  width,
   defaultRowHeight = 40,
   defaultColumnWidth = 120,
   loadDelay = 1000,
@@ -94,12 +92,13 @@ const GridTemplate: Story<GridScrollerStoryProps<any>> = ({
       rowsSizes={rowsSizes}
       columnsSizes={columnsSizes}
       overscroll={overscroll}
-      height={height}
+      scrollerContainerProps={{
+        style: { height: '100vh' },
+      }}
       defaultRowHeight={defaultRowHeight}
       defaultColumnWidth={defaultColumnWidth}
       totalRows={gridValue.length}
       totalColumns={gridValue[0].length}
-      width={width}
       RowComponent="div"
       rowComponentProps={{ className: 'row' }}
       render={({ value, style }) => (

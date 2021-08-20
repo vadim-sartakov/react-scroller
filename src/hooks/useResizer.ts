@@ -7,8 +7,6 @@ interface UseResizerProps {
   scrollerContainerRef: MutableRefObject<HTMLDivElement>;
   rowsScroller: Scroller;
   columnsScroller?: Scroller;
-  width?: number | string;
-  height?: number | string;
   onRowsScrollDataChange: (scrollData: ScrollData) => void;
   onColumnsScrollDataChange?: (scrollData: ScrollData) => void;
 }
@@ -17,28 +15,24 @@ function useResizer({
   scrollerContainerRef,
   rowsScroller,
   columnsScroller,
-  width,
-  height,
   onRowsScrollDataChange,
   onColumnsScrollDataChange,
 }: UseResizerProps): void {
   useEffect(() => {
-    if (typeof width === 'number' && typeof height === 'number') return () => {};
-
     const resizeObserver = new ResizeObserver(scrollerContainerRef.current);
 
     const updateContainerSize = () => {
       const scrollerContainerRect = scrollerContainerRef.current?.getBoundingClientRect();
       if (!scrollerContainerRect) return;
 
-      if (typeof height !== 'number' && rowsScroller.containerSize !== scrollerContainerRect.height) {
+      if (rowsScroller.containerSize !== scrollerContainerRect.height) {
         const nextRowsScrollData = rowsScroller.updateContainerSize(
           scrollerContainerRect.height,
         ).scrollData;
         onRowsScrollDataChange(nextRowsScrollData);
       }
 
-      if (columnsScroller && typeof width !== 'number' && columnsScroller.containerSize !== scrollerContainerRect.width) {
+      if (columnsScroller && columnsScroller.containerSize !== scrollerContainerRect.width) {
         const nextColumnsScrollData = columnsScroller.updateContainerSize(
           scrollerContainerRect.width,
         ).scrollData;
@@ -54,8 +48,6 @@ function useResizer({
   }, [
     rowsScroller,
     columnsScroller,
-    width,
-    height,
     scrollerContainerRef,
     onRowsScrollDataChange,
     onColumnsScrollDataChange,

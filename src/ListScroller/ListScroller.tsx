@@ -31,8 +31,6 @@ const ListScroller = <T extends unknown>({
   loadPage,
   itemsPerPage,
   loadTimeout,
-  height,
-  width,
   rowsSizes = defaultArray,
   scrollerContainerRef: scrollerContainerRefProp,
   scrollerContainerProps,
@@ -56,7 +54,6 @@ const ListScroller = <T extends unknown>({
     onRowsScrollDataChange,
   } = useScroller({
     scrollerContainerRef: scrollerContainerRefProp,
-    height,
     defaultRowHeight,
     totalRows,
     rowsSizes,
@@ -67,7 +64,6 @@ const ListScroller = <T extends unknown>({
   useResizer({
     scrollerContainerRef,
     rowsScroller,
-    height,
     onRowsScrollDataChange,
   });
 
@@ -106,8 +102,6 @@ const ListScroller = <T extends unknown>({
   return (
     <ListScrollerContainer
       onScroll={onScroll}
-      height={height}
-      width={width}
       containerRef={scrollerContainerRef}
       {...scrollerContainerProps}
     >

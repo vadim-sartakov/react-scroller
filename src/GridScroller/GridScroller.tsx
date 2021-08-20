@@ -30,8 +30,6 @@ export type GridScrollerAsyncProps<T> =
 const defaultArray: number[] = [];
 
 const GridScroller = <T extends unknown>({
-  width,
-  height,
   value: valueProp,
   itemsPerPage,
   loadPage,
@@ -68,8 +66,6 @@ const GridScroller = <T extends unknown>({
     columnsScroller,
   } = useScroller({
     scrollerContainerRef: scrollerContainerRefProp,
-    height,
-    width,
     defaultRowHeight,
     defaultColumnWidth,
     totalRows,
@@ -85,8 +81,6 @@ const GridScroller = <T extends unknown>({
     scrollerContainerRef,
     rowsScroller,
     columnsScroller,
-    width,
-    height,
     onRowsScrollDataChange,
     onColumnsScrollDataChange,
   });
@@ -118,8 +112,6 @@ const GridScroller = <T extends unknown>({
     <GridScrollerContainer
       containerRef={scrollerContainerRef}
       onScroll={onScroll}
-      width={width}
-      height={height}
       {...scrollerContainerProps}
     >
       <div

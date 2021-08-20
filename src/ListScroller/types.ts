@@ -4,10 +4,6 @@ export interface ListScrollerSizesProps {
   defaultRowHeight: number;
   totalRows: number;
   rowsSizes?: number[];
-  /* Scroller container height. Could be any valid css string */
-  height?: number | string;
-  /* Scroller container width. Could be any valid css string */
-  width?: number | string;
 }
 
 export interface ListScrollerSyncPropsBase<T> {

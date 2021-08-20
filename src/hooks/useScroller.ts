@@ -27,12 +27,13 @@ interface UseScrollerResult {
 }
 
 const defaultArray: number[] = [];
+const DEFAULT_CONTAINER_WIDTH = 1200;
+const DEFAULT_CONTAINER_HEIGHT = 800;
 
 const useScroller = ({
   defaultRowHeight,
   totalRows,
   rowsSizes = defaultArray,
-  height,
   overscroll = 0,
   focusedCell,
   scrollerContainerRef: scrollerContainerRefProp,
@@ -42,7 +43,6 @@ const useScroller = ({
   let defaultColumnWidth: UseGridScrollerProps['defaultColumnWidth'];
   let totalColumns: UseGridScrollerProps['totalColumns'];
   let columnsSizes = defaultArray;
-  let width: UseGridScrollerProps['width'];
   let gridLayout: UseGridScrollerProps['gridLayout'];
 
   if (isGridScrollerProps(props)) {
@@ -50,7 +50,6 @@ const useScroller = ({
       defaultColumnWidth,
       totalColumns,
       columnsSizes = defaultArray,
-      width,
       gridLayout,
     } = props);
   }
@@ -61,7 +60,7 @@ const useScroller = ({
   const rowsScrollerRef = useRef(new Scroller({
     defaultSize: defaultRowHeight,
     scroll: 0,
-    containerSize: typeof height === 'number' ? height : 600,
+    containerSize: DEFAULT_CONTAINER_HEIGHT,
     totalCount: totalRows,
     overscroll,
     sizes: rowsSizes,
@@ -70,7 +69,7 @@ const useScroller = ({
   const columnsScrollerRef = useRef(totalColumns && new Scroller({
     defaultSize: defaultColumnWidth,
     scroll: 0,
-    containerSize: typeof width === 'number' ? width : 800,
+    containerSize: DEFAULT_CONTAINER_WIDTH,
     totalCount: totalColumns,
     overscroll,
     sizes: columnsSizes,
