@@ -21,7 +21,8 @@
     "build": "rm -rf lib && mkdir lib && cross-env NODE_ENV=production tsc --build tsconfig.build.json && cp package.json ./lib/",
     "test": "jest",
     "storybook": "start-storybook -p 9009",
-    "build-storybook": "rm -rf docs/storybook && build-storybook -o docs/storybook"
+    "build-storybook": "rm -rf docs/storybook && build-storybook -o docs/storybook",
+    "build-docs": "rm -rf docs/docs && typedoc --out docs/docs src/index.ts"
   },
   "pre-commit": [
     "lint",
